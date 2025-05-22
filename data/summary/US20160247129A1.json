@@ -1,0 +1,8 @@
+{
+  "problem": "Inefficiencies and imprecision in machine maintenance due to limited information availability and reliance on engineers' experiences",
+  "solution_function": "Creation and utilization of digital twins for energy-efficient asset maintenance, providing dynamic structured data about machine operations using full product-life-cycle data repositories and simulation models",
+  "solution_structure": "A system comprising a plurality of digital twins, each corresponding to a unique physical machine; a simulation platform processed by multiprocessor computer systems; and a data platform processed by the same multiprocessor computer systems",
+  "solution_implementation": "Each digital twin contains product nameplate data, one or more simulation models, and a database of run time log data from sensors associated with the unique physical machine. The simulation platform processes these models using a Bayesian filtering framework, with each simulation model executed in parallel across processors on the multiprocessor computer system. The data platform processes a plurality of data query tasks",
+  "effect": "Improved energy efficiency and precision in asset maintenance through better quality products and more effective machine monitoring",
+  "id": "US20160247129A1"
+}

@@ -1,0 +1,50 @@
+name: compare_implementation_diff
+description: Extract key implementation comparison axes and compare two patents across those axes, while handling cases with little or no technical overlap.
+template: |
+  You are a patent analyst comparing the implementation-level characteristics of two inventions. These may involve software, hardware, or hybrid systems.
+
+  Your job is to:
+  1. Extract **3 to 5 meaningful technical comparison axes**
+     - These may include aspects like: component interaction, resource allocation, control logic, system structure, integration method, etc.
+ 
+  2. For each axis, describe **how each patent implements the concept**. Use precise technical language, and only compare aspects that exist in both patents.
+
+  3. Finally, provide an **overall summary** that explains the key difference in implementation philosophy or approach.
+
+  [Important Guidelines]
+  - ✅ Be concise but technically clear.
+  - ✅ Respond strictly in the following JSON format.
+
+  Input Data:
+
+  [Our Patent]
+  Problem: {our_problem}
+  Solution Function: {our_function}
+  Solution Structure: {our_structure}
+  Solution Implementation: {our_implementation}
+  Effect: {our_effect}
+
+  [Competitor Patent]
+  Problem: {comp_problem}
+  Solution Function: {comp_function}
+  Solution Structure: {comp_structure}
+  Solution Implementation: {comp_implementation}
+  Effect: {comp_effect}
+
+  Respond strictly in the following JSON format:
+
+  {{
+    "comparison_axes": [
+      {{
+        "axis": "data buffering mechanism",
+        "ours": "Uses intermediate double buffer structure to enable concurrent memory access and processing.",
+        "competitor": "Employs a simpler single-pass memory pipeline without staging."
+      }},
+      {{
+        "axis": "processing parallelism",
+        "ours": "Leverages multiple multiply-add units working in parallel.",
+        "competitor": "Implements sequential multiplication with conditional branching."
+      }}
+    ],
+    "overall_diff_summary": "Our patent focuses on parallelized and modular processing, while the competitor emphasizes minimalism and sequential control. These reflect different optimization priorities."
+  }}

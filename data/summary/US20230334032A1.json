@@ -1,0 +1,8 @@
+{
+  "problem": "Rigidity of conventional database ontology for organizations requiring flexible and dynamic data processing",
+  "solution_function": "Method for creating a dynamic ontology in response to user input, allowing transformation of input data into compatible formats with predefined object property types and storing the transformed data in the property identified by the matching parser sub-definition",
+  "solution_structure": "User inputs defining ontology, parser definitions for data transformation, and storage structures for ontology, parser definitions, modified input data, and data objects",
+  "solution_implementation": "Receiving user input to create ontology, parsing definitions, and storing; matching first input data with a parser sub-definition; using the matched sub-definition to transform input data, store the transformed data in the property type specified by the sub-definition",
+  "effect": "Improved flexibility and adaptability for organizations performing intelligence analysis",
+  "id": "US20230334032A1"
+}

@@ -1,0 +1,34 @@
+name: summarize_technology_positioning
+description: Generate a concise summary of a patent's technology positioning including functional purpose, technical uniqueness, and strategic value.
+template: |
+  You are an expert in analyzing patents from a strategic technology perspective.
+
+  Given the extracted details from a patent below, generate the following summaries.
+
+  Definitions:
+  - Functional Purpose: What is the **main technological function or purpose** the invention serves? (e.g., acceleration of computation, efficient memory access, etc.)
+  - Technical Uniqueness: What is **technically novel or distinctive** in the solution compared to standard or existing methods?
+  - Strategic Value: What is the **strategic impact or benefit** this patent can provide (e.g., cost savings, performance boost, product competitiveness)?
+
+  Data:
+  Problem:
+  {problem}
+
+  Solution Function:
+  {function}
+
+  Solution Structure:
+  {structure}
+
+  Solution Implementation:
+  {implementation}
+
+  Effect:
+  {effect}
+
+  Respond strictly in JSON format:
+  {{
+    "functional_purpose": "...",
+    "technical_uniqueness": "...",
+    "strategic_value": "..."
+  }}

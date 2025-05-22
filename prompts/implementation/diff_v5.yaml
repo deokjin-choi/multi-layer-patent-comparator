@@ -1,0 +1,73 @@
+name: compare_implementation_diff
+description: Extract key implementation comparison axes and compare two patents across those axes, clearly indicating relevance and technical advantage.
+template: |
+  You are a patent analyst comparing the implementation-level characteristics of two inventions. These may involve software, hardware, or hybrid systems.
+
+  Your job is to:
+  1. Extract **3 to 5 meaningful technical comparison axes**.
+     - These may include aspects like: component interaction, resource allocation, control logic, system structure, integration method, etc.
+     - ❗ Only include an axis if **both patents explicitly or implicitly mention a relevant implementation**. Do **not** compare if one side is completely unspecified.
+     - If a shared axis has weak overlap, include it with **low relevance**.
+
+  2. For each axis, describe:
+     - How each patent implements the concept.
+     - The **relevance** of the comparison: "high", "medium", or "low", based on both patents’ descriptions.
+     - The **technical advantage**: "ours", "competitor", or "unclear".
+     - A brief **reason** justifying the advantage.
+
+  3. Conclude with an **overall summary** that explains the key difference in implementation philosophy or design trade-offs.
+
+  [Important Guidelines]
+  - ✅ Extract 3–5 axes, **only if technically valid**.
+  - ✅ It is acceptable to extract fewer than 3 if only a small overlap exists.
+  - ✅ Be concise but technically clear.
+  - ✅ Never fabricate symmetry where it doesn’t exist.
+  - ✅ Respond strictly in the following JSON format.
+
+  Input Data:
+
+  [Our Patent]
+  Problem: {our_problem}
+  Solution Function: {our_function}
+  Solution Structure: {our_structure}
+  Solution Implementation: {our_implementation}
+  Effect: {our_effect}
+
+  [Competitor Patent]
+  Problem: {comp_problem}
+  Solution Function: {comp_function}
+  Solution Structure: {comp_structure}
+  Solution Implementation: {comp_implementation}
+  Effect: {comp_effect}
+
+  Respond strictly in the following JSON format:
+
+  {{
+    "comparison_axes": [
+      {{
+        "axis": "signal filtering method",
+        "ours": "Uses a configurable digital filter with adaptive coefficients.",
+        "competitor": "Applies a fixed analog low-pass filter.",
+        "relevance": "high",
+        "advantage": "ours",
+        "reason": "Digital filtering allows real-time tuning and better adaptability."
+      }},
+      {{
+        "axis": "power supply regulation",
+        "ours": "Implements dynamic voltage scaling based on processing load.",
+        "competitor": "Operates at fixed voltage using basic linear regulators.",
+        "relevance": "medium",
+        "advantage": "ours",
+        "reason": "Dynamic scaling offers better power efficiency in variable workloads."
+      }},
+      {{
+        "axis": "heat dissipation",
+        "ours": "Employs a modular active cooling system with thermal sensors.",
+        "competitor": "Uses a static aluminum heat sink.",
+        "relevance": "low",
+        "advantage": "ours",
+        "reason": "Active control improves response to rapid thermal changes."
+      }}
+    ],
+    "overall_diff_summary": "Our patent favors adaptability and modular optimization, while the competitor emphasizes simplicity and fixed-function design. The choice reflects different system design priorities."
+  }}

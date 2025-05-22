@@ -1,0 +1,29 @@
+name: summarize_v1
+description: Extract structured and concise elements from a patent description
+template: |
+  You are a professional patent analyst.  
+  From the following patent description, extract and summarize **only the core content** of the five elements below.  
+  Eliminate any vague or generic phrases such as “this invention,” “this method,” “the main function of,” “the key component,” etc.  
+  Your response must be **clear, concise**, and **strictly in JSON format** as shown.
+
+  ### Definitions:
+  - **Problem**: What technical issue or limitation is being addressed?
+  - **Solution_Function**: Describe how the system works from a functional perspective.
+  - **Solution_Structure**: What structural features or configurations enable the function?
+  - **Solution_Implementation**: How is it implemented technically (mechanism, material, sequence)?
+  - **Effect**: What benefit or result does this solution provide?
+
+
+  ### Output Format (Required JSON):
+  ```json
+  {
+    "problem": "...",
+    "solution_function": "...",
+    "solution_structure": "...",
+    "solution_implementation": "...",
+    "effect": "..."
+  }
+
+  ===
+  Patent Description:
+  {{description}}

@@ -1,0 +1,8 @@
+{
+  "problem": "Scaling up Deep Neural Network (DNN) accelerators face memory bandwidth problem when increasing data parallelism.",
+  "solution_function": "The solution involves a banked memory structure that assigns each vector of the data to a separate local memory and channel for processing by a computation unit.",
+  "solution_structure": "The banked memory structure includes a plurality of local memories, a memory decoder, a plurality of computation units, and a plurality of channels. Each channel is paired with a separate local memory and one computation unit.",
+  "solution_implementation": "The memory decoder receives data for the accelerator, identifies the plurality of vectors in the data, selects a separate local memory for each vector, maps an address of the selected local memory to the vector, and sends the data for the vector to a data channel associated with the selected local memory.",
+  "effect": "This implementation reduces complexity of supporting increasing number of independent accesses to the memory structure.",
+  "id": "US11347652B2"
+}

@@ -1,0 +1,75 @@
+name: generate_strategic_positioning_layer
+description: Generate strategic positioning scores and explanations from patent summaries for map-level insight.
+template: |
+  You are a technology strategist tasked with generating a **strategic positioning map** for one of our key patents.
+
+  Your objective is to evaluate each patent’s strategic contribution in a competitive landscape.  
+  Your evaluation will help inform patent clustering and positioning decisions for planning and communication.
+
+  ---
+  📥 INPUT:
+  For each patent (including our own and competitors), the following fields are provided:
+  - `patent_id`: unique patent identifier
+  - `tech_summary`: a one-sentence explanation of the main technical content
+  - `strategic_direction`: a one-sentence description of its potential value or advantage
+  - `technical_value`: either "High" or "Low"
+
+  ---
+  Patents information: {patents_table}
+
+  ---
+  📊 STRATEGIC ASPECTS (Each scored from 1 to 5):
+
+  1. **Core Tech Area**  
+     - *What it means:* Does the patent address a foundational or widely-used technical problem or design element?  
+     - *How to evaluate:* Score high if it improves key operations that are essential across many systems or architectures.
+
+  2. **Performance Advantage**  
+     - *What it means:* Does the patent significantly enhance processing speed, efficiency, or system performance?  
+     - *How to evaluate:* Look for mentions of faster execution, optimized handling, or streamlined processing steps.
+
+  3. **Differentiation**  
+     - *What it means:* Is the technical approach structurally different from common or existing methods?  
+     - *How to evaluate:* Score high if the structure, mechanism, or sequence is clearly distinct or creative.
+
+  4. **Application Versatility**  
+     - *What it means:* Can the solution be applied in a wide range of system types, product designs, or application contexts?  
+     - *How to evaluate:* Broad applicability across multiple use cases increases the score.
+
+  5. **Market Impact**  
+     - *What it means:* Does the invention support product-level deployment, integration into practical systems, or end-user advantage?  
+     - *How to evaluate:* Score high if the technology leads to practical outcomes or business opportunities.
+
+  6. **Competitor Block**  
+     - *What it means:* Does the patent create a technical or legal barrier for others trying to implement similar features?  
+     - *How to evaluate:* Score high if the method is hard to replicate or covers a wide implementation range.
+
+  ---
+  🧠 EVALUATION GUIDELINES:
+
+  - Use only the provided `tech_summary`, `strategic_direction`, and `technical_value`.
+  - If `technical_value` is "High", you may use it to support higher scores, **only when justified by the text**.
+
+  ---
+  🎯 OUTPUT FORMAT:
+
+  Return your output as a **valid JSON list**.  
+  Do not include comments, ellipses (`...`), or trailing commas.  
+  Do not include curly brace escapes like `{{` or `}}`.
+
+  Each item must follow this structure exactly:
+
+  [
+    {{
+      "patent_id": "pantent_no",
+      "scores": {{
+        "Core Tech Area": {{ "score": scored from 1 to 5, "reason": "a full sentence" }},
+        "Performance Advantage": {{ "score": scored from 1 to 5, "reason": "a full sentence" }},
+        "Differentiation": {{ "score": scored from 1 to 5, "reason": "a full sentence" }},
+        "Application Versatility": {{ "score": scored from 1 to 5, "reason": "a full sentence" }},
+        "Market Impact": {{ "score": scored from 1 to 5, "reason": "a full sentence" }},
+        "Competitor Block": {{ "score": scored from 1 to 5, "reason": "a full sentence" }}
+      }}
+    }},
+    ...
+  ]

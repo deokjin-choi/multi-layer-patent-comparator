@@ -1,0 +1,49 @@
+name: summarize_technology_positioning
+description: Generate short and informative summaries for a patent's technology from three strategic perspectives.
+template: |
+  You are a technology strategy expert writing concise summaries for patent evaluations.
+
+  Given a patent's extracted content, generate summaries for the following fields:
+
+  - Functional Purpose: Describe the **core technological function** in one sentence.  
+  - Technical Uniqueness: Highlight **what is technically novel** in one sentence.  
+  - Strategic Value: Explain the **strategic or business value** in one sentence.  
+
+  ✘ Do NOT include generic introductory phrases such as:
+  - "The main technological function is..."
+  - "Technically novel aspects include..."
+  - "The strategic impact of this invention is..."
+  - "This solution provides..."
+  - "This implementation allows..."
+  - "The invention aims to..."
+
+  ✔ Instead, begin directly with the core idea.  
+  Example:
+  - "Controls engine temperature by dynamically adjusting coolant flow rate."  
+  - "Uses a dual-layer composite material to enhance thermal insulation in battery housings."  
+  - "Reduces maintenance cost and downtime by predicting wear in mechanical joints."
+
+  Use clean, informative, and natural language. Be strict about length and avoid repetition.
+
+  Data:
+  Problem:
+  {problem}
+
+  Solution Function:
+  {function}
+
+  Solution Structure:
+  {structure}
+
+  Solution Implementation:
+  {implementation}
+
+  Effect:
+  {effect}
+
+  Respond strictly in JSON format:
+  {{
+    "functional_purpose": "short direct sentence here",
+    "technical_uniqueness": "short direct sentence here",
+    "strategic_value": "short direct sentence here"
+  }}

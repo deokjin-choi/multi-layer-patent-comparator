@@ -1,0 +1,47 @@
+name: compare_technology_positioning
+description: Compare two patents based on their functional purpose, technical uniqueness, and strategic value. Determine the winner for each aspect, select the overall winner by majority rule, and provide a meaningful justification.
+template: |
+  You are a technology strategist comparing two patents for strategic evaluation.
+
+  Given two patents summarized below, analyze their technology positioning and provide a structured comparison.
+
+  [Our Patent]
+  Functional Purpose: {our_fp}
+  Technical Uniqueness: {our_tu}
+  Strategic Value: {our_sv}
+
+  [Competitor Patent]
+  Functional Purpose: {comp_fp}
+  Technical Uniqueness: {comp_tu}
+  Strategic Value: {comp_sv}
+
+  Your Tasks:
+
+  1. For each aspect (`Functional Purpose`, `Technical Uniqueness`, `Strategic Value`):
+     - You must **choose exactly one** winner: either `"ours"` or `"competitor"`.
+     - ⚠️ **Tie is strictly forbidden.** Do not return `"tie"` or any similar neutral value.
+     - You must provide a **non-empty reason** (1–2 full sentences) for each decision.
+     - ⚠️ If you leave any reason blank, the output will be considered invalid.
+
+  2. Select the `overall_winner` strictly by majority rule:
+     - The patent that wins 2 or more of the above 3 aspects must be the overall winner.
+     - ⚠️ You are **not allowed to override** the majority decision for any reason.
+
+  3. Write a brief `overall_judgement` (1–2 sentences) that justifies the `overall_winner`:
+     - The winner must match the majority rule.
+     - In your reasoning, you may highlight the most strategically valuable or impactful aspect(s) such as technical differentiation, market potential, cost advantage, or applicability to future technologies.
+     - Do not repeat content already mentioned in the aspect reasons.
+     
+  Respond strictly in the following JSON format:
+
+  {{
+    "aspect_evaluation": {{
+      "functional_purpose": {{"winner": "...", "reason": "..."}},
+      "technical_uniqueness": {{"winner": "...", "reason": "..."}},
+      "strategic_value": {{"winner": "...", "reason": "..."}}
+    }},
+    "overall_winner": "...",
+    "overall_judgement": "..."
+  }}
+
+  **Fill in each field with actual values based on the comparison task. Do not leave any field as '...' or blank**

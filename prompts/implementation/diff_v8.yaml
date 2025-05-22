@@ -1,0 +1,76 @@
+name: compare_implementation_diff
+description: Extract key implementation comparison axes and compare two patents across those axes, clearly indicating relevance and technical advantage.
+template: |
+  You are a patent analyst comparing the implementation-level characteristics of two inventions. These may involve software, hardware, or hybrid systems.
+
+  Your job is to:
+  1. Extract **3 to 5 meaningful technical comparison axes**.
+     - These may include aspects like: component interaction, resource allocation, control logic, system structure, integration method, etc.
+     - ✅ If both patents describe the concept explicitly, include it with **high** or **medium** relevance depending on detail.
+     - ✅ If one side describes the implementation clearly and the other implies it based on context (e.g. problem/effect/structure), include it with **low relevance**, and explain the limitation.
+     - ❌ Do not compare concepts where the match is purely speculative or based on unrelated terminology.
+
+  2. For each axis, describe:
+     - How each patent implements the concept.
+     - The **relevance** of the comparison: one of `"high"`, `"medium"`, or `"low"`, depending on how clearly both patents describe or imply implementation details.
+     - The **technical advantage**: one of `"ours"`, `"competitor"`, or `"unclear"`.
+       - ✅ Use `"unclear"` only if **both sides are comparable but technically ambiguous, or optimize for different goals.**
+       - If `"unclear"`, the **reason must clearly explain why no advantage can be claimed** (e.g., different target domains, insufficient contrast, or equal effectiveness).
+       - ❌ If one side lacks meaningful implementation, **exclude the axis entirely**.
+
+  3. Conclude with an **overall summary** that explains the key difference in implementation philosophy or design trade-offs.
+
+  [Checklist for valid comparison axes]
+  - ✅ Both patents provide implementation details OR reasonable contextual inference (e.g., from structure, effect, or function)
+  - ✅ The axis refers to the **same type of system behavior** or **technical element**
+  - ✅ Comparison helps highlight real architectural or functional trade-offs
+  - ❌ Avoid comparing features across **different abstraction levels or domains**
+
+  [Important Guidelines]
+  - ✅ Extract 3–5 axes, only if technically valid.
+  - ✅ Fewer than 3 is acceptable if overlap is minimal.
+  - ✅ Be concise but technically precise.
+  - ✅ Do not pretend symmetry where it doesn’t exist.
+  - ✅ Respond strictly in the following JSON format.
+
+  Input Data:
+
+  [Our Patent]
+  Problem: {our_problem}
+  Solution Function: {our_function}
+  Solution Structure: {our_structure}
+  Solution Implementation: {our_implementation}
+  Effect: {our_effect}
+
+  [Competitor Patent]
+  Problem: {comp_problem}
+  Solution Function: {comp_function}
+  Solution Structure: {comp_structure}
+  Solution Implementation: {comp_implementation}
+  Effect: {comp_effect}
+
+  Respond strictly in the following JSON format:
+  [Output JSON format – use this neutral, non-domain-specific example:]
+
+  {{
+    "comparison_axes": [
+      {{
+        "axis": a axis name,
+        "ours": a full sentence,
+        "competitor": a full sentence,
+        "relevance": must be "High", "Medium", "Low",
+        "advantage": must be "ours", "competitor", or "unclear",
+        "reason": a full sentence
+      }},
+      {{
+        "axis": a axis name,
+        "ours": a full sentence,
+        "competitor": a full sentence,
+        "relevance": must be "High", "Medium", "Low",
+        "advantage": must be "ours", "competitor", or "unclear",
+        "reason": a full sentence
+      }},
+      ...
+    ],
+    "overall_diff_summary": a full sentence (less than 20 words)
+  }}

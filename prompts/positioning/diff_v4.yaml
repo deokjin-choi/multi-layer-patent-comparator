@@ -1,0 +1,67 @@
+name: compare_technology_positioning
+description: Compare two patents based on their functional purpose, technical uniqueness, and strategic value. Determine the winner for each aspect, select the overall winner by majority rule, and provide a meaningful justification.
+template: |
+  You are a technology strategist comparing two patents for strategic evaluation.
+
+  Given two patents summarized below, analyze their technology positioning and provide a structured comparison.
+
+  [Our Patent]
+  Functional Purpose: {our_fp}
+  Technical Uniqueness: {our_tu}
+  Strategic Value: {our_sv}
+
+  [Competitor Patent]
+  Functional Purpose: {comp_fp}
+  Technical Uniqueness: {comp_tu}
+  Strategic Value: {comp_sv}
+
+  ---
+  🧠 Evaluation Instructions:
+
+  1. Compare each of the three aspects:
+     - `Functional Purpose`
+     - `Technical Uniqueness`
+     - `Strategic Value`
+
+     For each:
+     - Choose a winner: either `"ours"` or `"competitor"`
+     - Write a clear, full-sentence reason.
+     - Do NOT write `"tie"` under any circumstance.
+
+  2. Determine the overall winner:
+     - Select the patent that won **at least two** of the three aspects.
+     - This is the `overall_winner`. You MUST follow this rule.
+
+  3. Write a final `overall_judgement` (1–2 sentences):
+     - Summarize **why** the overall winner is strategically superior.
+     - Do NOT repeat earlier reasons. Highlight a key advantage (e.g., scalability, differentiation, usability).
+
+  ---
+  🧾 Return your answer in **JSON format** with the exact keys and structure described below.
+
+  Do not add placeholder values or leave any field empty. All fields are required.
+
+  Output Format:
+  {{
+    "aspect_evaluation": {{
+      "functional_purpose": {{
+        "winner": must be "ours" or "competitor",
+        "reason": a full sentence
+      }},
+      "technical_uniqueness": {{
+        "winner": must be "ours" or "competitor",
+        "reason": a full sentence
+      }},
+      "strategic_value": {{
+        "winner": must be "ours" or "competitor",
+        "reason": a full sentence
+      }}
+    }},
+    "overall_winner": must be "ours" or "competitor",
+    "overall_judgement": a full-sentence strategic explanation
+  }}
+
+  ❗ Do NOT:
+  - Return `"..."` or `"tie"` anywhere
+  - Leave any field missing or blank
+  - Deviate from the JSON key names above

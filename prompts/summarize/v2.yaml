@@ -1,0 +1,33 @@
+name: summarize_v2
+description: Extract technically structured insights from a patent description with HW-SW coordination in mind.
+template: |
+  You are a professional patent analyst.  
+  Your task is to extract only the core technical content from the patent description, avoiding all vague or redundant phrases such as “this invention,” “this method,” “the main function of,” “the key component,” etc.  
+  Focus especially on **how hardware and software components interact**, if both exist, and be clear about **functional roles**, not just what happens.
+
+  Your response must be:
+  - **Technically accurate**
+  - **Concise**
+  - **Strictly in JSON format** (no markdown fences, no explanatory text)
+
+  ### Definitions:
+  - **Problem**: What technical limitation or inefficiency does the invention solve?
+  - **Solution_Function**: Describe the core function the system performs to solve the problem.  
+    If both hardware and software elements exist, summarize how they functionally coordinate.  
+    Emphasize control flow, computation roles, or interaction models rather than just saying “performs multiplication.”
+  - **Solution_Structure**: Describe the key components or architectural layout that supports the function (e.g., processors, buffers, circuits, memory structures).
+  - **Solution_Implementation**: Describe the technical method by which the system is implemented, including hardware operation sequence, data flow, or system control logic.
+  - **Effect**: What measurable benefit or practical impact results from this solution? (e.g., speedup, resource reduction, flexibility)
+
+  ### Output Format (JSON only):
+  {
+    "problem": "...",
+    "solution_function": "...",
+    "solution_structure": "...",
+    "solution_implementation": "...",
+    "effect": "..."
+  }
+
+  ===
+  Patent Description:
+  {{description}}

@@ -1,0 +1,42 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Logs
+logs/
+
+# Jupyter Notebook Checkpoints (if applicable)
+.ipynb_checkpoints/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Environments
+.env
+.venv
+env/
+venv/
+*.env
+
+# OS metadata
+ehthumbs.db
+Icon?
+desktop.ini
+
+# Compiled results (pickle or cache)
+*.pkl
+
+# IDE-specific folders
+.vscode/
+.idea/
+
+# Streamlit cache
+.streamlit/
+
+# Optional: exclude raw result files or temp
+*.bak
+*.tmp
