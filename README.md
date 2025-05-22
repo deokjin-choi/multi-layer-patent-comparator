@@ -7,11 +7,14 @@ This is an AI-powered patent comparison system designed to support structured, r
 The 3-Layer Patent Comparison System replaces manual and subjective analysis with structured AI-driven comparisons across three expert-designed layers:
 
 ### 1. Strategic Direction – Provides a strategic guide for how your patent should be positioned or developed further
+![Strategy Result](images/1.strategic_recommend.PNG)
+![Patents Summary Table](images/1.patent_summary_table.PNG)
 - Compares your patent with multiple competitors
 - Aggregates similarity and relative value
 - Generates a strategic recommendation based on the analysis
 
 ### 2. Technology Positioning – Determines which side has the technological and strategic upper hand.
+![Technology Positioning Result](images/2.technology_positioning.PNG)
 - Compares a single patent pair across:
   - Functional Purpose
   - Technical Uniqueness
@@ -19,6 +22,7 @@ The 3-Layer Patent Comparison System replaces manual and subjective analysis wit
 - Provides axis-level winners and overall judgment
 
 ### 3. Implementation Differentiation  – Highlights how your technical design differs in structure and approach.
+![Implementation Differentiation Result](images/3.implementation_diff.PNG)
 - Identifies 3–5 key implementation axes per patent pair
 - Summarizes each side's solution
 - Explains differences in structure, mechanism, or approach
@@ -35,6 +39,8 @@ Before using this system, it is assumed that your team has:
 1. Enter your company’s target patent number
 2. Enter one or more competitor patent numbers
 3. Run the analysis
+
+![Input GUI](images/input_gui.PNG)
 
 The system will:
 - Perform one-to-one comparisons
