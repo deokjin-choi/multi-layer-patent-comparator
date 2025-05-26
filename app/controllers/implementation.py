@@ -70,3 +70,56 @@ def analyze_implementation_diff(our_patent: dict, competitor_patents: list[dict]
         comparison_tables.append(df)
 
     return comparison_tables
+
+# 추상화된 관점에서 차이점 요약 -> 1:N 전체 시각화를 위해서
+def analyze_implementation_diff_by_axis(imp_diff_result: list[pd.DataFrame], our_id: str) -> dict:
+    llm = get_llm_client()
+    prompt_template = load_prompt("implementation", "axis_standard_v4")  # 프롬프트 헤더
+
+    # 누적 입력용 리스트
+    merged_input = []
+
+    for df in imp_diff_result:
+        comp_id = df.attrs.get("competitor_id", "unknown")
+
+        axes = []
+        for _, row in df.iterrows():
+            axis_name = row["Comparison Axis"]
+            ours_desc = row.get(f"Our ({our_id})", "not explicitly described")
+            comp_desc = row.get(f"Competitor ({comp_id})", "not explicitly described")
+            axes.append({
+                "axis": axis_name,
+                "ours": ours_desc,
+                "competitor": comp_desc
+            })
+
+        merged_input.append({
+            "our_patent_id": our_id,
+            "competitor_patent_id": comp_id,
+            "axes": axes
+        })
+
+    # 전체 입력을 단일 JSON에 넣기
+    input_json = json.dumps({
+        "input_list": merged_input  # ← axis_standard_v4 프롬프트에서 input_list 기준
+    }, ensure_ascii=False, indent=2)
+
+    # 전체 프롬프트 구성 및 출력
+    full_prompt = prompt_template + "\n\nInput Data:\n" + input_json
+    print("[DEBUG] Full Prompt:\n", full_prompt)
+
+    # LLM 호출 한 번만 수행
+    llm_response = llm.invoke(full_prompt)
+
+    try:
+        parsed = extract_json_from_llm_output(llm_response)
+        return {
+            "axis_summary": parsed.get("implementation_summary", [])
+        }
+    except Exception as e:
+        print(f"[ERROR] JSON parsing failed: {e}")
+        return {
+            "axis_summary": [],
+            "error": str(e)
+        }
+

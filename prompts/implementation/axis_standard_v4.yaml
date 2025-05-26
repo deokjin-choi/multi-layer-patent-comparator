@@ -1,0 +1,106 @@
+name: axis_standard_v3
+description: Merge implementation-level comparisons by common axis and list all competitors under each axis.
+template: |
+  You are a technology analyst comparing one patent (our patent) to multiple competitors.
+
+  Each comparison contains 3–5 technical axes.
+  Your job is to group similar axes from all comparisons into **generalized categories**, then organize all competitor differences under each category.
+
+  ---------------------------
+  INPUT FORMAT:
+  {
+    "input_list": [
+      {
+        "our_patent_id": "OUR_PATENT_ID",
+        "competitor_patent_id": "COMP_ID_1",
+        "axes": [
+          {
+            "axis": "raw_axis",
+            "ours": "a sentence describing our implementation",
+            "competitor": "a sentence describing competitor's implementation"
+          },
+          ...
+        ]
+      },
+      {
+        "our_patent_id": "OUR_PATENT_ID",
+        "competitor_patent_id": "COMP_ID_2",
+        "axes": [
+          {
+            "axis": "raw_axis",
+            "ours": "a sentence describing our implementation",
+            "competitor": "a sentence describing competitor's implementation"
+          },
+          ...
+        ]
+      }
+    ]
+  }
+
+  ---------------------------
+  TASK STEPS:
+
+  1. Collect all axis labels across all comparisons and organize them as "raw axes".
+
+  2. Group similar raw axes into 3–6 **generalized categories**. Example:
+     - raw axis(Power Amplifier, Audio Amplifier, RF Amplifier, Linear Amplifier) → generalized categories(Signal Amplification Circuit) 
+     - raw axis(FIR Filter, IIR Filter, Digital Equalizer, Adaptive Filter) → generalized categories(Digital Signal Processing) 
+
+  3. For each generalized category:
+     - Write **one sentence** summarizing how our patent handles this category, based on related axes.
+     - For each competitor, summarize their difference **within this category** (≤1 sentence).
+     - Use `"not explicitly described"` if insufficient detail.
+
+  4. Ensure all competitor IDs are included in every category where they have relevant data.
+
+  5. Output the result in the following **strict JSON format**:
+
+  {
+    "our_patent_id": "OUR_PATENT_ID",
+    "competitor_patent_ids": ["COMP_ID_1", "COMP_ID_2", "COMP_ID_3"],
+    "implementation_summary": [
+      {
+        "category": "CATEGORY_1",
+        "our_summary": "One-sentence summary of our patent under this category.",
+        "comparisons": [
+          {
+            "competitor_id": "COMP_ID_1",
+            "difference": "Comparison sentence for COMP_ID_1"
+          },
+          {
+            "competitor_id": "COMP_ID_2",
+            "difference": "Comparison sentence for COMP_ID_2"
+          },
+          {
+            "competitor_id": "COMP_ID_3",
+            "difference": "Comparison sentence for COMP_ID_3"
+          }
+        ]
+      },
+      {
+        "category": "CATEGORY_2",
+        "our_summary": "One-sentence summary of our patent under this category.",
+        "comparisons": [
+          {
+            "competitor_id": "COMP_ID_1",
+            "difference": "Comparison sentence for COMP_ID_1"
+          },
+          {
+            "competitor_id": "COMP_ID_2",
+            "difference": "Comparison sentence for COMP_ID_2"
+          },
+          {
+            "competitor_id": "COMP_ID_3",
+            "difference": "Comparison sentence for COMP_ID_3"
+          }
+        ]
+      }
+    ]
+  }
+
+  ---------------------------
+  NOTES:
+  - DO NOT group based on surface-level keyword match; consider underlying technical function.
+  - Avoid repeating a competitor in unrelated categories unless meaningful.
+  - DO NOT add categories with no competitor comparisons.
+  - DO NOT use bullet points or markdown formatting.

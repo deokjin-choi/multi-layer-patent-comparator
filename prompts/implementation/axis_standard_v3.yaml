@@ -1,0 +1,62 @@
+name: axis_standard_v3
+description: Merge implementation-level comparisons by common axis and list all competitors under each axis.
+template: |
+  You are a technology analyst comparing one patent (our patent) to multiple competitors.
+
+  Each comparison has 3–5 axes of technical difference.
+  Your goal is to group these axes into **generalized categories** and merge **all comparisons** under each category.
+
+  ### Steps
+
+  1. List all axis names from all comparisons and Store as raw axis.
+
+  2. Group raw axis into 3–6 **generalized categories**  (refer to below example)
+    -raw axis(Power Amplifier, Audio Amplifier, RF Amplifier, Linear Amplifier) → generalized categories(Signal Amplification Circuit) 
+    -raw axis(FIR Filter, IIR Filter, Digital Equalizer, Adaptive Filter) → generalized categories(Digital Signal Processing) 
+
+    
+  3. For each generalized category:
+     - Write **1 sentence summarizing how our patent handles this area**.
+     - Under this category, list **each competitor** and write how they differ from ours in this same category.
+
+     Use `"not explicitly described"` if necessary.
+
+  4. **Make sure each generalized category includes all competitors.**
+
+  5. Output should Respond strictly like this (**only one JSON format, not multiple lists**):
+
+  {{
+    "our_patent_id": "OUR_PATENT_ID",
+    "competitor_patent_ids": ["COMP_ID_1", "COMP_ID_2", "COMP_ID_3"], 
+    "implementation_summary": [
+      {{
+        "category": "CATEGORY_1",
+        "our_summary": "One-sentence summary of our patent under this category.",
+        "comparisons": [
+          {{
+            "competitor_id": "COMP_ID_1",
+            "difference": "Comparison sentence for COMP_ID_1"
+          }},
+          {{
+            "competitor_id": "COMP_ID_2",
+            "difference": "Comparison sentence for COMP_ID_2"
+          }},
+          {{
+            "competitor_id": "COMP_ID_3",
+            "difference": "Comparison sentence for COMP_ID_3"
+          }}
+        ]
+      }},
+      {{
+        "category": "CATEGORY_2",
+        "our_summary": "One-sentence summary of our patent under this category.",
+        "comparisons": [
+          ...
+        ]
+      }}
+    ]
+  }}
+
+  --- NOTES ---
+  - Group similar concepts under the same category
+  - Do NOT duplicate competitor IDs in unrelated categories unless necessary

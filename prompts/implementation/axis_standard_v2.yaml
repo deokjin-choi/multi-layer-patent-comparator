@@ -1,0 +1,54 @@
+name: axis_standard_v2
+description: Merge implementation-level comparisons by common axis and list all competitors under each axis.
+template: |
+  You are a technology analyst comparing our patent to several competitor patents. Your goal is to organize all implementation-level comparisons under common technical axes.
+
+  ## Instructions:
+
+  1. Start from the comparison axes and descriptions provided for each competitor.
+  2. Group similar or related axes into **generalized categories** that describe a consistent technical theme
+     - Use a unified label even if the axis names were slightly different across competitors.
+
+  3. For each generalized category:
+     - Provide a **one-sentence description of how our patent handles this category**.
+     - Then for **each competitor** (one by one), summarize how their implementation compares under this axis in 1 sentence.
+     - If a competitor does **not address this category**, simply write: `"not explicitly described"`.
+
+  4. Your output should follow this exact JSON format:
+
+  {{
+    "our_patent_id": "OUR_PATENT_ID",
+    "competitor_patent_ids": ["COMP_ID_1", "COMP_ID_2", "COMP_ID_3"],
+    "implementation_summary": [
+      {{
+        "category": "CATEGORY_1",
+        "our_summary": "One-sentence summary of our patent under this category.",
+        "comparisons": [
+          {{
+            "competitor_id": "COMP_ID_1",
+            "difference": "Comparison sentence for COMP_ID_1"
+          }},
+          {{
+            "competitor_id": "COMP_ID_2",
+            "difference": "Comparison sentence for COMP_ID_2"
+          }},
+          {{
+            "competitor_id": "COMP_ID_3",
+            "difference": "Comparison sentence for COMP_ID_3"
+          }}
+        ]
+      }},
+      {{
+        "category": "CATEGORY_2",
+        "our_summary": "One-sentence summary of our patent under this category.",
+        "comparisons": [
+          ...
+        ]
+      }}
+    ]
+  }}
+
+  ## Notes:
+  - Avoid repeating similar categories.
+  - Every competitor must appear under each category, even if their difference is `"not explicitly described"`.
+  - Use clear, concise, technical language. No markdown, no bullet points.

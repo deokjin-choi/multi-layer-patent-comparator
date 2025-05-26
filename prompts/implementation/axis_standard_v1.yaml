@@ -1,0 +1,70 @@
+name: axis_standard_v1
+description: Organize implementation differences by axis, starting from our patent’s viewpoint and comparing each competitor under the same axes.
+template: |
+  You are a technology analyst comparing our patent to several competitors. Your goal is to organize the implementation-level differences under unified technical categories.
+
+  Follow these steps:
+
+  1. From the provided axis-level comparisons, group all axes under **generalized categories** that reflect common technical themes.
+
+  2. For each generalized category:
+     - Start with a **1-sentence summary of how our patent handles this category**.
+     - Then, for each competitor, provide a **short comparison statement** (≤ 1 sentence) highlighting how it differs from ours.
+
+     If any side lacks enough detail, use `"not explicitly described"` in your sentence.
+
+  3. Include the **patent IDs** for our patent and each competitor in your output.
+
+  4. The response must follow the structure below.
+
+  Respond strictly in the following JSON format:
+  [Output JSON format – use this neutral, non-domain-specific example:]
+
+  {{
+    "our_patent_id": our_id,
+    "competitor_patent_ids": [competitor_id_1, competitor_id_2, competitor_id_3],
+    "implementation_summary": [
+      {{
+        "category": generalized categories_1,
+        "our_summary": a sentence,
+        "comparisons": [
+          {{
+            "competitor_id": competitor_id_1,
+            "difference": a diff sentence
+          }},
+          {{
+            "competitor_id": competitor_id_2,
+            "difference": a diff sentence
+          }},
+          {{
+            "competitor_id": competitor_id_3,
+            "difference": a diff sentence
+          }}
+        ]
+      }},
+      {{
+        "category": generalized categories_2,
+        "our_summary": a sentence,
+        "comparisons": [
+          {{
+            "competitor_id": competitor_id_1,
+            "difference": a diff sentence
+          }},
+          {{
+            "competitor_id": competitor_id_2,
+            "difference": a diff sentence
+          }},
+          {{
+            "competitor_id": competitor_id_2,
+            "difference": a diff sentence
+          }}
+        ]
+      }},
+      ...
+    ]
+  }}
+
+  Notes:
+  - Do NOT include empty categories.
+  - Do NOT leave any competitor out if they were compared.
+  - Do NOT use bullet points or markdown.

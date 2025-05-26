@@ -11,7 +11,7 @@ from app.utils.caching import (
 
 from app.controllers.summarize import summarize_patent
 from app.controllers.positioning import analyze_positioning
-from app.controllers.implementation import analyze_implementation_diff
+from app.controllers.implementation import analyze_implementation_diff, analyze_implementation_diff_by_axis
 
 # 미래 확장: positioning, implementation, strategy
 
@@ -51,11 +51,14 @@ def run_analysis(our_patent_id: str, competitor_patent_ids: list[str]) -> dict:
                                      [competitor_patent["summary"] for competitor_patent in competitor_patents])
     print("Positioning Analysis Result:", pos_result)
 
-    # ✅ 구현 차별성 분석 : summary만 전달
+    # ✅ 구현 차별성 분석 : summary만 전달(1:1)
     imp_diff_result = analyze_implementation_diff(our_patent["summary"],
                                                   [competitor_patent["summary"] for competitor_patent in competitor_patents])
     
+    # 구현 차별성 분석 : 1:N 요약
+    imp_diff_by_axis = analyze_implementation_diff_by_axis(imp_diff_result, our_patent_id)
 
-    print("Implementation Difference Analysis Result:", imp_diff_result)
 
-    return pos_result, imp_diff_result
+    print("Implementation Difference Analysis Result:", imp_diff_by_axis)
+
+    return pos_result, imp_diff_result, imp_diff_by_axis

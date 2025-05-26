@@ -2,13 +2,17 @@ import streamlit as st
 import sys
 import os
 import pandas as pd
+import numpy as np
 import pickle
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 # 상위 디렉토리 추가
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from frontend.components import input_form, plot_strategy
+from frontend.components import input_form, plot_strategy, plot_position, plot_implementation
 from app.controllers.engine import run_analysis
 from app.controllers.strategy import analyze_strategic_direction
+
 
 # 페이지 설정
 st.set_page_config(page_title="3-Layer Patent Comparison System", layout="wide")
@@ -101,7 +105,7 @@ if user_input["submitted"]:
     elif not user_input["competitor_patents"]:
         st.warning("Please enter at least one competitor patent number.")
     else:
-        pos_result, imp_diff_result = run_analysis(
+        pos_result, imp_diff_result, imp_diff_by_axis = run_analysis(
             our_patent_id=user_input["our_patent"],
             competitor_patent_ids=user_input["competitor_patents"]
         )
@@ -111,6 +115,7 @@ if user_input["submitted"]:
             pickle.dump({
                 "pos_result": pos_result,
                 "imp_diff_result": imp_diff_result,
+                "imp_diff_by_axis": imp_diff_by_axis,
                 "strategy_output": strategy_output
             }, f)
 
@@ -124,17 +129,18 @@ elif os.path.exists(result_path):
         cached_result = pickle.load(f)
         pos_result = cached_result["pos_result"]
         imp_diff_result = cached_result["imp_diff_result"]
+        imp_diff_by_axis = cached_result["imp_diff_by_axis"]
         strategy_output = cached_result["strategy_output"]
     st.info("Previous analysis loaded. See below for the results.")
 else:
     st.info("No analysis result available yet.")
-    pos_result = imp_diff_result = strategy_output = None
+    pos_result = imp_diff_result = imp_diff_by_axis = strategy_output = None
 
 # -------------------------------
 # Step 4: Display Results
 # -------------------------------
 
-if pos_result and imp_diff_result and strategy_output:
+if pos_result and imp_diff_result and imp_diff_by_axis and strategy_output:
     # Strategic Direction
     st.subheader("(1) Strategic Direction Result")
     
@@ -149,8 +155,7 @@ if pos_result and imp_diff_result and strategy_output:
         # 🎯 왼쪽: 레이더 차트
         with col1:
             st.markdown("##### Strategic Positioning Overview")
-            from frontend.components.plot_strategy import plot_strategy_radar
-            plot_strategy_radar(strategy_output["strategy_scores"])
+            plot_strategy.plot_strategy_radar(strategy_output["strategy_scores"])
 
         # 🧠 오른쪽: 핵심 점수 + 이유 요약 테이블
     with col2:
@@ -203,24 +208,38 @@ if pos_result and imp_diff_result and strategy_output:
 
     st.markdown("#### Patent Summary Table")
     df_strategy = pd.DataFrame(strategy_output["strategy_table"])
-    st.table(df_strategy[["patent_id", "tech_summary", "tech_similarity", "technical_value", "strategic_direction"]])
+    st.table(df_strategy[["patent_id", "tech_summary", "tech_similarity", "technical_value", "strategic_direction"]].reset_index(drop=True))
 
     # Technology Positioning
     st.subheader("(2) Technology Positioning Result")
-    
+    plot_position.render_positioning_summary_table(pos_result)
+
+
+    # 실제 1:1 비교 결과 테이블
     for df in pos_result:
         st.markdown(f"#### Our Patent vs Competitor ({df.attrs.get('competitor_id', 'Unknown')})")
-        st.table(df)
+        st.table(df.reset_index(drop=True))
         st.markdown(f"**Overall Winner:** `{df.attrs.get('overall_winner', 'N/A')}`")
         st.markdown(f"**Reason:** {df.attrs.get('overall_judgement', 'N/A')}")
         st.markdown("---")
 
     # Implementation Differentiation
     st.subheader("(3) Implementation Differentiation Result")
+
+    # 당사 특허 id 설정(캐시에 있을 떄도)
+    our_id = (
+    user_input["our_patent"]
+    if user_input.get("our_patent") and user_input["submitted"]
+    else strategy_output["strategy_table"][0]["patent_id"]
+    if strategy_output and "strategy_table" in strategy_output
+    else "UNKNOWN"
+    )
+
+    plot_implementation.render_implementation_tree(axis_summary = imp_diff_by_axis['axis_summary'], our_id=our_id)
     
     for df in imp_diff_result:
         st.markdown(f"#### Our Patent vs Competitor ({df.attrs.get('competitor_id', 'Unknown')})")
-        st.table(df)
+        st.table(df.reset_index(drop=True))
         st.markdown(f"**Summary of Technical Difference:** {df.attrs.get('overall_diff_summary', 'N/A')}")
         st.markdown("---")
 
