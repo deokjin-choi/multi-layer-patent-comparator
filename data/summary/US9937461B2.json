@@ -1,0 +1,8 @@
+{
+  "problem": "Removing greenhouse gases, particularly carbon dioxide, from a mass of gas laden air to mitigate global warming and climate change",
+  "solution_function": "Directing CO2-laden air through an amine-based sorbent structure that captures CO2. Regenerating the sorbent structure using process heat, preferably steam, to separate and sequester CO2 from the sorbent structure.",
+  "solution_structure": "Sorbent structure composed of an amine carried by a substrate, which can be in particulate or monolithic form. The sorbent is adsorbed on the surfaces of the substrate.",
+  "solution_implementation": "Air is directed through the sorbent-coated substrate to capture CO2. Process heat is applied to separate CO2 from the sorbent and regenerate it for reuse.",
+  "effect": "Compensating for other greenhouse gases, reducing the risk of climate change and achieving energy objectives",
+  "id": "US9937461B2"
+}

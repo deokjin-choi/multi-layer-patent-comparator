@@ -1,0 +1,8 @@
+{
+  "problem": "The increase in greenhouse gases like carbon dioxide contributes to global warming and climate change.",
+  "solution_function": "Removal of carbon dioxide from a stream of gas, particularly the atmosphere, by directing the CO2-laden air through a sorbent structure that captures CO2, and regenerating the sorbent structure using process heat in the form of steam.",
+  "solution_structure": "Sorbent structure comprising an amine carried by a substrate, which can be solid particles or monolithic. The sorbent is adsorbed on the surfaces of the substrate.",
+  "solution_implementation": "Directing CO2-laden air through the sorbent structure, heating the sorbent structure with steam to release captured CO2 and regenerate it.",
+  "effect": "Compensating for other greenhouse gases like methane that can change their concentrations and cause climate change",
+  "id": "US10413866B2"
+}

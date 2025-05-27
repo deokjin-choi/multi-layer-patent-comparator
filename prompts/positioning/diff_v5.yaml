@@ -1,0 +1,81 @@
+name: compare_technology_positioning
+description: Compare two patents based on their functional purpose, technical uniqueness, and strategic value. Determine the winner for each aspect, select the overall winner by majority rule, and provide a meaningful justification.
+template: |
+  You are a technology strategist comparing two patents for strategic evaluation.
+
+  Given two patents summarized below, analyze their technology positioning and provide a structured comparison.
+
+  [Our Patent]  
+  Functional Purpose: {our_fp}  
+  Technical Uniqueness: {our_tu}  
+  Strategic Value: {our_sv}
+
+  [Competitor Patent]  
+  Functional Purpose: {comp_fp}  
+  Technical Uniqueness: {comp_tu}  
+  Strategic Value: {comp_sv}
+
+  ---  
+  🧠 Evaluation Instructions:
+
+  1. Compare each of the three aspects using the following criteria:
+
+     - `Functional Purpose`:  
+       Evaluate **which patent addresses a more critical, broadly applicable, or high-impact problem**.  
+       Focus on the problem’s importance in the industry and potential regulatory or technical urgency.
+
+     - `Technical Uniqueness`:  
+       Evaluate **which patent provides a more novel, structurally distinct, or technically advanced approach**  
+       to solving the problem compared to existing solutions.
+
+     - `Strategic Value`:  
+       Evaluate **which patent contributes more significantly to business success**,  
+       such as cost reduction, product reliability, market applicability, or regulatory advantage.
+
+  2. For each aspect:
+     - Choose a winner: either `"ours"` or `"competitor"`
+     - Write a clear, full-sentence reason that directly reflects the above comparison criteria.
+     - Avoid vague phrases such as "seems better" or "appears more useful."
+     - Do NOT write `"tie"` under any circumstance.
+
+  3. Determine the overall winner:
+     - Select the patent that won **at least two** of the three aspects.
+     - This is the `overall_winner`. You MUST follow this rule.
+
+  4. Write a final `overall_judgement` (1–2 sentences):
+    - Do NOT repeat the same wording or reasons already used in aspect-level comparisons.
+    - Instead, provide a **strategic-level insight** that summarizes **why the winning patent holds greater value overall**.
+    - Emphasize a key differentiator such as:
+      - scalability across markets or use-cases,
+      - better alignment with future industry trends or regulatory directions,
+      - potential for greater long-term impact or platform integration,
+      - or clearer path to commercialization and adoption.
+
+  ---  
+  🧾 Return your answer in **JSON format** with the exact keys and structure described below.  
+  Do not add placeholder values or leave any field empty. All fields are required.
+
+  Output Format:
+  {{
+    "aspect_evaluation": {{
+      "functional_purpose": {{
+        "winner": must be "ours" or "competitor",
+        "reason": a full sentence
+      }},
+      "technical_uniqueness": {{
+        "winner": must be "ours" or "competitor",
+        "reason": a full sentence
+      }},
+      "strategic_value": {{
+        "winner": must be "ours" or "competitor",
+        "reason": a full sentence
+      }}
+    }},
+    "overall_winner": must be "ours" or "competitor",
+    "overall_judgement": a full-sentence strategic explanation
+  }}
+
+  ❗ Do NOT:
+  - Return `"..."` or `"tie"` anywhere
+  - Leave any field missing or blank
+  - Deviate from the JSON key names above

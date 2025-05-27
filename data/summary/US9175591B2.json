@@ -1,0 +1,8 @@
+{
+  "problem": "Reduction of carbon dioxide (CO2) emissions from the exhaust gas stream of vehicles powered by internal combustion engines (ICEs) and other heat engines.",
+  "solution_function": "Temporary on-board storage of CO2 to reduce its emission, leveraging waste heat recovery from the hot source for the regeneration and reuse of the CO2 capture agent.",
+  "solution_structure": "System consists of an ICE, a CO2 capture agent (e.g., amines or amine functionalized liquids), storage tank for temporary CO2 storage, and heat recovery mechanism to utilize waste heat from the ICE.",
+  "solution_implementation": "The system absorbs CO2 in the exhaust gas stream using the capture agent at temperatures up to 80°C. The captured CO2 is stored temporarily, and the heat recovery mechanism uses the waste heat from the ICE to regenerate and reuse the capture agent.",
+  "effect": "Reduction of CO2 emissions from mobile sources, addressing space and weight limitations, dynamic nature of operations, and promoting the viability of crude oil market in the transportation sector",
+  "id": "US9175591B2"
+}

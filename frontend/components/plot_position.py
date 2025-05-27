@@ -41,24 +41,27 @@ def summarize_positioning_advantage(pos_result):
     tu_dominant = dominant(tu)
     sv_dominant = dominant(sv)
 
-    # 문장 생성
+    # Functional Purpose (핵심 문제성 + 산업적 영향력 + 규제 시급성)
     fp_text = {
-        "ours": f"Our patent leads in functional purpose ({fp['ours']} out of {total}), showing strong alignment with key technological goals.",
-        "competitor": f"Competitor patents dominate in functional purpose ({fp['competitor']} out of {total}), indicating we may need to reassess our core objective.",
-        "tie": "Functional purpose results were balanced, with no clear lead, implying shared technology domains."
+        "ours": f"Our patent leads in functional purpose ({fp['ours']} out of {total}), indicating stronger focus on solving critical industry problems with broad applicability and regulatory urgency.",
+        "competitor": f"Competitor patents dominate in functional purpose ({fp['competitor']} out of {total}), suggesting their alignment with higher-impact challenges or more urgent regulatory demands.",
+        "tie": "Functional purpose results were balanced, showing both sides address similarly important and broadly relevant problems."
     }[fp_dominant]
 
+    # Technical Uniqueness (구조적 참신성 + 기술적 깊이 + 구현 복잡도)
     tu_text = {
-        "ours": f"We showed stronger technical uniqueness ({tu['ours']} out of {total}), highlighting distinctive implementation techniques worth defending.",
-        "competitor": f"Competitors showed more technical uniqueness ({tu['competitor']} out of {total}), suggesting we explore more differentiated technical approaches.",
-        "tie": "Technical uniqueness was evenly split, reflecting similar levels of novelty across patents."
+        "ours": f"We demonstrated higher technical uniqueness ({tu['ours']} out of {total}), based on structurally innovative mechanisms and technically deep implementation approaches.",
+        "competitor": f"Competitors showed greater technical uniqueness ({tu['competitor']} out of {total}), reflecting novel structural ideas and more complex implementation strategies.",
+        "tie": "Technical uniqueness was evenly split, indicating comparable innovation in structure and execution between both sides."
     }[tu_dominant]
 
+    # Strategic Value (비용 효율성 + 규제 정합성 + 시장성)
     sv_text = {
-        "ours": f"Our patent delivered higher strategic value ({sv['ours']} out of {total}), reinforcing its competitive impact across domains.",
-        "competitor": f"Competitor patents showed greater strategic value ({sv['competitor']} out of {total}), indicating stronger business relevance or application impact.",
-        "tie": "Strategic value was evenly matched, showing similar potential across compared patents."
+        "ours": f"Our patent delivered stronger strategic value ({sv['ours']} out of {total}), with advantages in cost efficiency, regulatory alignment, and commercial potential.",
+        "competitor": f"Competitor patents showed higher strategic value ({sv['competitor']} out of {total}), suggesting stronger market potential and alignment with business and policy needs.",
+        "tie": "Strategic value results were evenly matched, indicating similar levels of cost, compliance, and market potential."
     }[sv_dominant]
+
 
     return f"{fp_text} {tu_text} {sv_text}"
 

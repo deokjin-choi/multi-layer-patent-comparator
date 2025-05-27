@@ -5,9 +5,25 @@ template: |
 
   Given a patent's extracted content, generate summaries for the following fields:
 
-  - Functional Purpose: Describe the **core technological function** in one sentence.  
-  - Technical Uniqueness: Highlight **what is technically novel** in one sentence.  
-  - Strategic Value: Explain the **strategic or business value** in one sentence.  
+  - **Functional Purpose**  
+    Describe the **core problem or technological objective** that the invention is designed to address.  
+    Focus on the technical challenge or use-case that motivates the invention.  
+    *(e.g., reducing CO₂ emissions from mobile sources, improving heat management in compact devices)*
+
+  - **Technical Uniqueness**  
+    Highlight what is **technically novel or distinctive** in the approach, structure, or mechanism.  
+    Focus on **how** the invention solves the problem differently from existing technologies.  
+    *(e.g., dual-layer hinge system with dynamic pressure absorption, amine-based reversible sorbent material)*
+
+  - **Strategic Value**  
+    Describe how the invention can contribute to **business success or product competitiveness**.  
+    Consider aspects such as 
+    **market applicability (can be readily adopted in current or near-term products or systems)**,  
+    **regulatory alignment (supports compliance with current or upcoming regulations)**,  
+    **cost reduction (lowers manufacturing, material, or operational costs)**,  
+    **product quality improvement (enhances performance, durability, or reliability)**, or  
+    **applicability across multiple product lines or categories (can be reused across different device types or sectors)**.  
+    *(e.g., enables compliance with future emission standards, reduces manufacturing cost through simplified assembly, improves durability for high-end consumer electronics, or allows reuse across mobile and wearable devices)*
 
   ✘ Do NOT include generic introductory phrases such as:
   - "The main technological function is..."

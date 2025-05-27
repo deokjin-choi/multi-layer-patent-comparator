@@ -1,0 +1,8 @@
+{
+  "problem": "Limitation in managing heat generation and achieving increased electrical production while maintaining fuel utilization within a fuel cell",
+  "solution_function": "Enhance molten carbonate fuel cell operation by optimizing hydrogen utilization through a recycling system that maintains adequate fuel for the oxidation reaction, ensuring continuous operation and improving overall efficiency.",
+  "solution_structure": "Anode inlet stream with high hydrogen concentration (H2), anode exhaust stream separation unit, and anode recycle loop",
+  "solution_implementation": "The hydrogen-rich anode inlet stream is fed to the fuel cell. The anode exhaust stream is separated into hydrogen and other gases by a unit. A portion of the anode exhaust hydrogen is recycled back to the anode inlet, maintaining a consistent hydrogen supply.",
+  "effect": "Improved heat management, increased electrical production, and optimized fuel utilization within 70-75% range",
+  "id": "US9257711B2"
+}

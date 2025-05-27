@@ -72,7 +72,7 @@ def analyze_positioning(our_patent: dict, competitor_patents: list[dict]) -> lis
         comp_summary = {k: v for k, v in comp.items() if k != "id"}
         comp_pos = generate_positioning_summary(comp_id, comp_summary, prompt_version="summarize_v3")
 
-        result = compare_positioning(our_id, our_pos, comp_id, comp_pos, prompt_version="diff_v4")
+        result = compare_positioning(our_id, our_pos, comp_id, comp_pos, prompt_version="diff_v5")
         print(f"Comparison result for {our_id} vs {comp_id}: {result}")
 
         # 테이블 형태로 변환
