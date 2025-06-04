@@ -49,8 +49,8 @@ template: |
   Solution Implementation: {comp_implementation}
   Effect: {comp_effect}
 
-  Respond strictly in the following JSON format:
-  [Output JSON format – use this neutral, non-domain-specific example:]
+  You MUST output only valid JSON. Do not include any explanation, markdown, or formatting. Do not wrap your output in ``` or any other markers.
+  Respond strictly in JSON format:
 
   {{
     "comparison_axes": [

@@ -43,7 +43,7 @@ def summarize_positioning_advantage(pos_result):
 
     # Functional Purpose (핵심 문제성 + 산업적 영향력 + 규제 시급성)
     fp_text = {
-        "ours": f"Our patent leads in functional purpose ({fp['ours']} out of {total}), indicating stronger focus on solving critical industry problems with broad applicability and regulatory urgency.",
+        "ours": f"Our patent leads in functional purpose ({fp['ours']} out of {total}), indicating stronger focus on solving critical industry problems with broad applicability.",
         "competitor": f"Competitor patents dominate in functional purpose ({fp['competitor']} out of {total}), suggesting their alignment with higher-impact challenges or more urgent regulatory demands.",
         "tie": "Functional purpose results were balanced, showing both sides address similarly important and broadly relevant problems."
     }[fp_dominant]
@@ -57,8 +57,8 @@ def summarize_positioning_advantage(pos_result):
 
     # Strategic Value (비용 효율성 + 규제 정합성 + 시장성)
     sv_text = {
-        "ours": f"Our patent delivered stronger strategic value ({sv['ours']} out of {total}), with advantages in cost efficiency, regulatory alignment, and commercial potential.",
-        "competitor": f"Competitor patents showed higher strategic value ({sv['competitor']} out of {total}), suggesting stronger market potential and alignment with business and policy needs.",
+        "ours": f"Our patent delivered stronger strategic value ({sv['ours']} out of {total}), with advantages in cost efficiency, quality improvement, and commercial potential.",
+        "competitor": f"Competitor patents showed higher strategic value ({sv['competitor']} out of {total}), suggesting stronger market potential and alignment with business needs.",
         "tie": "Strategic value results were evenly matched, indicating similar levels of cost, compliance, and market potential."
     }[sv_dominant]
 

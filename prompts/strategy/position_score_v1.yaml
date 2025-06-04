@@ -53,7 +53,8 @@ template: |
   ---
   🎯 OUTPUT FORMAT:
 
-  Return your output as a **valid JSON list**.  
+  You MUST output only valid JSON. Do not include any explanation, markdown, or formatting. Do not wrap your output in ``` or any other markers.
+  Respond strictly in JSON format: 
   Do not include comments, ellipses (`...`), or trailing commas.  
   Do not include curly brace escapes like `{{` or `}}`.
 

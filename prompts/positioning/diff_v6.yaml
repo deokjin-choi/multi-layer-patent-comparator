@@ -5,18 +5,22 @@ template: |
 
   Given two patents summarized below, analyze their technology positioning and provide a structured comparison.
 
-  [Our Patent]  
-  Functional Purpose: {our_fp}  
-  Technical Uniqueness: {our_tu}  
-  Strategic Value: {our_sv}
+  [Patent A]  
+  Functional Purpose: {patent_a_fp}  
+  Technical Uniqueness: {patent_a_tu}  
+  Strategic Value: {patent_a_sv}
 
-  [Competitor Patent]  
-  Functional Purpose: {comp_fp}  
-  Technical Uniqueness: {comp_tu}  
-  Strategic Value: {comp_sv}
+  [Patent B]  
+  Functional Purpose: {patent_b_fp}  
+  Technical Uniqueness: {patent_b_tu}  
+  Strategic Value: {patent_b_sv}
 
   ---  
   🧠 Evaluation Instructions:
+  You are comparing two patents with neutral identifiers.  
+  You should **not assume either is superior based on its label**.  
+  Base **all judgments purely on content**.
+  The **order of presentation (top/bottom) does not imply any preference or origin**.
 
   1. Compare each of the three aspects using the following criteria:
 
@@ -33,7 +37,7 @@ template: |
        such as cost reduction, product reliability, market applicability, or regulatory advantage.
 
   2. For each aspect:
-     - Choose a winner: either `"ours"` or `"competitor"`
+     - Choose a winner: either `"A"` or `"B"`
      - Write a clear, full-sentence reason that directly reflects the above comparison criteria.
      - Avoid vague phrases such as "seems better" or "appears more useful."
      - Do NOT write `"tie"` under any circumstance.
@@ -43,13 +47,13 @@ template: |
      - This is the `overall_winner`. You MUST follow this rule.
 
   4. Write a final `overall_judgement` (1–2 sentences):
-    - Do NOT repeat the same wording or reasons already used in aspect-level comparisons.
-    - Instead, provide a **strategic-level insight** that summarizes **why the winning patent holds greater value overall**.
-    - Emphasize a key differentiator such as:
-      - scalability across markets or use-cases,
-      - better alignment with future industry trends or regulatory directions,
-      - potential for greater long-term impact or platform integration,
-      - or clearer path to commercialization and adoption.
+     - Do NOT repeat the same wording or reasons already used in aspect-level comparisons.
+     - Instead, provide a **strategic-level insight** that summarizes **why the winning patent holds greater value overall**.
+     - Emphasize a key differentiator such as:
+       - scalability across markets or use-cases,
+       - better alignment with future industry trends or regulatory directions,
+       - potential for greater long-term impact or platform integration,
+       - or clearer path to commercialization and adoption.
 
   ---  
   🧾 Return your answer in **JSON format** with the exact keys and structure described below.  
@@ -59,19 +63,19 @@ template: |
   {{
     "aspect_evaluation": {{
       "functional_purpose": {{
-        "winner": must be "ours" or "competitor",
+        "winner": must be "A" or "B",
         "reason": a full sentence
       }},
       "technical_uniqueness": {{
-        "winner": must be "ours" or "competitor",
+        "winner": must be "B" or "A",
         "reason": a full sentence
       }},
       "strategic_value": {{
-        "winner": must be "ours" or "competitor",
+        "winner": must be "A" or "B",
         "reason": a full sentence
       }}
     }},
-    "overall_winner": must be "ours" or "competitor",
+    "overall_winner": must be "B" or "A",
     "overall_judgement": a full-sentence strategic explanation
   }}
 

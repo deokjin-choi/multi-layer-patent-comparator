@@ -57,6 +57,7 @@ template: |
   Effect:
   {effect}
 
+  You MUST output only valid JSON. Do not include any explanation, markdown, or formatting. Do not wrap your output in ``` or any other markers.
   Respond strictly in JSON format:
   {{
     "functional_purpose": "short direct sentence here",

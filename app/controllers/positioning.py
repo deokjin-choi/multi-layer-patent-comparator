@@ -36,26 +36,125 @@ def generate_positioning_summary(patent_id: str, summary: dict, prompt_version="
 def compare_positioning(our_id: str, our_pos: dict, comp_id: str, comp_pos: dict, prompt_version="diff_v1"):
     """당사 vs 경쟁사 1:1 비교"""
     try:
-        prompt_template = load_prompt("positioning", prompt_version)
-        prompt = prompt_template.format(
-            our_fp=our_pos["functional_purpose"],
-            our_tu=our_pos["technical_uniqueness"],
-            our_sv=our_pos["strategic_value"],
-            comp_fp=comp_pos["functional_purpose"],
-            comp_tu=comp_pos["technical_uniqueness"],
-            comp_sv=comp_pos["strategic_value"]
-        )
+        # diff_v7: 양방향 평가 + confidence 기반 선택
+        if prompt_version == "diff_v7":
+            prompt_template = load_prompt("positioning", prompt_version)
 
-        llm = get_llm_client()
-        response = llm.invoke(prompt)
-        return extract_json_from_llm_output(response)
+            # A-first prompt (ours first)
+            prompt_a_first = prompt_template.format(
+                patent_id_a=our_id,
+                patent_a_fp=our_pos["functional_purpose"],
+                patent_a_tu=our_pos["technical_uniqueness"],
+                patent_a_sv=our_pos["strategic_value"],
+                patent_id_b=comp_id,
+                patent_b_fp=comp_pos["functional_purpose"],
+                patent_b_tu=comp_pos["technical_uniqueness"],
+                patent_b_sv=comp_pos["strategic_value"]
+            )
+
+            # B-first prompt (competitor first)
+            prompt_b_first = prompt_template.format(
+                patent_id_a=comp_id,
+                patent_a_fp=comp_pos["functional_purpose"],
+                patent_a_tu=comp_pos["technical_uniqueness"],
+                patent_a_sv=comp_pos["strategic_value"],
+                patent_id_b=our_id,
+                patent_b_fp=our_pos["functional_purpose"],
+                patent_b_tu=our_pos["technical_uniqueness"],
+                patent_b_sv=our_pos["strategic_value"]
+            )
+
+            llm = get_llm_client()
+            response_a = llm.invoke(prompt_a_first)
+            response_b = llm.invoke(prompt_b_first)
+
+            result_a = extract_json_from_llm_output(response_a)
+            result_b = extract_json_from_llm_output(response_b)
+
+            # confidence 비교
+            final_result = result_a if result_a.get("confidence", 0) >= result_b.get("confidence", 0) else result_b
+
+            # patent_id → ours / competitor 변환
+            def map_role(pid):
+                if pid == our_id:
+                    return "ours"
+                elif pid == comp_id:
+                    return "competitor"
+                elif pid == "tie":
+                    return "tie"
+                else:
+                    return pid  # 예외
+
+            remapped = {
+                "aspect_evaluation": {
+                    k: {
+                        "winner": map_role(v["winner"]),
+                        "reason": v["reason"]
+                    } for k, v in final_result["aspect_evaluation"].items()
+                },
+                "overall_winner": map_role(final_result["overall_winner"]),
+                "overall_judgement": final_result["overall_judgement"]
+            }
+
+            return remapped
+
+        # diff_v6: 기존 방식 (A = ours, B = competitor)
+        elif prompt_version == "diff_v6":
+            prompt_template = load_prompt("positioning", prompt_version)
+            prompt = prompt_template.format(
+                patent_a_fp=our_pos["functional_purpose"],
+                patent_a_tu=our_pos["technical_uniqueness"],
+                patent_a_sv=our_pos["strategic_value"],
+                patent_b_fp=comp_pos["functional_purpose"],
+                patent_b_tu=comp_pos["technical_uniqueness"],
+                patent_b_sv=comp_pos["strategic_value"]
+            )
+            llm = get_llm_client()
+            response = llm.invoke(prompt)
+            raw_result = extract_json_from_llm_output(response)
+
+            def remap_winner(value):
+                return "ours" if value == "A" else "competitor"
+
+            def remap_reason(text):
+                return text.replace("Patent A", "Our patent").replace("Patent B", "Competitor patent")
+
+            remapped = {
+                "aspect_evaluation": {
+                    k: {
+                        "winner": remap_winner(v["winner"]),
+                        "reason": remap_reason(v["reason"])
+                    } for k, v in raw_result["aspect_evaluation"].items()
+                },
+                "overall_winner": remap_winner(raw_result["overall_winner"]),
+                "overall_judgement": remap_reason(raw_result["overall_judgement"])
+            }
+            return remapped
+
+        # 그 외 버전은 기존 방식
+        else:
+            prompt_template = load_prompt("positioning", prompt_version)
+            prompt = prompt_template.format(
+                our_fp=our_pos["functional_purpose"],
+                our_tu=our_pos["technical_uniqueness"],
+                our_sv=our_pos["strategic_value"],
+                comp_fp=comp_pos["functional_purpose"],
+                comp_tu=comp_pos["technical_uniqueness"],
+                comp_sv=comp_pos["strategic_value"]
+            )
+            llm = get_llm_client()
+            response = llm.invoke(prompt)
+            return extract_json_from_llm_output(response)
+
     except Exception as e:
         logger.error(f"[{our_id} vs {comp_id}] Positioning comparison failed: {e}")
         return {
             "aspect_evaluation": {},
             "overall_winner": "competitor",
-            "overall_judgement": "Comparison failed; defaulting to competitor."
+            "overall_judgement": "Comparison failed; defaulting to competitor.",
+            "confidence": 0.0
         }
+
  
 
 def analyze_positioning(our_patent: dict, competitor_patents: list[dict]) -> list[pd.DataFrame]:
@@ -64,7 +163,7 @@ def analyze_positioning(our_patent: dict, competitor_patents: list[dict]) -> lis
     our_id = our_patent["id"]
     our_summary = {k: v for k, v in our_patent.items() if k != "id"}
     our_pos = generate_positioning_summary(our_id, our_summary, prompt_version="summarize_v3")
-
+    print(f"Positioning summary for {our_id}: {our_pos}")
     comparison_tables = []
 
     for comp in competitor_patents:
@@ -72,7 +171,7 @@ def analyze_positioning(our_patent: dict, competitor_patents: list[dict]) -> lis
         comp_summary = {k: v for k, v in comp.items() if k != "id"}
         comp_pos = generate_positioning_summary(comp_id, comp_summary, prompt_version="summarize_v3")
 
-        result = compare_positioning(our_id, our_pos, comp_id, comp_pos, prompt_version="diff_v5")
+        result = compare_positioning(our_id, our_pos, comp_id, comp_pos, prompt_version="diff_v7")
         print(f"Comparison result for {our_id} vs {comp_id}: {result}")
 
         # 테이블 형태로 변환

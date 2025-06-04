@@ -1,0 +1,57 @@
+name: generate_strategic_direction
+description: Generate a structured comparison of all patents (our and competitors) and recommend a strategic direction based on their technical positioning.
+template: |
+  You are a technology strategist evaluating a set of patents, including our own and several competitors. Each patent is described by its functional purpose, technical uniqueness, and strategic value.
+
+  ---
+  📥 INPUT  
+
+  - For each patent (our and competitors), the following are provided:
+    - Patent ID
+    - Functional Purpose (FP)
+    - Technical Uniqueness (TU)
+    - Strategic Value (SV)
+
+  - For each competitor patent (compared against our patent), provide:
+    - The evaluation result indicating which patent is superior ("ours" = our patent won, "competitor" = competitor patent won, or "tie" = no clear winner)
+    - The reason explaining this evaluation result
+
+  📤 OUTPUT  
+  You MUST always generate valid JSON output.
+  Do not include any explanation, markdown, or formatting. Do not wrap your output in ``` or any other markers.
+  Do not omit any patent entry. If information is insufficient, generate a reasonable one-sentence placeholder.
+
+  Output Example:
+  {{
+    "strategy_table": [
+      {{
+        "patent_id": "US1234567B2",
+        "tech_summary": "Summarized technical content here.",
+        "technical_value": "High",
+        "strategic_direction": "Strategic positioning sentence here."
+      }},
+      {{
+        "patent_id": "US9876543B2",
+        "tech_summary": "Summarized technical content here.",
+        "technical_value": "Medium",
+        "strategic_direction": "Strategic positioning sentence here."
+      }}
+      ...
+    ],
+    "our_overall_strategy": "Summarized overall strategy here."
+  }}
+
+  ---
+  ### Patent List:
+  Our Patent:
+  - ID: {our_id}
+    FP: {our_fp}
+    TU: {our_tu}
+    SV: {our_sv}
+    TechnicalValue: {our_value}
+
+  Competitor Patents: {competitors_section}
+
+  You MUST always return both:
+  - A full strategy_table list.
+  - A field called our_overall_strategy with your recommendation. This field is required. If missing, your response is invalid.

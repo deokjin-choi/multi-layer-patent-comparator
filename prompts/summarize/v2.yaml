@@ -20,6 +20,8 @@ template: |
   - **Effect**: What measurable benefit or practical impact results from this solution? (e.g., speedup, resource reduction, flexibility)
 
   ### Output Format (JSON only):
+  You MUST output only valid JSON. Do not include any explanation, markdown, or formatting. Do not wrap your output in ``` or any other markers.
+  Respond strictly in JSON format:
   {
     "problem": "...",
     "solution_function": "...",

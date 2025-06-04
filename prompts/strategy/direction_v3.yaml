@@ -12,52 +12,26 @@ template: |
     - Technical Uniqueness (TU)
     - Strategic Value (SV)
 
-  - For each **competitor patent**:
-    - Overall evaluation result against our patent ("ours" or "competitor")
-    - Reason for the evaluation
+  - For each competitor patent (compared against our patent), provide:
+    - The evaluation result indicating which patent is superior ("ours" = our patent won, "competitor" = competitor patent won, or "tie" = no clear winner)
+    - The reason explaining this evaluation result
 
-  ---
-  📊 TECHNICAL SIMILARITY RULE  
-  For each competitor patent, compare its FP, TU, and SV to those of our patent individually.
-
-  - For each of FP / TU / SV:
-    - Mark as "High" if the core purpose or mechanism is highly aligned or nearly identical to ours
-    - Mark as "Low" if the technological objective or method is fundamentally different or unrelated
-    - Mark as "Medium" if there is a moderate level of conceptual or functional similarity
-
-  Then:
-    - If 2 or more of FP / TU / SV are "High" → tech_similarity = "High"
-    - If 2 or more are "Low" → tech_similarity = "Low"
-    - Otherwise → tech_similarity = "Medium"
-
-  For our patent, tech_similarity is **left empty**.
-
-  ---
   📤 OUTPUT  
   1. Create a JSON list where each patent (our and competitors) includes:
     - `patent_id`
     - `tech_summary`: concise technical summary (1 sentence)
     - `tech_similarity`: "High", "Medium", "Low", or "" for our patent
-    - `technical_value`: "High" or "Low"
-      . **← This value is already given in the input. You must copy it as-is.**
-    - `strategic_direction`:  
-      Write a one-sentence **technical positioning strategy** for each patent.  
-      You MUST:
-        - Highlight what **technically or functionally distinguishes** this patent from others (based on FP or TU),
-        - Mention a **specific application area, product type, or regulatory context** where that difference creates an advantage,  
-      DO NOT:
-        - Use vague phrases like "may lie in industries such as...",
-        - Repeat the same structure across patents,
-        - Omit the differentiator—every sentence must explain *why* this patent is strategically distinct.
+    - `technical_value`: "High", "Medium", "Low"
+       . **← This value is already given in the input. You must copy it as-is.**
+    - `strategic_direction`: 1 sentence explanation of the patent’s strategic positioning, focusing on:
+       . Its key differentiators compared to other patents
+       . Potential application areas or markets where it provides a competitive advantage
 
-  2. Generate our **overall strategic direction recommendation** :  
-    In 2–3 sentences, compare our patent’s strengths and gaps to competitors.  
-    Then, **clearly recommend a next step**, such as:
-    - doubling down on an advantage (e.g., integration simplicity),
-    - addressing a competitor trend (e.g., shifting to stationary applications),
-    - or exploring new target markets based on technical fit.
-    DO NOT:
-      - Refer previous our strategic direction
+  2. At the end, generate our **overall strategic direction recommendation** in 2–3 sentences, clearly addressing:
+    - What is our current strength?
+    - What are the emerging strategic trends among competitors?
+    - What should we do next to strengthen our position?
+
   ---
   ### Patent List:
   Our Patent:
@@ -70,22 +44,21 @@ template: |
   Competitor Patents: {competitors_section}
 
   ---
-  Respond in the following JSON format:
+  You MUST output only valid JSON. Do not include any explanation, markdown, or formatting. Do not wrap your output in ``` or any other markers.
+  Respond strictly in JSON format:
 
   {{
     "strategy_table": [
       {{
         "patent_id": pantent_no,
         "tech_summary": a full sentence,
-        "tech_similarity": must be "High", "Medium", "Low", or "" for our patent,
-        "technical_value": must be "High" or "Low",
+        "technical_value": must be "High", "Medium", "Low",
         "strategic_direction": a full sentence
       }},
       {{
         "patent_id": pantent_no,
         "tech_summary": a full sentence,
-        "tech_similarity": must be "High", "Medium", "Low", or "" for our patent,
-        "technical_value": must be "High" or "Low",
+        "technical_value": must be "High", "Medium", "Low",
         "strategic_direction": a full sentence
       }},
       ...

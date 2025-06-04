@@ -16,7 +16,8 @@ class LocalAPILLMClient(BaseLLMClient):
         payload = {
             "model": self.model,
             "prompt": prompt,
-            "stream": False
+            "stream": False,
+            "temperature": 0.2
         }
 
         try:

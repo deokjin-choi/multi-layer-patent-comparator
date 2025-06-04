@@ -1,4 +1,4 @@
-name: axis_standard_v3
+name: axis_standard_v4
 description: Merge implementation-level comparisons by common axis and list all competitors under each axis.
 template: |
   You are a technology analyst comparing one patent (our patent) to multiple competitors.
@@ -53,7 +53,10 @@ template: |
 
   4. Ensure all competitor IDs are included in every category where they have relevant data.
 
-  5. Output the result in the following **strict JSON format**:
+  5. You MUST always generate at least 1 generalized category, even if raw axes are few.
+
+  6. You MUST output only valid JSON. Do not include any explanation, markdown, or formatting. Do not wrap your output in ``` or any other markers.
+  Respond strictly in JSON format:
 
   {
     "our_patent_id": "OUR_PATENT_ID",

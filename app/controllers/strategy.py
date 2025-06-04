@@ -16,6 +16,7 @@ def analyze_strategic_direction(pos_result: list[pd.DataFrame], our_patent_id: s
     competitors = []
     high_value_count = 0
     low_value_count = 0
+    medium_value_count = 0
 
     for df in pos_result:
         comp_id = df.attrs["competitor_id"]
@@ -27,11 +28,15 @@ def analyze_strategic_direction(pos_result: list[pd.DataFrame], our_patent_id: s
         tu = df[df["Aspect"] == "Technical Uniqueness"][comp_cols[0]].values[0]
         sv = df[df["Aspect"] == "Strategic Value"][comp_cols[0]].values[0]
 
-        tech_value = "High" if overall == "competitor" else "Low"
-        if tech_value == "High":
+        if overall == "competitor":
+            tech_value = "High"
             high_value_count += 1
-        elif tech_value == "Low":
+        elif overall == "ours":
+            tech_value = "Low"
             low_value_count += 1
+        elif overall == "tie":
+            tech_value = "Medium"
+            medium_value_count += 1
 
         competitors.append({
             "id": comp_id,
@@ -40,15 +45,20 @@ def analyze_strategic_direction(pos_result: list[pd.DataFrame], our_patent_id: s
             "sv": sv,
             "evaluation": overall,
             "reason": reason,
-            "similarity": None,# 나중에 다시 계산됨
+            "similarity": None,
             "value": tech_value
         })
 
     total = len(competitors)
+
+    high_ratio = high_value_count / total
+    low_ratio = low_value_count / total
+
+    # Determine our value based on high/low ratios
     our_value = "Medium"
-    if high_value_count / total >= 0.6:
+    if high_ratio >= 0.5:
         our_value = "Low"
-    elif low_value_count / total >= 0.6:
+    elif low_ratio >= 0.5:
         our_value = "High"
 
     # competitor YAML block generation
@@ -63,7 +73,7 @@ def analyze_strategic_direction(pos_result: list[pd.DataFrame], our_patent_id: s
 """
 
     # Load template
-    template = load_prompt("strategy", "direction_v2")
+    template = load_prompt("strategy", "direction_v4")
 
     # Fill in final prompt
     prompt = template.format(
