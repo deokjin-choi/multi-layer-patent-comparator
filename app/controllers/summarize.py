@@ -2,6 +2,7 @@ from app.utils.llm.llm_factory import get_llm_client
 from app.utils.prompts import load_prompt
 from app.utils.json_helper import extract_json_from_llm_output  # 위 함수 별도 분리 시
 
+
 def summarize_patent(text: str, patent_id: str, prompt_version: str = "v1") -> dict:
     llm = get_llm_client()
     

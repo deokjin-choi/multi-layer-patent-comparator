@@ -1,8 +1,16 @@
 from app.utils.prompts import load_prompt
 from app.utils.json_helper import extract_json_from_llm_output  # 위 함수 별도 분리 시
 from app.utils.llm.llm_factory import get_llm_client
+from app.utils.path_helper import RAW_DATA_DIR
+
 
 import pandas as pd
+
+import os
+import json
+
+# 1️⃣ 데이터 폴더 경로 지정 (예: data/raw)
+import os
 
 def analyze_strategic_direction(pos_result: list[pd.DataFrame], our_patent_id: str):
 
@@ -13,6 +21,13 @@ def analyze_strategic_direction(pos_result: list[pd.DataFrame], our_patent_id: s
     our_tu = first_df[first_df["Aspect"] == "Technical Uniqueness"][our_cols[0]].values[0]
     our_sv = first_df[first_df["Aspect"] == "Strategic Value"][our_cols[0]].values[0]
 
+    # our assignee 정보 추가
+    our_raw_file_path = os.path.join(RAW_DATA_DIR, our_patent_id+ ".json")
+
+    with open(our_raw_file_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+        our_assignee = data.get("assignee", None)
+
     competitors = []
     high_value_count = 0
     low_value_count = 0
@@ -22,6 +37,13 @@ def analyze_strategic_direction(pos_result: list[pd.DataFrame], our_patent_id: s
         comp_id = df.attrs["competitor_id"]
         overall = df.attrs["overall_winner"]
         reason = df.attrs["overall_judgement"]
+
+        # comp assignee 정보 추가
+        comp_raw_file_path = os.path.join(RAW_DATA_DIR, comp_id+ ".json")
+
+        with open(comp_raw_file_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            comp_assignee = data.get("assignee", None)
 
         comp_cols = [col for col in df.columns if f"({comp_id})" in col]
         fp = df[df["Aspect"] == "Functional Purpose"][comp_cols[0]].values[0]
@@ -40,6 +62,7 @@ def analyze_strategic_direction(pos_result: list[pd.DataFrame], our_patent_id: s
 
         competitors.append({
             "id": comp_id,
+            "assignee": comp_assignee,  # 경쟁사 특허의 assignee 정보 추가
             "fp": fp,
             "tu": tu,
             "sv": sv,
@@ -65,6 +88,7 @@ def analyze_strategic_direction(pos_result: list[pd.DataFrame], our_patent_id: s
     competitor_str = ""
     for c in competitors:
         competitor_str += f"""- ID: {c["id"]}
+  Assignee: {c["assignee"]}
   FP: {c["fp"]}
   TU: {c["tu"]}
   SV: {c["sv"]}
@@ -73,11 +97,12 @@ def analyze_strategic_direction(pos_result: list[pd.DataFrame], our_patent_id: s
 """
 
     # Load template
-    template = load_prompt("strategy", "direction_v4")
+    template = load_prompt("strategy", "direction_v3")
 
     # Fill in final prompt
     prompt = template.format(
         our_id=our_patent_id,
+        our_assignee=our_assignee,
         our_fp=our_fp,
         our_tu=our_tu,
         our_sv=our_sv,
@@ -91,10 +116,6 @@ def analyze_strategic_direction(pos_result: list[pd.DataFrame], our_patent_id: s
     result = llm.invoke(prompt)
     print(prompt)
     response = extract_json_from_llm_output(result)  # JSON 파싱
-
-   
-    # 👇 새로운 포지셔닝 점수 프롬프트 추가 실행
-    score_template = load_prompt("strategy", "position_score_v1")
 
     # 1. our patent 정보 구성
     strategy_table = response["strategy_table"]  # ← 기존 프롬프트에서 생성된 결과 그대로 활용
@@ -117,7 +138,8 @@ def analyze_strategic_direction(pos_result: list[pd.DataFrame], our_patent_id: s
     technical_value: {item["technical_value"]}
     """
 
-    # 3. 프롬프트 채워넣기
+    # 3. 새로운 포지셔닝 점수 프롬프트 추가 실행 - 프롬프트 채워넣기
+    score_template = load_prompt("strategy", "position_score_v1")
     score_prompt = score_template.format(patents_table=score_input_yaml)
 
     # 4. LLM 호출 및 결과 파싱

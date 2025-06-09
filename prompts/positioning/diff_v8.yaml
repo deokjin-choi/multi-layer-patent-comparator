@@ -1,0 +1,66 @@
+name: compare_technology_positioning_v8
+description: Compare two patents using their actual patent IDs. Determine the winner for each aspect and an overall winner, or indicate a tie. Provide a confidence score.
+template: |
+  You are a technology strategist comparing two patents for strategic evaluation.
+
+  Given two patents summarized below, analyze their technology positioning and provide a structured comparison.
+
+  [{patent_id_a}]  
+  Functional Purpose: {patent_a_fp}  
+  Technical Uniqueness: {patent_a_tu}  
+  Strategic Value: {patent_a_sv}
+
+  [{patent_id_b}]  
+  Functional Purpose: {patent_b_fp}  
+  Technical Uniqueness: {patent_b_tu}  
+  Strategic Value: {patent_b_sv}
+
+  ---  
+  🧠 Evaluation Instructions:
+  - Compare the two patents based **purely on content**, not position or label.
+  - Use actual patent IDs as identifiers.
+  - You may return `"tie"` if the difference is minimal or indistinguishable.
+  - For each comparison aspect, provide a reason.
+  - ⚠ In all reasons, you MUST refer to patents only by their provided patent IDs ({patent_id_a}, {patent_id_b}).
+  - Do NOT use "first patent", "second patent", "Patent A", "Patent B", or similar position-based expressions.
+  - Always write reasons like: "{patent_id_a} mentions X, while {patent_id_b} does not mention Y."
+  - DO NOT invent exceptions.
+
+  🔧 Overall Winner Determination Rule (**MUST follow the below rule**):
+  - You are not allowed to apply subjective judgment.
+  - You must strictly count the winners across functional_purpose, technical_uniqueness, and strategic_value.
+  - If one patent ID wins 2 or more aspects → assign that patent ID as overall_winner.
+  - If "tie" appears in 2 or more aspects → assign "tie" as overall_winner.
+  - If {patent_id_a} wins one aspect, {patent_id_b} wins one aspect, and the remaining aspect is a tie, then the overall_winner must be "tie".
+  - Any violation will make your output invalid.
+
+  After applying the rule, provide an `overall_winner` and a confidence score from 0 to 1.
+
+  ---  
+  You MUST output only valid JSON. Do not include any explanation, markdown, or formatting. Do not wrap your output in ``` or any other markers.
+  Respond strictly in JSON format:
+  {{
+    "aspect_evaluation": {{
+      "functional_purpose": {{
+        "winner": "{patent_id_a}" or "{patent_id_b}" or "tie",
+        "reason": "... full sentence ..."
+      }},
+      "technical_uniqueness": {{
+        "winner": "{patent_id_a}" or "{patent_id_b}" or "tie",
+        "reason": "... full sentence ..."
+      }},
+      "strategic_value": {{
+        "winner": "{patent_id_a}" or "{patent_id_b}" or "tie",
+        "reason": "... full sentence ..."
+      }}
+    }},
+    "overall_winner": "{patent_id_a}" or "{patent_id_b}" or "tie",
+    "overall_judgement": "... full-sentence strategic insight ...",
+    "confidence": float between 0.0 and 1.0
+  }}
+
+  ❗ Do NOT:
+  - Return placeholder values
+  - Leave any field blank
+  - Use labels like "Patent A" or "Patent B"
+  - Use expressions like "first patent" or "second patent"

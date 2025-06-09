@@ -208,7 +208,7 @@ if pos_result and imp_diff_result and imp_diff_by_axis and strategy_output:
 
     st.markdown("#### Patent Summary Table")
     df_strategy = pd.DataFrame(strategy_output["strategy_table"])
-    st.table(df_strategy[["patent_id", "tech_summary", "technical_value", "strategic_direction"]].reset_index(drop=True))
+    st.table(df_strategy[["patent_id","assignee", "tech_summary", "technical_value", "strategic_direction"]].reset_index(drop=True))
 
     # Technology Positioning
     st.subheader("(2) Technology Positioning Result")

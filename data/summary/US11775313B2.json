@@ -1,8 +1,0 @@
-{
-  "problem": "Inefficient computation and high computational complexity in convolutional neural networks (CNNs) due to repeated two-dimensional convolutions, especially in deep CNN architectures.",
-  "solution_function": "This invention presents a hardware architecture that implements convolutional neural networks. The core function is to perform convolutional operations on input feature maps and produce output feature maps. This is achieved by convolving multiple three-dimensional filters with the same input, combining the results using pixel-wise addition, and repeating this process for all output feature maps. Some layers are followed by a downsampling operation called max pooling, which reduces computational complexity.",
-  "solution_structure": "The hardware architecture consists of multiple layers, each layer containing iC input feature maps of width iW and height iH, as many three-dimensional convolutional kernels as output maps (oC), and a downsampling module if needed. The elements of the convolutional kernels are called weights.",
-  "solution_implementation": "The convolutional operation is performed by first performing two-dimensional convolution on each input map using the convolutional kernels. This produces iC two-dimensional outputs, which are added together to produce a single two-dimensional output feature map. This process is repeated oC times for all output feature maps. Max pooling downsamples the feature maps by performing the max operation over a two-dimensional PP window with a stride of s in both dimensions.",
-  "effect": "The proposed hardware architecture reduces computational complexity in deep CNNs, making them more efficient and practical for real-time applications.",
-  "id": "US11775313B2"
-}

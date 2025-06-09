@@ -1,8 +1,0 @@
-{
-  "problem": "Accurate prediction and assessment of a physical system's condition or remaining useful life, especially when the system is not operating.",
-  "solution_function": "The system creates a digital twin of a physical system, which is monitored and assessed by a computer processor based on sensor data. The computer processor performs monitoring and assessing processes to determine the condition and remaining useful life of selected portions of the twinned system even when it's not operating.",
-  "solution_structure": "The system consists of sensors, a computer processor, and a communication port. Sensors capture values of designated parameters for the physical system. The computer processor executes monitoring and assessing processes for a selected portion of the twinned physical system using the captured sensor data. A communication port sends information associated with the generated results.",
-  "solution_implementation": "The system operates by sensing the designated parameters of the physical system, performing monitoring and assessing processes on the computer processor when the twinned system is not operating, and transmitting the results via a communication port.",
-  "effect": "Improved automatic and accurate assessment and prediction for physical systems",
-  "id": "US20170286572A1"
-}

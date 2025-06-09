@@ -1,8 +1,0 @@
-{
-  "problem": "Inflexible calculation and low efficiency in matrix multiplication",
-  "solution_function": "Matrix multiplier performs matrix multiplication with flexibility and improved efficiency by partitioning input matrices, processing subblocks simultaneously using a 2D computational array (matrix multiplication circuit), and accumulating results through addition circuits.",
-  "solution_structure": "The system includes first and second memory for storing input matrices, an operation circuit comprising X rows and Y columns of operation units (vector multiplication and addition circuits), and a controller. The matrix multiplication circuit processes subblocks from the input matrices and the controller manages data partitioning and control flow.",
-  "solution_implementation": "The first matrix is partitioned into S x R subblocks, each with size X L. Similarly, the second matrix is partitioned into R x T subblocks, each with size L x Y. The controller sends these partitions to the operation circuit where vector multiplication and addition occur simultaneously, followed by accumulation of results within the operation unit.",
-  "effect": "Improved calculation efficiency due to simultaneous processing of multiple subblocks, enhanced flexibility in handling matrices of varying sizes.",
-  "id": "CN109992743B"
-}

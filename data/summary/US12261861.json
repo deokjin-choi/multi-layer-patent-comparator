@@ -1,8 +1,0 @@
-{
-  "problem": "Computer systems with limited resources and outdated security infrastructure, making them vulnerable to attacks.",
-  "solution_function": "Implement a Supervisory Control and Data Acquisition (SCADA) system that monitors user activity for improved computer system security.",
-  "solution_structure": "System consists of hardware components (e.g., machine with memory, processor) and software components (e.g., SCADA application). The hardware runs the SCADA software, which collects data on user activity and controls access based on predefined rules.",
-  "solution_implementation": "The SCADA software continuously monitors user activity and evaluates it against predefined security rules. If a rule is violated, the system restricts or denies access to the user. The hardware executes the instructions from the SCADA software in real-time.",
-  "effect": "Improved computer system security through continuous monitoring of user activity and enforcing predefined security rules.",
-  "id": "US12261861"
-}

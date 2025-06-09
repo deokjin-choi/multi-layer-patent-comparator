@@ -8,6 +8,7 @@ template: |
 
   - For each patent (our and competitors), the following are provided:
     - Patent ID
+    - Assignee
     - Functional Purpose (FP)
     - Technical Uniqueness (TU)
     - Strategic Value (SV)
@@ -20,7 +21,6 @@ template: |
   1. Create a JSON list where each patent (our and competitors) includes:
     - `patent_id`
     - `tech_summary`: concise technical summary (1 sentence)
-    - `tech_similarity`: "High", "Medium", "Low", or "" for our patent
     - `technical_value`: "High", "Medium", "Low"
        . **← This value is already given in the input. You must copy it as-is.**
     - `strategic_direction`: 1 sentence explanation of the patent’s strategic positioning, focusing on:
@@ -36,6 +36,7 @@ template: |
   ### Patent List:
   Our Patent:
   - ID: {our_id}
+    Assignee: {our_assignee}
     FP: {our_fp}
     TU: {our_tu}
     SV: {our_sv}
@@ -51,12 +52,14 @@ template: |
     "strategy_table": [
       {{
         "patent_id": pantent_no,
+        "assignee": assignee_name,
         "tech_summary": a full sentence,
         "technical_value": must be "High", "Medium", "Low",
         "strategic_direction": a full sentence
       }},
       {{
         "patent_id": pantent_no,
+        "assignee": assignee_name,
         "tech_summary": a full sentence,
         "technical_value": must be "High", "Medium", "Low",
         "strategic_direction": a full sentence

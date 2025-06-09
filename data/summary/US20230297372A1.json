@@ -1,8 +1,0 @@
-{
-  "problem": "Inefficiencies in processing multi-dimensional data arrays for technology fields such as numerical simulations, graphics processing, gaming console design, supercomputing, and machine learning computations for Deep Neural Networks (DNN) layers due to limitations of conventional vector processing units.",
-  "solution_function": "The system performs arithmetic operations associated with vectorized computations for a multi-dimensional data array using one or more processor units and a vector memory. The system includes a SIMD VPU (single instruction multiple data) for flexible computations, a matrix unit (MXU) for high computational density operations, and a cross-lane unit (XU) for certain non-SIMD compatible operations. The MXU receives at least two operands from a particular processor unit to perform operations associated with vectorized computations.",
-  "solution_structure": "The system consists of one or more processor units, a tightly coupled vector memory with multiple banks, and an optional matrix operation unit. The system may also include data serializers for each processor unit and the matrix operation unit.",
-  "solution_implementation": "Data is exchanged between the processor units and the vector memory at high bandwidth due to their close proximity. The particular processor unit sends operands to the matrix operation unit through a first data serializer. An optional second data serializer may serialize data for the matrix operation unit or other components.",
-  "effect": "The enhanced SIMD processor design architecture offers increased flexibility, higher memory bandwidth requirements, and reduced computational density compared to conventional SIMD processors.",
-  "id": "US20230297372A1"
-}

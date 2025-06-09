@@ -37,7 +37,7 @@ def compare_positioning(our_id: str, our_pos: dict, comp_id: str, comp_pos: dict
     """당사 vs 경쟁사 1:1 비교"""
     try:
         # diff_v7: 양방향 평가 + confidence 기반 선택
-        if prompt_version == "diff_v7":
+        if prompt_version == "diff_v7" or prompt_version == "diff_v8":
             prompt_template = load_prompt("positioning", prompt_version)
 
             # A-first prompt (ours first)
@@ -171,7 +171,7 @@ def analyze_positioning(our_patent: dict, competitor_patents: list[dict]) -> lis
         comp_summary = {k: v for k, v in comp.items() if k != "id"}
         comp_pos = generate_positioning_summary(comp_id, comp_summary, prompt_version="summarize_v3")
 
-        result = compare_positioning(our_id, our_pos, comp_id, comp_pos, prompt_version="diff_v7")
+        result = compare_positioning(our_id, our_pos, comp_id, comp_pos, prompt_version="diff_v8")
         print(f"Comparison result for {our_id} vs {comp_id}: {result}")
 
         # 테이블 형태로 변환

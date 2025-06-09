@@ -1,0 +1,8 @@
+{
+  "problem": "Conventional gear reduction mechanisms increase in size when disposed on the end of a robot wrist.",
+  "solution_function": "The invention presents a rotary axis module with a double gear train that reduces the size of the speed reduction mechanism while maintaining efficient power transmission from a drive motor to an output shaft.",
+  "solution_structure": "The structure includes an input shaft connected to a drive motor, an output shaft, an output shaft flange, parallel gears coupled to the output shaft flange, a reduction-drive outer case, multiple double gears disposed in the reduction-drive outer case, a transfer gear, support bearings, and optionally a support member, reinforcing member, angular back-to-back duplex bearings, bearings with needle bearings, and an umbilical member passage.",
+  "solution_implementation": "The double gear train is arranged between the inner surface of the reduction-drive outer case and the output shaft. The parallel gear engages with a pinion of one of the double gears while a gear wheel of another double gear engages with the transfer gear, thereby transmitting power from the drive motor.",
+  "effect": "The reduced size of the speed reduction mechanism results in improved workspace utilization for robots.",
+  "id": "US10465768"
+}

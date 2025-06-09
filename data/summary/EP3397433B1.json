@@ -1,0 +1,8 @@
+{
+  "problem": "The existing mechanical stopper for a robot rotary joint limits the rotation angle of the turning flange to less than 360 degrees, which is insufficient in certain applications requiring wide-angle rotation.",
+  "solution_function": "The invention provides a stopper apparatus for a robot rotary joint that allows setting the limit of the operating angle of the turning flange to a value of 360 degrees or more. It achieves this by using a rotary protrusion, an orbit, two sliders, and a stop protrusion, such that the rotary protrusion can push the second slider to rotate but not the first slider, and the shaft, rotary protrusion, and second slider are not obstructed by the stop protrusion.",
+  "solution_structure": "The structure includes a fixed rotary protrusion on the shaft, an orbit fixed to the robot housing, two rotatably accommodated sliders within the orbit, and a stop protrusion fixed to the housing of the robot rotary joint. The second slider can be pushed by the rotary protrusion.",
+  "solution_implementation": "The implementation involves fixing the rotary protrusion to the shaft, the orbit to the robot housing, placing two sliders within the orbit, and a stop protrusion on the housing of the robot rotary joint. The rotation of the second slider is enabled by the rotary protrusion while it is not obstructed by the stop protrusion.",
+  "effect": "The solution allows for wide-angle rotation (360 degrees or more) of the turning flange in a robot rotary joint.",
+  "id": "EP3397433B1"
+}
