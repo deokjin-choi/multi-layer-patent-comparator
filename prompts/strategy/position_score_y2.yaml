@@ -53,24 +53,27 @@ template: |
   ---
   🎯 OUTPUT FORMAT:
 
-  You MUST output only valid JSON. Do not include any explanation, markdown, or formatting. Do not wrap your output in ``` or any other markers.
-  Respond strictly in JSON format: 
+  You MUST output only valid JSON. Do not include any explanation, markdown, or formatting. Do not wrap your output in ``` or any other markers.  
   Do not include comments, ellipses (`...`), or trailing commas.  
-  Do not include curly brace escapes like `{{` or `}}`.
+  Do not include escaped brackets like `{{` or `}}`.
 
-  Each item must follow this structure exactly:
+  Return a **complete and uninterrupted list**.  
+  Do not shorten the output using `...` or omit any items.  
+  Do not stop early even if the list is long.
+
+  Each item must follow this structure exactly (use normal JSON syntax):
 
   [
-    {{
+    {
       "patent_id": "pantent_no",
-      "scores": {{
-        "Core Tech Area": {{ "score": scored from 1 to 5, "reason": "a full sentence" }},
-        "Performance Advantage": {{ "score": scored from 1 to 5, "reason": "a full sentence" }},
-        "Differentiation": {{ "score": scored from 1 to 5, "reason": "a full sentence" }},
-        "Application Versatility": {{ "score": scored from 1 to 5, "reason": "a full sentence" }},
-        "Market Impact": {{ "score": scored from 1 to 5, "reason": "a full sentence" }},
-        "Competitor Block": {{ "score": scored from 1 to 5, "reason": "a full sentence" }}
-      }}
-    }},
+      "scores": {
+        "Core Tech Area": { "score": 1 to 5, "reason": "a full sentence" },
+        "Performance Advantage": { "score": 1 to 5, "reason": "a full sentence" },
+        "Differentiation": { "score": 1 to 5, "reason": "a full sentence" },
+        "Application Versatility": { "score": 1 to 5, "reason": "a full sentence" },
+        "Market Impact": { "score": 1 to 5, "reason": "a full sentence" },
+        "Competitor Block": { "score": 1 to 5, "reason": "a full sentence" }
+      }
+    },
     ...
   ]

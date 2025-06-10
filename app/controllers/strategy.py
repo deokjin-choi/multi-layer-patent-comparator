@@ -2,6 +2,7 @@ from app.utils.prompts import load_prompt
 from app.utils.json_helper import extract_json_from_llm_output  # 위 함수 별도 분리 시
 from app.utils.llm.llm_factory import get_llm_client
 from app.utils.path_helper import RAW_DATA_DIR
+from app.utils.llm.retry_utils import safe_invoke
 
 
 import pandas as pd
@@ -97,7 +98,7 @@ def analyze_strategic_direction(pos_result: list[pd.DataFrame], our_patent_id: s
 """
 
     # Load template
-    template = load_prompt("strategy", "direction_v3")
+    template = load_prompt("strategy", "direction_v4")
 
     # Fill in final prompt
     prompt = template.format(
@@ -113,9 +114,13 @@ def analyze_strategic_direction(pos_result: list[pd.DataFrame], our_patent_id: s
     llm = get_llm_client()
 
     # Call LLM
-    result = llm.invoke(prompt)
-    print(prompt)
-    response = extract_json_from_llm_output(result)  # JSON 파싱
+    response = safe_invoke(llm, prompt, extract_json_from_llm_output)
+
+    if response is None:
+        response = {
+            "strategy_table": [],
+            "our_overall_strategy": "LLM failed after retries or JSON parsing failed."
+        }
 
     # 1. our patent 정보 구성
     strategy_table = response["strategy_table"]  # ← 기존 프롬프트에서 생성된 결과 그대로 활용
@@ -139,12 +144,14 @@ def analyze_strategic_direction(pos_result: list[pd.DataFrame], our_patent_id: s
     """
 
     # 3. 새로운 포지셔닝 점수 프롬프트 추가 실행 - 프롬프트 채워넣기
-    score_template = load_prompt("strategy", "position_score_v1")
+    score_template = load_prompt("strategy", "position_score_v2")
     score_prompt = score_template.format(patents_table=score_input_yaml)
 
     # 4. LLM 호출 및 결과 파싱
-    score_result = llm.invoke(score_prompt)
-    score_data = extract_json_from_llm_output(score_result)  # JSON list 형태 반환
+    score_data = safe_invoke(llm, score_prompt, extract_json_from_llm_output)
+
+    if score_data is None:
+        score_data = []
 
     return {
     "our_overall_strategy": response["our_overall_strategy"],

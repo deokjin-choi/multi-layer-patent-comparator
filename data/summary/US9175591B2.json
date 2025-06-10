@@ -1,0 +1,8 @@
+{
+  "problem": "Reduction of carbon dioxide emissions from vehicles powered by internal combustion engines and other heat engines due to global warming.",
+  "solution_function": "Temporary on-board storage of CO2 from vehicle exhaust for efficient and cost-effective emission reduction.",
+  "solution_structure": "System consists of a capture agent (amine solution) that interacts with the CO2 in the exhaust gas stream, a heat exchanger to cool the exhaust gas before interaction, and storage tanks for temporary CO2 storage.",
+  "solution_implementation": "Exhaust gas is directed through a heat exchanger to lower its temperature. The cooled exhaust gas then interacts with the capture agent, absorbing CO2. The captured CO2 is stored in temporary storage tanks until the vehicle is refueled or serviced.",
+  "effect": "Decreased carbon dioxide emissions from vehicles, contributing to environmental responsibility and maintaining the viability of the crude oil market in the transportation sector.",
+  "id": "US9175591B2"
+}

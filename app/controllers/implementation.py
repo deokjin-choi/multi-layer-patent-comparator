@@ -3,6 +3,7 @@ import json
 from app.utils.llm.llm_factory import get_llm_client
 from app.utils.prompts import load_prompt
 from app.utils.json_helper import extract_json_from_llm_output  # 위 함수 별도 분리 시
+from app.utils.llm.retry_utils import safe_invoke
 
 
 def analyze_implementation_diff(our_patent: dict, competitor_patents: list[dict]) -> list[pd.DataFrame]:
@@ -39,17 +40,14 @@ def analyze_implementation_diff(our_patent: dict, competitor_patents: list[dict]
             comp_effect=comp_summary.get("effect", "")
         )
 
-        # LLM 호출 및 결과 파싱
-        response = llm.invoke(filled_prompt)
+        result = safe_invoke(llm, filled_prompt, extract_json_from_llm_output)
 
-        try:
-            result = extract_json_from_llm_output(response)
-        except json.JSONDecodeError:
+        if result is None:
             result = {
                 "comparison_axes": [],
-                "overall_diff_summary": "JSON parsing failed. Raw output: " + response
+                "overall_diff_summary": "LLM failed after retries or JSON parsing failed."
             }
-
+  
         # 비교축별 내용 정리
         rows = []
         for axis_info in result.get("comparison_axes", []):
@@ -108,18 +106,15 @@ def analyze_implementation_diff_by_axis(imp_diff_result: list[pd.DataFrame], our
     full_prompt = prompt_template + "\n\nInput Data:\n" + input_json
     print("[DEBUG] Full Prompt:\n", full_prompt)
 
-    # LLM 호출 한 번만 수행
-    llm_response = llm.invoke(full_prompt)
+    # LLM 호출 한 번만 수행        
+    parsed = safe_invoke(llm, full_prompt, extract_json_from_llm_output)
 
-    try:
-        parsed = extract_json_from_llm_output(llm_response)
-        return {
+    if parsed is None:
+        parsed = {
+            "axis_summary": [],
+            "error": "LLM failed after retries or JSON parsing failed."
+        }
+
+    return {
             "axis_summary": parsed.get("implementation_summary", [])
         }
-    except Exception as e:
-        print(f"[ERROR] JSON parsing failed: {e}")
-        return {
-            "axis_summary": [],
-            "error": str(e)
-        }
-

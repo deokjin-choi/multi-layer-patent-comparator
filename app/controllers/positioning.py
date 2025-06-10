@@ -5,6 +5,7 @@ from app.utils.json_helper import extract_json_from_llm_output  # 위 함수 별
 from app.utils.prompts import load_prompt
 import logging
 import pandas as pd
+from app.utils.llm.retry_utils import safe_invoke
 
 
 logger = logging.getLogger(__name__)
@@ -23,15 +24,16 @@ def generate_positioning_summary(patent_id: str, summary: dict, prompt_version="
         prompt = prompt_template.format(**llm_input)
 
         llm = get_llm_client()
-        response = llm.invoke(prompt)
-        return extract_json_from_llm_output(response)
-    except Exception as e:
-        logger.error(f"[{patent_id}] Positioning summary generation failed: {e}")
-        return {
-            "functional_purpose": "N/A",
-            "technical_uniqueness": "N/A",
-            "strategic_value": "N/A"
-        }
+        response = safe_invoke(llm, prompt, extract_json_from_llm_output)
+
+        if response is None:
+            response = {
+                "functional_purpose": "N/A",
+                "technical_uniqueness": "N/A",
+                "strategic_value": "N/A"
+            }
+
+        return response
 
 def compare_positioning(our_id: str, our_pos: dict, comp_id: str, comp_pos: dict, prompt_version="diff_v1"):
     """당사 vs 경쟁사 1:1 비교"""
@@ -65,11 +67,24 @@ def compare_positioning(our_id: str, our_pos: dict, comp_id: str, comp_pos: dict
             )
 
             llm = get_llm_client()
-            response_a = llm.invoke(prompt_a_first)
-            response_b = llm.invoke(prompt_b_first)
+            
+            result_a = safe_invoke(llm, prompt_a_first, extract_json_from_llm_output)
+            result_b = safe_invoke(llm, prompt_b_first, extract_json_from_llm_output)
 
-            result_a = extract_json_from_llm_output(response_a)
-            result_b = extract_json_from_llm_output(response_b)
+            if result_a is None:
+                result_a = {
+                    "aspect_evaluation": {},
+                    "overall_winner": "competitor",
+                    "overall_judgement": "A-first comparison failed; defaulting to competitor.",
+                    "confidence": 0.0
+                }
+            if result_b is None:
+                result_b = {
+                    "aspect_evaluation": {},
+                    "overall_winner": "ours",
+                    "overall_judgement": "B-first comparison failed; defaulting to ours.",
+                    "confidence": 0.0
+                }        
 
             # confidence 비교
             final_result = result_a if result_a.get("confidence", 0) >= result_b.get("confidence", 0) else result_b

@@ -1,0 +1,88 @@
+name: generate_strategic_direction
+description: Generate a structured comparative analysis of all patents (our and competitors), and recommend a strategic direction for our patent based on relative technical positioning.
+template: |
+  You are a technology strategist evaluating a group of patents, including our own and those of competitors.
+
+  ---
+  🎯 YOUR GOAL
+
+  Your objective is to:
+  1. Summarize each patent’s core technical approach (tech_summary).
+  2. Describe the **relative strategic positioning** of each patent (strategic_direction), focusing on:
+     - How it is differentiated from other patents in the group
+     - Which specific **application areas or markets** the patent offers a clear competitive advantage in
+     - Avoid vague or general expressions like “compliance”, “climate change”, or “efficiency” unless **specific context or industry** is provided
+  3. Based on the full set of patents, generate a concise **overall strategic recommendation for our patent** (our_overall_strategy), addressing:
+     - What is our current strength relative to others?
+     - What strategic trends are visible among competitor patents?
+     - What should we do next to strengthen our position?
+
+  ---
+  📥 INPUT
+
+  For each patent (our and competitors), the following information is provided:
+    - Patent ID
+    - Assignee
+    - Functional Purpose (FP)
+    - Technical Uniqueness (TU)
+    - Strategic Value (SV)
+
+  For each competitor patent (compared against our patent), provide:
+    - The evaluation result indicating which patent is superior ("ours" = our patent won, "competitor" = competitor patent won, or "tie" = no clear winner)
+    - The reason explaining this evaluation result
+
+  📤 OUTPUT  
+  1. Create a JSON list where each patent (our and competitors) includes:
+    - `patent_id`
+    - `tech_summary`
+    - `technical_value`: "High", "Medium", "Low"
+       . **← This value is already given in the input. You must copy it as-is.**
+    - `strategic_direction`: 1 sentence explanation of the patent’s strategic positioning
+
+  2. At the end, generate our **overall strategic direction recommendation** in 2–3 sentences, clearly addressing:
+    - What is our current strength compared to other patents?
+    - What strategic patterns or trends are seen across competitors?
+    - What specific action should we take to enhance our technical or strategic position?
+
+  ---
+  ### Patent List:
+  Our Patent:
+  - ID: {our_id}
+    Assignee: {our_assignee}
+    FP: {our_fp}
+    TU: {our_tu}
+    SV: {our_sv}
+    TechnicalValue: {our_value}
+
+  Competitor Patents: {competitors_section}
+
+  ---
+  You MUST output only valid JSON. Do not include any explanation, markdown, or formatting. Do not wrap your output in ``` or any other markers.
+  Respond strictly in JSON format:
+
+  {{
+    "strategy_table": [
+      {{
+        "patent_id": pantent_no,
+        "assignee": assignee_name,
+        "tech_summary": a full sentence,
+        "technical_value": must be "High", "Medium", "Low",
+        "strategic_direction": a full sentence
+      }},
+      {{
+        "patent_id": pantent_no,
+        "assignee": assignee_name,
+        "tech_summary": a full sentence,
+        "technical_value": must be "High", "Medium", "Low",
+        "strategic_direction": a full sentence
+      }},
+      ...
+    ],
+    "our_overall_strategy": A concise strategic recommendation for our patent 
+  }}
+
+  
+You MUST return both:
+- A full **`strategy_table`** list.
+- A field called **`our_overall_strategy`** with your recommendation. This field is required. If missing, your response is invalid.
+

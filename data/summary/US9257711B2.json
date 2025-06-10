@@ -1,0 +1,8 @@
+{
+  "problem": "Traditional molten carbonate fuel cells operate with limited fuel utilization, around 70% to 75%, and inefficient hydrogen recycling in the anode.",
+  "solution_function": "The invention enhances fuel utilization within a molten carbonate fuel cell by maintaining a high concentration of H2 in the anode inlet stream, ensuring adequate fuel for oxidation reaction. The H2 not utilized is recycled to the anode for use in the next pass, increasing overall utilization.",
+  "solution_structure": "The system consists of a molten carbonate fuel cell with an anode and cathode, a separation unit configured to receive the anode exhaust stream and separate hydrogen, and a recycling path for the H2-rich exhaust back to the anode inlet.",
+  "solution_implementation": "The system operates by supplying H2-rich fuel to the anode inlet, with excess H2 not utilized in oxidation being recycled. The separation unit separates hydrogen from the anode exhaust stream and recycles it back to the anode inlet.",
+  "effect": "Increased fuel utilization in the anode leads to improved efficiency of the molten carbonate fuel cell, as well as more efficient hydrogen recycling.",
+  "id": "US9257711B2"
+}

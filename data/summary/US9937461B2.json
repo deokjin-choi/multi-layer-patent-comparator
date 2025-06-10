@@ -1,0 +1,8 @@
+{
+  "problem": "Limitation in removing greenhouse gases, particularly carbon dioxide, from an atmosphere without causing energy shortfalls or conflict.",
+  "solution_function": "Removing carbon dioxide from a stream of gas, preferably air, by directing the CO2-laden air through a sorbent structure that binds (captures) CO2. The bound CO2 is then removed from the sorbent structure using process heat, preferably steam, to heat the sorbent structure and regenerate it for continued use.",
+  "solution_structure": "The sorbent structure comprises an amine that binds to CO2 and is carried by a substrate. The substrate can be in the form of solid particles or a monolithic sorbent structure. The sorbent is adsorbed on the surfaces of the substrate.",
+  "solution_implementation": "The carbon dioxide-laden air is directed through the sorbent structure, and process heat is used to separate the carbon dioxide from the sorbent and regenerate the sorbent. The heat is converted into steam or other medium for this purpose.",
+  "effect": "Compensation for other greenhouse gases like methane that can cause climate change, as the amount of CO2 in the atmosphere can be effectively controlled.",
+  "id": "US9937461B2"
+}

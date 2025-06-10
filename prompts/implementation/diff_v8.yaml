@@ -5,7 +5,7 @@ template: |
 
   Your job is to:
   1. Extract **3 to 5 meaningful technical comparison axes**.
-     - These may include aspects like: component interaction, resource allocation, control logic, system structure, integration method, etc.
+     - Identify axes purely based on the technical content of the two patents.
      - ✅ If both patents describe the concept explicitly, include it with **high** or **medium** relevance depending on detail.
      - ✅ If one side describes the implementation clearly and the other implies it based on context (e.g. problem/effect/structure), include it with **low relevance**, and explain the limitation.
      - ❌ Do not compare concepts where the match is purely speculative or based on unrelated terminology.

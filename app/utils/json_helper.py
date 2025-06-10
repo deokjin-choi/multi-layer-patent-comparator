@@ -25,7 +25,5 @@ def extract_json_from_llm_output(text_or_obj) -> dict:
     try:
         return json.loads(cleaned)
     except Exception:
-        return {
-            "error": "Failed to parse JSON",
-            "raw_output": text
-        }
+        # → 여기서 예외를 던져야 safe_invoke가 재시도함
+        raise ValueError("Failed to parse JSON: " + text[:200])  # 일부만 로그로
