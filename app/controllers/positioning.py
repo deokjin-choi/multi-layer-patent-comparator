@@ -34,6 +34,13 @@ def generate_positioning_summary(patent_id: str, summary: dict, prompt_version="
             }
 
         return response
+    except Exception as e:
+        logger.error(f"[{patent_id}] Positioning summary failed: {e}")
+        return {
+            "functional_purpose": "N/A",
+            "technical_uniqueness": "N/A",
+            "strategic_value": "N/A"
+        }
 
 def compare_positioning(our_id: str, our_pos: dict, comp_id: str, comp_pos: dict, prompt_version="diff_v1"):
     """당사 vs 경쟁사 1:1 비교"""

@@ -63,17 +63,17 @@ template: |
 
   Each item must follow this structure exactly (use normal JSON syntax):
 
-  [
-    {
+   [
+    {{
       "patent_id": "pantent_no",
-      "scores": {
-        "Core Tech Area": { "score": 1 to 5, "reason": "a full sentence" },
-        "Performance Advantage": { "score": 1 to 5, "reason": "a full sentence" },
-        "Differentiation": { "score": 1 to 5, "reason": "a full sentence" },
-        "Application Versatility": { "score": 1 to 5, "reason": "a full sentence" },
-        "Market Impact": { "score": 1 to 5, "reason": "a full sentence" },
-        "Competitor Block": { "score": 1 to 5, "reason": "a full sentence" }
-      }
-    },
+      "scores": {{
+        "Core Tech Area": {{ "score": scored from 1 to 5, "reason": "a full sentence" }},
+        "Performance Advantage": {{ "score": scored from 1 to 5, "reason": "a full sentence" }},
+        "Differentiation": {{ "score": scored from 1 to 5, "reason": "a full sentence" }},
+        "Application Versatility": {{ "score": scored from 1 to 5, "reason": "a full sentence" }},
+        "Market Impact": {{ "score": scored from 1 to 5, "reason": "a full sentence" }},
+        "Competitor Block": {{ "score": scored from 1 to 5, "reason": "a full sentence" }}
+      }}
+    }},
     ...
   ]

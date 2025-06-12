@@ -9,13 +9,15 @@ import matplotlib.pyplot as plt
 
 # 상위 디렉토리 추가
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from frontend.components import input_form, plot_strategy, plot_position, plot_implementation
+from frontend.components import input_form, progress_tracker, plot_strategy, plot_position, plot_implementation
 from app.controllers.engine import run_analysis
 from app.controllers.strategy import analyze_strategic_direction
+from app.controllers.engine import get_or_fetch_with_summary # 최초 크롤링 되는지 확인용
 
 
 # 페이지 설정
 st.set_page_config(page_title="3-Layer Patent Comparison System", layout="wide")
+
 
 # -------------------------------
 # Introduction and Layer Overview
@@ -96,19 +98,64 @@ This process supports more informed and objective decision-making in R&D, IP str
 user_input = input_form.render()
 result_path = "data/final_results/last_result.pkl"
 
+# streamlit 내에서 정의
+status_text = st.empty()
+progress_bar = st.progress(0)
+
 # -------------------------------
 # Step 2: Run New Analysis
 # -------------------------------
 if user_input["submitted"]:
     if not user_input["our_patent"].strip():
         st.warning("Please enter your patent number before running the analysis.")
+        st.stop()
     elif not user_input["competitor_patents"]:
         st.warning("Please enter at least one competitor patent number.")
+        st.stop()
     else:
+        # Step 1️⃣: 당사 특허 확인
+        our_patent_check = get_or_fetch_with_summary(user_input["our_patent"])
+        if not our_patent_check:
+            st.error("❌ Our company patent not found. Please check the patent number.")
+            st.stop()
+
+        # Step 2️⃣: 경쟁사 특허 유효성 필터링
+        valid_competitors = []
+        invalid_competitors = []
+        for pid in user_input["competitor_patents"]:
+            result = get_or_fetch_with_summary(pid)
+            if result:
+                valid_competitors.append(pid)
+            else:
+                invalid_competitors.append(pid)
+
+        # 당사 특허가 경쟁사 목록에 포함된 경우 제거
+        our_patent_id = user_input["our_patent"].strip()        
+        if our_patent_id in valid_competitors:
+            valid_competitors.remove(our_patent_id)
+            st.warning(f"⚠️ Our patent ID '{our_patent_id}' was also entered as a competitor. It has been excluded.")
+
+
+        # 경쟁사 전부 실패한 경우
+        if not valid_competitors:
+            st.error("❌ None of the competitor patents could be analyzed. Please check the patent numbers.")
+            st.stop()
+
+        # 일부 실패한 경우 경고 표시
+        if invalid_competitors:
+            st.warning(
+                f"⚠️ {len(invalid_competitors)} competitor patent(s) could not be analyzed and will be excluded: {', '.join(invalid_competitors)}"
+            )
+
         pos_result, imp_diff_result, imp_diff_by_axis = run_analysis(
             our_patent_id=user_input["our_patent"],
-            competitor_patent_ids=user_input["competitor_patents"]
+            competitor_patent_ids=valid_competitors, # 유효한 경쟁사 특허만 전달
+            status_text=status_text, 
+            progress_bar=progress_bar, 
+            show_progress=progress_tracker.show_progress
         )
+
+        progress_tracker.show_progress("strategy", status_text, progress_bar)
         strategy_output = analyze_strategic_direction(pos_result, user_input["our_patent"])
 
         with open(result_path, "wb") as f:
@@ -185,7 +232,7 @@ if pos_result and imp_diff_result and imp_diff_by_axis and strategy_output:
         df_sorted = df_combined.sort_values("Aspect")
 
         # ✅ 병합 정리
-        df_grouped = df_sorted.groupby("Aspect", as_index=False).first()
+        df_grouped = df_sorted.groupby("Aspect", as_index=False, observed=True).first()
 
         # ✅ 폰트 크기 확대 및 행간 확보용 스타일 삽입 (HTML 스타일)
         st.markdown(
