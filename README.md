@@ -32,8 +32,6 @@ This multi-layered insight supports more effective decision-making in R&D, IP ma
 
 This system can be used in two different ways depending on the user’s role.
 
----
-
 ### ▶ For General Users
 
 Before using this system, it is assumed that your team has:
@@ -57,20 +55,20 @@ The system will:
 If you want to run, test, or extend this system locally:
 
 1. **Clone the repository and rename the folder**
-git clone https://github.com/deokjin-choi/multi-layer-patent-comparator.git
-mv multi-layer-patent-comparator patent_compare
-cd patent_compare
+- git clone https://github.com/deokjin-choi/multi-layer-patent-comparator.git
+- mv multi-layer-patent-comparator patent_compare
+- cd patent_compare
 
 2. **Install dependencies**
-pip install -r requirements.txt
+- pip install -r requirements.txt
 
 3. **Launch the local LLM using Ollama**
-ollama serve & # Start Ollama server in the background
-ollama run mistral
+- ollama serve & # Start Ollama server in the background
+- ollama run mistral
 > The system uses **Mistral** as the default local model via Ollama.
 
 4. **Start the Streamlit frontend**
-streamlit run main.py
+- streamlit run main.py
 
 5. **Project structure overview**
 - `app/controllers/`  
