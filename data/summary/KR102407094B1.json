@@ -1,0 +1,8 @@
+{
+  "problem": "Limitations in non-invasive blood pressure measurement methods such as cuff-based measurements causing potential damage and accuracy limitations in cuffless measurements.",
+  "solution_function": "Device measures biometric information (blood pressure) without a cuff, using a contact pressure sensor and pulse wave signal sensor to measure the contact pressure and pulse wave of the subject while their hand shape changes. The processor calculates the blood pressure based on these measured values.",
+  "solution_structure": "Main body worn by subject, contact pressure sensor (force sensor or strain gauge), pulse wave signal sensor, processor, strap for fixing the device to the subject.",
+  "solution_implementation": "Contact pressure sensor measures contact pressure as hand shape changes. Pulse wave sensor measures pulse wave. Processor calculates blood pressure using measured contact pressure and pulse wave values.",
+  "effect": "Reduced potential damage to patients, increased portability for individual use, improved accuracy in blood pressure measurement compared to cuffless methods",
+  "id": "KR102407094B1"
+}

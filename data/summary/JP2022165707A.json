@@ -1,0 +1,8 @@
+{
+  "problem": "In an electronic device, it is necessary to prevent the length of the display from changing when the housing rotates, especially for foldable devices that use a flexible substrate connecting electronic components. However, general cable-like wiring or flexible substrates cannot absorb excess length when housings rotate.",
+  "solution_function": "The system presented here is an electronic device with two housings that can rotate between stacked and perpendicular positions. It includes a hinge device for releasable connection, a flexible substrate connecting the electronic components, and a mechanism to offset the flexible substrate from the housing ends. This design allows the flexible substrate to smoothly absorb the excess length when the housings rotate.",
+  "solution_structure": "The system consists of two housings, each with an electronic component, connected by a hinge device and a flexible substrate. The flexible substrate is offset towards one housing from the housing ends to allow for smooth absorption of excess length during rotation.",
+  "solution_implementation": "Upon rotation of the housings, the flexible substrate bends and absorbs excess length due to its offset position. If the amount of information to be transmitted exceeds what can be handled by general cable-like wiring, a flexible substrate is used instead.",
+  "effect": "The electronic device achieves smooth absorption of excess length in the flexible substrate when housings rotate, providing a more efficient and stable connection between electronic components.",
+  "id": "JP2022165707A"
+}

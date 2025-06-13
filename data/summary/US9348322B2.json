@@ -1,0 +1,8 @@
+{
+  "problem": "Smart watches and smart glasses do not provide all desired features, such as effective biometric sensor features while maintaining a desirably small size.",
+  "solution_function": "The invention presents a smart device with an integrated biometric sensor. It captures light from the user's skin using a light detector, emits light towards the user's skin via a light emitter, and processes the reflected light to determine biometric data. The device is controlled by a central processor.",
+  "solution_structure": "The smart device includes a wrist-worn device or a user-worn frame, a controller, a power supply, a light emitter, a light detector, and a lens. The lens consists of an opaque section and a light transmissive section that facilitates the transmission of light from the light emitter to the user's skin.",
+  "solution_implementation": "The system operates by emitting light towards the user's skin using the light emitter, capturing the reflected light with the light detector, and processing this information with the controller. The lens directs the light from the emitter towards the user's skin and away from the detector.",
+  "effect": "The solution offers an effective biometric sensor within a compact smart device, thus providing users with more comprehensive features.",
+  "id": "US9348322B2"
+}

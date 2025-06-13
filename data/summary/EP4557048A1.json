@@ -1,0 +1,8 @@
+{
+  "problem": "Increase the size of a screen while maintaining portability of portable electronic devices",
+  "solution_function": "A foldable electronic device folds its display area into two separate housings. The display is supported by wing plates and connected using hinge structures that allow rotation when the device is opened or closed.",
+  "solution_structure": "The device includes a display, first housing, second housing, first wing plate in the first housing, second wing plate in the second housing, a plurality of hinge structures connecting the two housings, and a hinge housing on which the hinge structures are seated. The hinge structure consists of three parts: a first hinge with a center bar, a second hinge with another center bar, and a third hinge engaging the first and second wing plates.",
+  "solution_implementation": "The first and second housings each accommodate a portion of the display. The first wing plate supports the folding area in the first housing, while the second wing plate does the same in the second housing. The hinge structures connect the two housings and rotate in conjunction with the wing plates when opened or closed.",
+  "effect": "The device provides a larger screen while maintaining portability due to its ability to fold into a compact size.",
+  "id": "EP4557048A1"
+}

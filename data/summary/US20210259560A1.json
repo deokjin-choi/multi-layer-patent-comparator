@@ -1,0 +1,8 @@
+{
+  "problem": "The limitation lies in traditional cardiac monitoring tools being costly, difficult for lay users to apply and use, having a short continuous monitoring window, and not being suitable for non-clinical environments.",
+  "solution_function": "This invention offers a digital health monitoring device that can determine a subject's physiological or biological state or condition over extended time periods. The device monitors the cardiovascular system in particular, providing continuous data collection over months or years for more accurate and timely diagnosis of heart conditions.",
+  "solution_structure": "The device comprises a monitoring unit equipped with sensors placed at specific locations on the subject's body. It may also include an integrated stethoscope or be designed to accommodate one externally. The device is wearable for user convenience.",
+  "solution_implementation": "The device collects physiological data from the sensors and applies signal processing techniques to analyze the data, providing real-time insights about the subject's cardiac function. The processed data can be transmitted wirelessly to a smartphone or computer for further analysis and record keeping.",
+  "effect": "This solution results in increased accessibility of medical diagnostic capabilities, cost reduction, and improved efficacy in diagnostic efforts, particularly for cardiac care.",
+  "id": "US20210259560A1"
+}

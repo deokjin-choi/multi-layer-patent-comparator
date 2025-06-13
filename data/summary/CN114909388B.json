@@ -1,0 +1,8 @@
+{
+  "problem": "Easily caused damage to flexible screens in foldable electronic devices due to excessive bending during the folding process.",
+  "solution_function": "A folding mechanism that allows for controlled and even bending of the flexible screen by using a hinge mechanism with four swing arms (first, second, third, fourth) that are rotatably connected at one end to the base and at the other end to the screen support plates. The swing arms are arranged on opposite sides of the base and can slide relatively and rotate cooperatively, ensuring that the rotation axes of the first swing arm on each side are spaced apart.",
+  "solution_structure": "The structure includes a base, two housing bases (first, second), two screen support plates (first, second), four swing arms (first, second, third, fourth), and a hinge mechanism that comprises these parts. The housing seats are arranged on the screen support plates and rotatably matched with them.",
+  "solution_implementation": "The implementation involves rotatably connecting the swing arms to the base, first housing seat, and second housing seat, with one end of each swing arm connected to the base. The second ends of the first and third swing arms are slidably fitted with the first housing base and can slide relatively and rotate cooperatively with the first screen support plate. Similarly, the second ends of the second and fourth swing arms are slidably fitted with the second housing seat and can slide relatively and rotate cooperatively with the second screen support plate.",
+  "effect": "Reduced chances of damage to the flexible screen due to controlled bending during the folding process.",
+  "id": "CN114909388B"
+}

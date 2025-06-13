@@ -13,6 +13,7 @@ from frontend.components import input_form, progress_tracker, plot_strategy, plo
 from app.controllers.engine import run_analysis
 from app.controllers.strategy import analyze_strategic_direction
 from app.controllers.engine import get_or_fetch_with_summary # 최초 크롤링 되는지 확인용
+from app.controllers.fetch_patents import fetch_patent_metadata # 최초 크롤링 되는지 확인용
 
 
 # 페이지 설정
@@ -114,8 +115,8 @@ if user_input["submitted"]:
         st.stop()
     else:
         # Step 1️⃣: 당사 특허 확인
-        our_patent_check = get_or_fetch_with_summary(user_input["our_patent"])
-        if not our_patent_check:
+        our_patent_check = fetch_patent_metadata(user_input["our_patent"])
+        if our_patent_check is None:
             st.error("❌ Our company patent not found. Please check the patent number.")
             st.stop()
 
@@ -123,7 +124,7 @@ if user_input["submitted"]:
         valid_competitors = []
         invalid_competitors = []
         for pid in user_input["competitor_patents"]:
-            result = get_or_fetch_with_summary(pid)
+            result = fetch_patent_metadata(pid)
             if result:
                 valid_competitors.append(pid)
             else:

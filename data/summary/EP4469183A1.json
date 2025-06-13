@@ -1,0 +1,8 @@
+{
+  "problem": "Production of Hydrogen (H2) results in the undesired generation and potential emission of carbon dioxide (CO2), leading to contamination of H2 and requiring costly and hazardous separation methods.",
+  "solution_function": "Develop a carbon capture system that efficiently separates CO2 from gas mixtures, such as H2/CO2 and N2/CO2, reducing the need for costly and hazardous separation processes.",
+  "solution_structure": "The system consists of a carbon capture reactor where CO2 is selectively absorbed and a regeneration unit to release the captured CO2 for storage. The system uses a novel solvent that has low thermal demand for regeneration, high selectivity towards CO2, and resistance to thermal- and oxidative-degradation.",
+  "solution_implementation": "The carbon capture reactor absorbs CO2 from gas mixtures using the novel solvent. The absorbed CO2 is then released in the regeneration unit through pressure or temperature changes. The regenerated solvent is recycled back to the carbon capture reactor.",
+  "effect": "Reduction of heat demand for regeneration, elimination of hazardous compounds formation, and increased safety during operation due to the use of a novel CO2-selective solvent.",
+  "id": "EP4469183A1"
+}

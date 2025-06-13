@@ -25,9 +25,15 @@ def fetch_patent_metadata(patent_id: str) -> dict:
 
     try:
         response = requests.get(url, headers=headers, timeout=10)
-        response.raise_for_status()
+
+        # ❗ 404 or 기타 비정상 응답이면 None 반환
+        if response.status_code != 200:
+            print(f"[fetch_patent_metadata] Patent not found: {patent_id} (status code: {response.status_code})")
+            return None
+
     except Exception as e:
-        raise RuntimeError(f"[fetch_patent_metadata] Failed to fetch patent {patent_id}: {e}")
+        print(f"[fetch_patent_metadata] Request failed for {patent_id}: {e}")
+        return None  # 특허 없는 경우 None 반환
 
     soup = BeautifulSoup(response.content, "html.parser")
 

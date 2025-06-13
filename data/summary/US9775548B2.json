@@ -1,0 +1,8 @@
+{
+  "problem": "Inefficiency in heart rate monitoring using traditional PPG sensors due to limited spatial resolution and potential interference from direct light.",
+  "solution_function": "The invention improves heart rate monitoring by utilizing a high-aspect-ratio photodetector element located midway between two green LEDs, providing improved spatial resolution and minimizing interference from direct light.",
+  "solution_structure": "The system includes a housing with two green LEDs, a high-aspect-ratio photodetector element (square photosensitive area), and control logic.",
+  "solution_implementation": "When worn on the skin, the LEDs illuminate the skin. The photodetector element measures the amount of light emitted back from the skin. Control logic within the housing calculates the heart rate based on fluctuations in the measured light.",
+  "effect": "Improved accuracy and reliability in heart rate monitoring, due to increased spatial resolution and reduced interference",
+  "id": "US9775548B2"
+}

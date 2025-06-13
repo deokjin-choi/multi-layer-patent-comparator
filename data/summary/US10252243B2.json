@@ -1,0 +1,8 @@
+{
+  "problem": "High operational costs and energy penalties associated with gas separation steps in current carbon capture and storage (CCS) processes.",
+  "solution_function": "Chemical looping combustion (CLC) process that utilizes an oxygen carrier to transport oxygen between air and fuel, preventing direct contact. This results in exhaust gas consisting of CO2 and H2O only, avoiding the need for gas separation.",
+  "solution_structure": "Oxygen carrier acting as an intermediary between air and fuel, two reactors (air reactor and fuel reactor) to facilitate oxidation and reduction phases.",
+  "solution_implementation": "Oxidation reaction occurs in the air reactor where oxygen carrier absorbs oxygen from the air. The oxygen-depleted air is expelled as exhaust, while the oxygen-rich carrier is sent to the fuel reactor. Fuel combustion occurs here, releasing CO2 and water vapor. The now carbon dioxide-laden carrier is then recycled back to the air reactor.",
+  "effect": "Minimal energy penalty for CO2 capturing (2-3% efficiency lost), reduced NOx formation, and avoidance of significant operational costs associated with gas separation.",
+  "id": "US10252243B2"
+}

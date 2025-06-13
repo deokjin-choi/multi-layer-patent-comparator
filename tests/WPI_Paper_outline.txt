@@ -1,0 +1,245 @@
+(1)개발목적
+-“특허 전문을 의미 단위로 해석하고, 이를 다양한 축으로 비교하여 우위를 판단하고 그 이유를 알려주는 시스템”
+==========================
+
+(2)전체 프로세스
+
+1)특허 원문 입수 : 5가지 분야/선정기준은?
+-AI 기술 (ex. deep learning maxtix optimization) : US11475102B2 vs US20230297372A1, CN109992743B, US11347652B2, US11347652B2
+-에너지 기술 (ex. Carbon capture) : US9257711B2 vs US11955674B1, EP4469183A1, US9502728B1, US10252243B2
+-소비재 기술 (ex. water curtain & nozzle control) : US10231596B2 vs JP6857804B2, US12029369B2, JP6857804B2, EP3560405A1 
+-전자기기 (ex. foldable Hinge) : US11703916B2 vs CN114909388B, EP4557048A1, US20240430348A1, JP2022165707A
+-헬스케어 (ex. bio information 파악/대응 )US20210259560A1 vs KR102407094B1, US11432766B2, US9348322B2, US9775548B2
+
+
+Technology Area	Example Subfields	Criteria for Our Patents	Criteria for Competitor Patents
+AI Technology	
+- Vision-based object detection
+- NLP intent recognition & response	- Samsung SDS / Samsung Research AI labs
+- Bixby, SmartThings-related AI models
+- Deep learning model structure clearly described	- Google, Microsoft, Meta, OpenAI
+- Post-2020 Vision/NLP model deployment patents
+
+Energy Technology	
+- Carbon capture & utilization (CCUS)
+- Fuel cell / Hydrogen storage	- Carbon capture systems with efficiency improvement
+- Factory emission control patents	- ExxonMobil, GE, Huaneng, Siemens
+- Patents with process flow or system layout
+
+Home Appliance Technology	
+- Dishwashing water curtain control
+- Washing machine thermal/vibration control	- Samsung's dishwasher/washing machine patents
+- Water/temperature/time-based cycle control logic	- LG, Bosch, Whirlpool, Electrolux
+- Different cleaning mechanisms, process flow
+
+Mobile Hardware Technology (new name)	
+- Foldable phone hinge/heat dissipation
+- Battery safety circuit
+- Display + sensor integration	- Galaxy Z/Fold/S Series hardware structure
+- Hinge, thermal layers, display stacking	- Huawei, Xiaomi, BOE, Oppo
+- Patents targeting same functional purpose with different layout
+
+Digital Health Technology	
+- Smartwatch ECG/PPG sensing
+- Health anomaly detection	- Samsung Watch + Samsung Health data processing
+- Sensor-driven diagnostic logic	- Apple Watch, Fitbit, Withings
+- Algorithm + sensing combo patents
+
+❝To evaluate the robustness and domain generalizability of our patent comparison system, we selected five distinct technology domains — AI, energy, home appliances, mobile hardware, and digital health — that represent a wide range of technical structures and strategic objectives. These domains also align with both industry trends and the organizational R&D focus.❞
+
+❝Patent selection was driven by two principles: (1) clear articulation of technical problems and solutions within the document, and (2) the ability to form meaningful pairwise comparisons based on shared functional purpose but varied technical uniqueness.❞
+
+
+2)특허 별 문제, 솔루션_기능, 솔루션_구조, 솔루션_구현, 효과 추출
+  - **Problem**: What technical limitation or inefficiency does the invention solve?
+  - **Solution_Function**: Describe the core function the system performs to solve the problem.  
+    If both hardware and software elements exist, summarize how they functionally coordinate.  
+    Emphasize control flow, computation roles, or interaction models rather than just saying “performs multiplication.”
+  - **Solution_Structure**: Describe the key components or architectural layout that supports the function (e.g., processors, buffers, circuits, memory structures).
+  - **Solution_Implementation**: Describe the technical method by which the system is implemented, including hardware operation sequence, data flow, or system control logic.
+  - **Effect**: What measurable benefit or practical impact results from this solution? (e.g., speedup, resource reduction, flexibility)
+
+3)특허 별 FP, TU, SV 요약
+  - **Functional Purpose**  
+    Describe the **core problem or technological objective** that the invention is designed to address.  
+    Focus on the technical challenge or use-case that motivates the invention.  
+    *(e.g., reducing CO₂ emissions from mobile sources, improving heat management in compact devices)*
+
+  - **Technical Uniqueness**  
+    Highlight what is **technically novel or distinctive** in the approach, structure, or mechanism.  
+    Focus on **how** the invention solves the problem differently from existing technologies.  
+    *(e.g., dual-layer hinge system with dynamic pressure absorption, amine-based reversible sorbent material)*
+
+  - **Strategic Value**  
+    Describe how the invention can contribute to **business success or product competitiveness**.  
+    Consider aspects such as 
+    **market applicability (can be readily adopted in current or near-term products or systems)**,  
+    **regulatory alignment (supports compliance with current or upcoming regulations)**,  
+    **cost reduction (lowers manufacturing, material, or operational costs)**,  
+    **product quality improvement (enhances performance, durability, or reliability)**, or  
+    **applicability across multiple product lines or categories (can be reused across different device types or sectors)**.  
+    *(e.g., enables compliance with future emission standards, reduces manufacturing cost through simplified assembly, improves durability for high-end consumer electronics, or allows reuse across mobile and wearable devices)*
+
+
+4)당사 특허와 경쟁사 특허의 FP, TU, SV 비교
+-각 항목 별 승자 결정 및 이유 도출
+.(version 1) 편향다수 - ours / competitors 구분 입력에 따른 편향, 순서에 따른 중요도 편향
+  [Our Patent]
+  Functional Purpose: {our_fp}
+  Technical Uniqueness: {our_tu}
+  Strategic Value: {our_sv}
+
+  [Competitor Patent]
+  Functional Purpose: {comp_fp}
+  Technical Uniqueness: {comp_tu}
+  Strategic Value: {comp_sv}
+
+  Your Tasks:
+
+  1. For each aspect (`Functional Purpose`, `Technical Uniqueness`, `Strategic Value`):
+     - You must **choose exactly one** winner: either `"ours"` or `"competitor"`.
+     - ⚠️ **Tie is strictly forbidden.** Do not return `"tie"` or any similar neutral value.
+     - You must provide a **non-empty reason** (1–2 full sentences) for each decision.
+     - ⚠️ If you leave any reason blank, the output will be considered invalid.
+
+  2. Select the `overall_winner` strictly by majority rule:
+     - The patent that wins 2 or more of the above 3 aspects must be the overall winner.
+     - ⚠️ You are **not allowed to override** the majority decision for any reason.
+
+  3. Write a brief `overall_judgement` (1–2 sentences) that justifies the `overall_winner`:
+     - The winner must match the majority rule.
+     - In your reasoning, you may highlight the most strategically valuable or impactful aspect(s) such as technical differentiation, market potential, cost advantage, or applicability to future technologies.
+     - Do not repeat content already mentioned in the aspect reasons.
+	 
+	 
+.(version k) 편향축소 - ours / competitors 구분 제거, 특허 id와 필요 정보만 제공, 순서 별 중요도 반영x, 최종 결정에 대한 confidence요청, 입력 위치 바꿔서 높은 confidence를 최종 확정
+  [{patent_id_a}]  
+  Functional Purpose: {patent_a_fp}  
+  Technical Uniqueness: {patent_a_tu}  
+  Strategic Value: {patent_a_sv}
+
+  [{patent_id_b}]  
+  Functional Purpose: {patent_b_fp}  
+  Technical Uniqueness: {patent_b_tu}  
+  Strategic Value: {patent_b_sv}
+
+  ---  
+  🧠 Evaluation Instructions:
+  - Compare the two patents based **purely on content**, not position or label.
+  - Use actual patent IDs as identifiers.
+  - You may return `"tie"` if the difference is minimal or indistinguishable.
+  - For each comparison aspect, provide a reason.
+  - ⚠ In all reasons, you MUST refer to patents only by their provided patent IDs ({patent_id_a}, {patent_id_b}).
+  - Do NOT use "first patent", "second patent", "Patent A", "Patent B", or similar position-based expressions.
+  - Always write reasons like: "{patent_id_a} mentions X, while {patent_id_b} does not mention Y."
+  - DO NOT invent exceptions.
+
+  🔧 Overall Winner Determination Rule (**MUST follow the below rule**):
+  - You are not allowed to apply subjective judgment.
+  - You must strictly count the winners across functional_purpose, technical_uniqueness, and strategic_value.
+  - If one patent ID wins 2 or more aspects → assign that patent ID as overall_winner.
+  - If "tie" appears in 2 or more aspects → assign "tie" as overall_winner.
+  - If {patent_id_a} wins one aspect, {patent_id_b} wins one aspect, and the remaining aspect is a tie, then the overall_winner must be "tie".
+  - Any violation will make your output invalid.
+
+  After applying the rule, provide an `overall_winner` and a confidence score from 0 to 1.  
+  ★★[문제] : 현재 overall_judgement에 대한 설명과 가이드 없음★★
+
+-입력위치 바꿔서 각자 실행, confidence 높은 것 최종 결정, patent_id_a 및 patent_id_b를 ours/competitor 로 변경(position.py)
+# A-first prompt (ours first)
+prompt_a_first = prompt_template.format(
+	patent_id_a=our_id,
+	patent_a_fp=our_pos["functional_purpose"],
+	patent_a_tu=our_pos["technical_uniqueness"],
+	patent_a_sv=our_pos["strategic_value"],
+	patent_id_b=comp_id,
+	patent_b_fp=comp_pos["functional_purpose"],
+	patent_b_tu=comp_pos["technical_uniqueness"],
+	patent_b_sv=comp_pos["strategic_value"]
+)
+
+# B-first prompt (competitor first)
+prompt_b_first = prompt_template.format(
+	patent_id_a=comp_id,
+	patent_a_fp=comp_pos["functional_purpose"],
+	patent_a_tu=comp_pos["technical_uniqueness"],
+	patent_a_sv=comp_pos["strategic_value"],
+	patent_id_b=our_id,
+	patent_b_fp=our_pos["functional_purpose"],
+	patent_b_tu=our_pos["technical_uniqueness"],
+	patent_b_sv=our_pos["strategic_value"]
+)
+
+llm = get_llm_client()
+
+result_a = safe_invoke(llm, prompt_a_first, extract_json_from_llm_output)
+result_b = safe_invoke(llm, prompt_b_first, extract_json_from_llm_output)
+
+if result_a is None:
+	result_a = {
+		"aspect_evaluation": {},
+		"overall_winner": "competitor",
+		"overall_judgement": "A-first comparison failed; defaulting to competitor.",
+		"confidence": 0.0
+	}
+if result_b is None:
+	result_b = {
+		"aspect_evaluation": {},
+		"overall_winner": "ours",
+		"overall_judgement": "B-first comparison failed; defaulting to ours.",
+		"confidence": 0.0
+	}        
+
+# confidence 비교
+final_result = result_a if result_a.get("confidence", 0) >= result_b.get("confidence", 0) else result_b
+
+# patent_id → ours / competitor 변환
+def map_role(pid):
+	if pid == our_id:
+		return "ours"
+	elif pid == comp_id:
+		return "competitor"
+	elif pid == "tie":
+		return "tie"
+	else:
+		return pid  # 예외
+
+
+5)당사 특허와 경쟁사 특허 최종 포지셔닝 비교
+-Overall 승자 결정
+-Overall 승자 이유 도출
+
+==========================
+
+(3)위 전체 프로세스에 대해서 평가지표 고안 및 비교실험(최초 버전 vs 편향제거 버전)
+-5개 기술 분야
+ └→ 각 기술별 당사 vs 경쟁사 특허 4개
+       └→ 비교쌍당 30회 실험
+             └→ 평가지표 산출 (Rule 위반률, SV 편향 등)
+                   └→ 지표 변화 분석 및 시사점 도출
+				   
+-평가지표
+1.최종 승자의 당사 비율(시스템 개선 전후 비교 가능)
+-최초에는 역할 편향으로 인해 당사의 최종 승자 비율이 80% 이상 -> 이후에는 줄어듬.. (이런 느낌)
+
+
+2.당사와 경쟁사의 FP / TU / SV의 항목별 유사도 (시스템 개선 전후 비교 가능?)
+-FP, TU, SV를 임베딩 후 각 항목 별 당사와 경쟁사 코사인 유사도 계산
+.FP는 높고 TU만 다른 경우 → 기술적 접근 차이로 해석 가능
+.FP/SV가 유사하면 같은 목표 + 유사한 시장 방향
+-시스템 개선 전후 거시적인 관점에서 차이를 드러내고, 그 의미해석필요
+.최초에는 SV 간 유사도가 0.8이상, FP 0.7, TU 0.3
+.이후에는 SV 간 유사도가 0.5, FP 0.9, TU 0.2
+
+3. FP/TU/SV 승자와 최종 승자의 관계(시스템 개선 전후 비교 가능)
+-항목별 승자와 최종 승자 간의 상관관계 (카이제곱 검정, Point-biserial 등)
+-어떤 항목이 최종 판단에 더 큰 영향을 주는가? 예: SV 승자와 최종 승자가 80% 이상 일치하면 → SV가 가장 결정적 
+
+4. 최종 승자 Reason의 키워드 기반 분석(시스템 개선 전후 비교 가능)
+-tf-idf 등으로 핵심 키워드 추출
+-핵심 키워드의 빈도를 바탕으로 최종 reason이 어디에 집중하는지 파악(FP 연관 30%, TU 연관 15%, SV 연관 55% 등)
+
+5. 최종 승자가 Rule(FP, TU, SV 다수결 기반)을 따르지 않는 비율
+-Rule을 따르지 않는 비율 자체
+. Rule을 따르지 않는 상황에서 최종 승자 비율(ours, compeitor, tie = 대부분 tie -> 보수적)
+. 모델의 성향/편향 해석 : Rule 을 따르지 않는 최종 tie에서, FP, TU, SV의 승자 비율

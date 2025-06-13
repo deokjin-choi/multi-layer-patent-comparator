@@ -1,0 +1,8 @@
+{
+  "problem": "Limitations in portability and screen size of portable electronic devices when providing various functions",
+  "solution_function": "A foldable electronic device design that allows stable, durable folding and unfolding actions, enabling wider screens without compromising portability",
+  "solution_structure": "The device includes a display, two housings (first and second), a hinge structure connecting the housings, and a hinge housing supporting the hinge structure. The hinge structure has fixed brackets providing support points, first and second rotating members for stable folding motion, first and second link members for enhancing durability of the housings, and first and second arm members for flattening the regions of display in the folded state",
+  "solution_implementation": "The fixed bracket is attached to the hinge housing and consists of a first and second rail. The rotating members include first and second rail structures inserted into the rails, with extensions (first rail structure for first rotating member, third rail structure for second rotating member). The link members consist of portions coupled with the housings and rails coupled with the rail structures of the rotating members. The arm members include fifth and sixth rail structures fastened with adjacent rails of the link members, and seventh rails disposed at appropriate locations",
+  "effect": "Increased portability due to maintenance of compact size when unfolded, enhanced screen size for better user experience",
+  "id": "US20240430348A1"
+}

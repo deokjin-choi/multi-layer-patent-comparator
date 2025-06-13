@@ -1,0 +1,8 @@
+{
+  "problem": "Limitation in wearable devices for sensing accurate electrocardiogram (ECG) from a user without additional accessories",
+  "solution_function": "The system measures voltages at two electrodes, one on the watch crown and another on the watch carrier. The processor determines an ECG using these measured voltages and displays it on the touch-sensitive display.",
+  "solution_structure": "Housing, carrier, transparent cover, touch-sensitive display, first electrode (on carrier), second electrode (on crown), crown (consisting of a body and shaft), and processor.",
+  "solution_implementation": "The voltages are measured when the user is in contact with both electrodes. The processor calculates the ECG using these voltages and updates the display to reflect the current ECG readings.",
+  "effect": "Improved accuracy and convenience in sensing ECG data through a compact, wearable device.",
+  "id": "US11432766B2"
+}

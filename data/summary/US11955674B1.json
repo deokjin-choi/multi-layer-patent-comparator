@@ -1,0 +1,8 @@
+{
+  "problem": "Increase energy efficiency and reduce carbon emissions in hydrocarbon cracking systems.",
+  "solution_function": "The system separates a first cracking product stream into a hydrogen-rich methane stream and other product streams. The hydrogen-rich methane stream is then converted to electricity through a fuel cell, while producing carbon dioxide and water as byproducts.",
+  "solution_structure": "Furnace with an interior conduit, separators (first and second), and a fuel cell. The fuel cell has an anode chamber, cathode chamber, and a separating element (solid oxide or molten carbonate).",
+  "solution_implementation": "The first separator separates the cracking product stream into hydrogen-rich methane and other streams. The second separator further separates the hydrogen-rich methane into hydrogen and methane streams. The methane from either the separators is fed to the fuel cell's anode chamber, while oxygen is introduced at the cathode chamber.",
+  "effect": "Reduced carbon emissions due to conversion of methane to carbon dioxide in the fuel cell, with the generated electricity being used or processed without concern for carbon dioxide emissions.",
+  "id": "US11955674B1"
+}

@@ -1,0 +1,8 @@
+{
+  "problem": "Increasing energy consumption from fossil fuels resulting in carbon dioxide emissions and global warming",
+  "solution_function": "A high-efficiency fuel cell system with carbon dioxide capture capability. The system uses a multi-stack design, where individual fuel cells are stacked together and powered to produce electricity through an electrochemical reaction.",
+  "solution_structure": "The structure includes a fuel cell stack module housing multiple fuel cell stacks within a common box-like containment structure. Each fuel cell stack has inlet manifolds for receiving fuel and oxidant gases, and outlet manifolds for spent gases as anode and cathode exhausts. The containment structure has gas inlet and outlet ports that communicate with the respective manifolds of each cell stack.",
+  "solution_implementation": "The fuel cells are stacked along the length of the containment structure within the module. Fuel and oxidant gases are introduced through inlet ports, ducts, and manifolds to each fuel cell stack. Electrical energy is generated as a result of the electrochemical reaction occurring within each fuel cell.",
+  "effect": "The system reduces carbon dioxide emissions by using a cleaner energy source and capturing the produced carbon dioxide.",
+  "id": "US9502728B1"
+}

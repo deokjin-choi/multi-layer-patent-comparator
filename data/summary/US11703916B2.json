@@ -1,0 +1,8 @@
+{
+  "problem": "Shaking of support plates in a foldable electronic device, reducing stability of moving tracks during folding and unfolding processes.",
+  "solution_function": "The hinge mechanism ensures stability of moving tracks by preventing support plates from shaking during unfolding and folding processes through a sliding interaction between the first and second lap joint structures.",
+  "solution_structure": "Base, two mounting brackets, two support plates, two linkage components, first lap joint structure, second lap joint structure.",
+  "solution_implementation": "Each mounting bracket is rotatably connected to the corresponding support plate. One end of each linkage component is rotatably connected to the base and the other end is connected to the corresponding mounting bracket. The first lap joint structures extend from the base to the corresponding mounting brackets and the second lap joint structures extend from the support plates to the base, with a sliding interaction between the second surfaces of the second lap joint structures and the surfaces of the first lap joint structures during unfolding or folding processes.",
+  "effect": "Improved stability of moving tracks in the hinge mechanism, reducing shaking of support plates during folding and unfolding processes.",
+  "id": "US11703916B2"
+}
