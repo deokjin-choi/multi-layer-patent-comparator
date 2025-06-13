@@ -30,29 +30,9 @@ This multi-layered insight supports more effective decision-making in R&D, IP ma
 
 ## How to Use
 
-This system can be used in two different ways depending on the user’s role.
+This system is intended for developers or technical users who wish to test, run, or extend the application locally.
 
-### ▶ For General Users
-
-Before using this system, it is assumed that your team has:
-- Selected key patents from your company and competitors
-- Filtered to focus on strategically important patent sets
-
-#### Steps:
-1. Enter your company’s target patent number
-2. Enter one or more competitor patent numbers
-3. Run the analysis
-
-![Input GUI](images/input_gui.PNG)
-
-The system will:
-- Perform one-to-one comparisons
-- Generate results using LLMs across the three layers
-- Provide structured tables, insights, and strategy recommendations
-
-### ▶ For Developers
-
-If you want to run, test, or extend this system locally:
+### Setup and Execution
 
 1. **Clone the repository and rename the folder**
 - git clone https://github.com/deokjin-choi/multi-layer-patent-comparator.git
@@ -70,7 +50,19 @@ If you want to run, test, or extend this system locally:
 4. **Start the Streamlit frontend**
 - streamlit run main.py
 
-5. **Project structure overview**
+5. **Run the analysis**
+- Enter your company’s target patent number
+- Enter one or more competitor patent numbers
+- Run the analysis
+
+![Input GUI](images/input_gui.PNG)
+
+The system will:
+- Perform one-to-one comparisons
+- Generate results using LLMs across the three layers
+- Provide structured tables, insights, and strategy recommendations
+
+6. **Project structure overview**
 - `app/controllers/`  
   Core modules for summarization, positioning, strategy, etc.
 
