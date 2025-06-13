@@ -35,20 +35,28 @@ This system is intended for developers or technical users who wish to test, run,
 ### Setup and Execution
 
 1. **Clone the repository and rename the folder**
-- git clone https://github.com/deokjin-choi/multi-layer-patent-comparator.git
-- mv multi-layer-patent-comparator patent_compare
-- cd patent_compare
+```bash
+git clone https://github.com/deokjin-choi/multi-layer-patent-comparator.git
+mv multi-layer-patent-comparator patent_compare
+cd patent_compare
+```
 
 2. **Install dependencies**
-- pip install -r requirements.txt
+```bash
+pip install -r requirements.txt
+```
 
 3. **Launch the local LLM using Ollama**
-- ollama serve & # Start Ollama server in the background
-- ollama run mistral
+```bash
+ollama serve & # Start Ollama server in the background
+ollama run mistral
+```
 > The system uses **Mistral** as the default local model via Ollama.
 
 4. **Start the Streamlit frontend**
-- streamlit run main.py
+```bash
+streamlit run main.py
+```
 
 5. **Run the analysis**
 - Enter your company’s target patent number
