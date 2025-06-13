@@ -8,9 +8,8 @@ The 3-Layer Patent Comparison System replaces manual and subjective analysis wit
 
 ### 1. Strategic Direction – Provides a strategic guide for how your patent should be positioned or developed further
 ![Strategy Result](images/1.strategic_recommend.PNG)
-![Patents Summary Table](images/1.patent_summary_table.PNG)
 - Compares your patent with multiple competitors
-- Aggregates similarity and relative value
+- Aggregates relative value
 - Generates a strategic recommendation based on the analysis
 
 ### 2. Technology Positioning – Determines which side has the technological and strategic upper hand.
@@ -31,11 +30,17 @@ This multi-layered insight supports more effective decision-making in R&D, IP ma
 
 ## How to Use
 
+This system can be used in two different ways depending on the user’s role.
+
+---
+
+### ▶ For General Users
+
 Before using this system, it is assumed that your team has:
 - Selected key patents from your company and competitors
 - Filtered to focus on strategically important patent sets
 
-### Steps:
+#### Steps:
 1. Enter your company’s target patent number
 2. Enter one or more competitor patent numbers
 3. Run the analysis
@@ -46,6 +51,45 @@ The system will:
 - Perform one-to-one comparisons
 - Generate results using LLMs across the three layers
 - Provide structured tables, insights, and strategy recommendations
+
+### ▶ For Developers
+
+If you want to run, test, or extend this system locally:
+
+1. **Clone the repository and rename the folder**
+git clone https://github.com/deokjin-choi/multi-layer-patent-comparator.git
+mv multi-layer-patent-comparator patent_compare
+cd patent_compare
+
+2. **Install dependencies**
+pip install -r requirements.txt
+
+3. **Launch the local LLM using Ollama**
+ollama serve & # Start Ollama server in the background
+ollama run mistral
+> The system uses **Mistral** as the default local model via Ollama.
+
+4. **Start the Streamlit frontend**
+streamlit run main.py
+
+5. **Project structure overview**
+- `app/controllers/`  
+  Core modules for summarization, positioning, strategy, etc.
+
+- `utils/llm/`  
+  LLM client interface, retry logic, model selection
+
+- `prompts/`  
+  Prompt templates (version-controlled per task)
+
+- `data/`  
+  Raw patents, summaries, and result caching
+
+- `frontend/components/`  
+  Streamlit-based user interface components
+
+- `tests/`  
+  Unit tests and evaluation scripts
 
 ## Author
 
