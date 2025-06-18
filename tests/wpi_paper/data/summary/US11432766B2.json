@@ -1,0 +1,8 @@
+{
+  "problem": "Limitation in wearable devices for accurately and efficiently measuring electrocardiogram (ECG) of users",
+  "solution_function": "Wearable electronic device equipped with a set of electrodes to sense or determine ECG of a user. The processor determines the ECG by correlating voltages measured from the first and second electrodes.",
+  "solution_structure": "The wearable device consists of a housing, a crown, a carrier, a touch-sensitive display, and a transparent cover. Two electrodes are placed on the carrier and the crown body.",
+  "solution_implementation": "Upon user contact with both electrodes, the first electrode measures the first voltage while the second electrode measures the second voltage. The processor within the housing processes these voltages to determine the ECG, which is then displayed on the touch-sensitive display.",
+  "effect": "Improved accuracy and efficiency in measuring user's ECG compared to traditional wearable devices",
+  "id": "US11432766B2"
+}

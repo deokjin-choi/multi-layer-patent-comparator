@@ -1,0 +1,8 @@
+{
+  "problem": "Limitation in ensuring stability of moving tracks of support plates in foldable electronic devices due to shaking during folding or unfolding",
+  "solution_function": "Prevent shaking of support plates during unfolding and folding processes, thereby ensuring stability of moving tracks",
+  "solution_structure": "Base, two mounting brackets, two support plates, two linkage components that are symmetrically disposed relative to the base, first lap joint structure on one end of each linkage component that extends from the base, second lap joint structure on one side of each support plate that faces the base",
+  "solution_implementation": "Each mounting bracket is rotatably connected to the support plate on the same side, one end of each linkage component is rotatably connected to the base, the other end of the linkage component is connected to the mounting bracket on the same side. In a folding or unfolding process, the second surface of the second lap joint structure slides along the surface of the first lap joint structure.",
+  "effect": "Improved stability of moving tracks during folding and unfolding processes",
+  "id": "US11703916B2"
+}

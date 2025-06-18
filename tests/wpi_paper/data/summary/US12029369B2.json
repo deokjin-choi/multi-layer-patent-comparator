@@ -1,0 +1,8 @@
+{
+  "problem": "The problem addressed is the challenge of ensuring that customer-provided reusable beverage containers are clean and sanitary prior to filling, while minimizing the time and space required in a retail environment.",
+  "solution_function": "The system functions by rapidly washing and sanitizing reusable beverage containers using a pop-up sprayer that rotates and moves along an axis of rotation. The pop-up sprayer has multiple nozzles, one of which sprays wash fluid into the container's interior when it is held within the holder, and another that sprays wash fluid onto the outer lip of the container.",
+  "solution_structure": "The system includes a housing defining a wash chamber, a holder for holding the beverage container during washing, and a pop-up sprayer with a plurality of nozzles. The pop-up sprayer rotates about an axis of rotation and moves between retracted and extended positions along this axis.",
+  "solution_implementation": "The system operates by introducing wash fluid into the manifold in the pop-up sprayer, allowing it to flow through the axial conduit towards the nozzles. The nozzles are oriented appropriately to spray wash fluid into the interior of the container or onto its outer lip depending on the position of the container within the holder.",
+  "effect": "The effect is a rapid and sanitary washing method for customer-provided reusable beverage containers, suitable for use in a retail environment.",
+  "id": "US12029369B2"
+}

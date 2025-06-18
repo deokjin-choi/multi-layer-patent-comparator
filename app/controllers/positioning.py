@@ -46,7 +46,7 @@ def compare_positioning(our_id: str, our_pos: dict, comp_id: str, comp_pos: dict
     """당사 vs 경쟁사 1:1 비교"""
     try:
         # diff_v7: 양방향 평가 + confidence 기반 선택
-        if prompt_version == "diff_v7" or prompt_version == "diff_v8":
+        if prompt_version == "diff_v7" or prompt_version == "diff_v8" or prompt_version == "diff_v9":
             prompt_template = load_prompt("positioning", prompt_version)
 
             # A-first prompt (ours first)
@@ -131,10 +131,10 @@ def compare_positioning(our_id: str, our_pos: dict, comp_id: str, comp_pos: dict
                 patent_b_tu=comp_pos["technical_uniqueness"],
                 patent_b_sv=comp_pos["strategic_value"]
             )
+            
             llm = get_llm_client()
-            response = llm.invoke(prompt)
-            raw_result = extract_json_from_llm_output(response)
-
+            raw_result = safe_invoke(llm, prompt, extract_json_from_llm_output)
+            
             def remap_winner(value):
                 return "ours" if value == "A" else "competitor"
 
@@ -165,8 +165,8 @@ def compare_positioning(our_id: str, our_pos: dict, comp_id: str, comp_pos: dict
                 comp_sv=comp_pos["strategic_value"]
             )
             llm = get_llm_client()
-            response = llm.invoke(prompt)
-            return extract_json_from_llm_output(response)
+            response = safe_invoke(llm, prompt, extract_json_from_llm_output)
+            return response
 
     except Exception as e:
         logger.error(f"[{our_id} vs {comp_id}] Positioning comparison failed: {e}")
@@ -193,7 +193,7 @@ def analyze_positioning(our_patent: dict, competitor_patents: list[dict]) -> lis
         comp_summary = {k: v for k, v in comp.items() if k != "id"}
         comp_pos = generate_positioning_summary(comp_id, comp_summary, prompt_version="summarize_v3")
 
-        result = compare_positioning(our_id, our_pos, comp_id, comp_pos, prompt_version="diff_v8")
+        result = compare_positioning(our_id, our_pos, comp_id, comp_pos, prompt_version="diff_v9")
         print(f"Comparison result for {our_id} vs {comp_id}: {result}")
 
         # 테이블 형태로 변환

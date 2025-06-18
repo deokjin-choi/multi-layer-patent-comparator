@@ -1,0 +1,8 @@
+{
+  "problem": "Portable electronic devices have limited screen size due to their compact design, making it difficult for users to use wider screens without compromising portability.",
+  "solution_function": "A foldable electronic device solves this problem by providing a larger display area that can be folded when not in use, thus increasing usability without sacrificing portability.",
+  "solution_structure": "The device consists of two housings (first and second), each accommodating a portion of the display. Each housing has a wing plate that supports the foldable display. There are multiple hinge structures connecting the housings and a hinge housing where these hinges are seated. The hinge structure includes a center bar and is designed to rotate in conjunction with the wing plates.",
+  "solution_implementation": "The device operates by allowing the user to fold the display between the two housings, using the hinge structures to maintain the display's position. Each hinge structure has a continuous center bar that ensures seamless rotation and support of the display.",
+  "effect": "The benefit is a portable electronic device with a larger display area that can be used comfortably without compromising portability.",
+  "id": "EP4557048A1"
+}

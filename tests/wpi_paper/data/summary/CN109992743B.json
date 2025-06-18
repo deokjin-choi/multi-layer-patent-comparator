@@ -1,0 +1,8 @@
+{
+  "problem": "Inflexible calculation and low efficiency in matrix multiplication",
+  "solution_function": "Performs matrix multiplication by partitioning matrices, processing subblocks concurrently in a systolic array, and accumulating results.",
+  "solution_structure": "Includes two memories for storing matrices, an operation circuit with X rows of operation units (each with a vector multiplication circuit and an addition circuit), and a controller.",
+  "solution_implementation": "The controller partitions the first matrix into subblocks, each with size X L, and the second matrix into subblocks with size L x Y. The operation circuit receives row vector data from the first memory and column vector data from the second memory. Each operation unit multiplies the corresponding vectors and adds the results, accumulating them for the same operation unit. The controller controls the operation based on the partitioned subblocks.",
+  "effect": "Improves calculation efficiency and flexibility in matrix multiplication",
+  "id": "CN109992743B"
+}

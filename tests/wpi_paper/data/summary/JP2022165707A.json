@@ -1,0 +1,8 @@
+{
+  "problem": "Electronic devices with foldable displays experience difficulty in absorbing excess length of wiring or flexible substrate connecting components when housings rotate.",
+  "solution_function": "The invention introduces an electronic device that provides a structure allowing smooth absorption of the excess length of a flexible substrate between housings, facilitating rotation and data transmission between components.",
+  "solution_structure": "A hinge device connects adjacent ends of the first and second housings, enabling rotational movement. A flexible substrate links the electronic components in each housing, positioned offset toward one housing to allow for absorption of excess length when the housings are rotated.",
+  "solution_implementation": "The flexible substrate is designed such that it can be flexed and maintained without horizontal bending; the hinge device allows controlled movement without hindering the flexible substrate's flexibility.",
+  "effect": "By absorbing excess length, the device improves smoothness during rotation, enabling better data transmission between components.",
+  "id": "JP2022165707A"
+}

@@ -1,0 +1,8 @@
+{
+  "problem": "Traditional molten carbonate fuel cells operate to maximize electrical efficiency, maintaining fuel utilization within a fuel cell at 70% to 75%. This limitation leads to inefficient energy production.",
+  "solution_function": "The invention improves the efficiency of molten carbonate fuel cells by adjusting the amount of hydrogen provided to the anode. Hydrogen with a high concentration of H2 is recycled from the anode exhaust for use in the next pass, increasing utilization beyond the traditional 70% to 75%.",
+  "solution_structure": "The system consists of a fuel cell and a separation unit that recycles hydrogen-rich exhaust back to the anode inlet.",
+  "solution_implementation": "Hydrogen utilization is increased by recycling excess hydrogen from the anode exit to the anode inlet, with a utilization range of over 10% to 30%. Reforming primarily occurs externally, but some internal reforming is also enabled.",
+  "effect": "The improved fuel cell design results in increased energy production and more efficient use of hydrogen.",
+  "id": "US9257711B2"
+}

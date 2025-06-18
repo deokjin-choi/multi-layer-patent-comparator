@@ -1,0 +1,8 @@
+{
+  "problem": "Efficient execution of matrix multiplication operations in deep neural networks consumes significant running time.",
+  "solution_function": "The system performs adaptive matrix multiplication by loading data from memory into two multiplying units, performing multiplications, adding the results, and sending the sum to an outer buffer for addition. Each multiplying unit has inner buffer circuits, adder circuits, and multiplying circuits.",
+  "solution_structure": "The system includes a first multiplying unit with a first inner buffer circuit, a second inner buffer circuit, an adder circuit, and a multiplying circuit; a second multiplying unit with similar components; a memory load circuit; and an outer buffer circuit.",
+  "solution_implementation": "The memory load circuit loads data from memory into the first and second inner buffer circuits of both multiplying units in a single burst using a burst memory access mode. The multiplying circuits form products of elements within their respective inner buffer circuits, which are then transmitted to the adder circuits for summation. The resulting sums are sent to the outer buffer circuit for final addition.",
+  "effect": "Improved performance of deep neural networks by reducing matrix multiplication running time",
+  "id": "US11475102B2"
+}

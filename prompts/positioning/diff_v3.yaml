@@ -28,7 +28,7 @@ template: |
 
   3. Write an `overall_judgement` (1–2 sentences) justifying the overall winner:
      - Do not repeat earlier reasons.
-     - Instead, highlight the **most impactful or strategically valuable factor** that made the winner superior (e.g., adaptability, energy savings, integration potential, product differentiation).
+     - This explanation must reflect the actual aspect(s) that contributed to the win (e.g., functional purpose, technical uniqueness, or strategic value).
 
   ---
   Respond **strictly** in the following JSON format:
@@ -49,7 +49,7 @@ template: |
       }}
     }},
     "overall_winner": "ours" or "competitor",
-    "overall_judgement": "your strategic reasoning here"
+    "overall_judgement": "your reasoning here"
   }}
 
   ---

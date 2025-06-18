@@ -1,0 +1,8 @@
+{
+  "problem": "Inefficient cleaning in dish washing machines due to areas not receiving washing water, especially with linear type jet structures.",
+  "solution_function": "The invention presents a linear type dish washing machine that optimizes the distribution of washing water from a fixed nozzle and a movable vane. The vane reflects washing water jetted from the fixed nozzle towards the dish, enabling coverage of the entire washing tank area.",
+  "solution_structure": "The structure includes a fixed nozzle with multiple horizontal jet holes, a movable vane extending in the horizontal direction of the washing tank, and a driving device to move the vane linearly. The driving device can be implemented using a motor, a belt, and a rail.",
+  "solution_implementation": "The washing water from the sump is distributed by a specific device to the jet nozzles. In the linear type jet structure, an outlet of the distribution device facing upward is preferred for rotating nozzles, but not necessary for fixed nozzles since they are adjacent to the back wall of the washing tank.",
+  "effect": "The optimized linear type dish washing machine reduces areas not receiving washing water and improves overall cleaning efficiency.",
+  "id": "US10231596B2"
+}

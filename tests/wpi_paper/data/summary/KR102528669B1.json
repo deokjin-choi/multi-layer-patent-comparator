@@ -1,0 +1,8 @@
+{
+  "problem": "The limitation lies in the even distribution of washing water on a dish's surface for efficient cleaning and improvement of spray area and washing efficiency of the spray arm in conventional dishwashers.",
+  "solution_function": "The solution involves improving the spray arm structure by incorporating an auxiliary arm that rotates with the main arm, diversifying the spray angle according to the rotation of the spray arm. The main arm and the auxiliary arm work together to reciprocate the auxiliary arm using the rotational force of the main arm, thus eliminating the need for a separate driving device.",
+  "solution_structure": "The dishwasher includes a washing tank, a dish rack, a spray arm with both main and auxiliary components, a sump, and a supply flow path. The spray arm has a main arm that rotates and an auxiliary arm mounted to it, which reciprocates during rotation.",
+  "solution_implementation": "The main arm is driven by the washing water being sprayed through it. This motion is transferred to the auxiliary arm, causing it to reciprocate along the arcuate trajectory of the spray arm, thus changing the spray angle for more efficient cleaning.",
+  "effect": "The proposed solution provides increased spray area and improved washing efficiency, resulting in cleaner dishes and reduced water usage.",
+  "id": "KR102528669B1"
+}

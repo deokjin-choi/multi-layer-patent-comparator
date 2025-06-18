@@ -1,0 +1,8 @@
+{
+  "problem": "Limitation in portability when providing wider screens in portable electronic devices",
+  "solution_function": "A foldable electronic device folds and unfolds to change its screen size, allowing wider screens without increasing overall size, thus maintaining portability.",
+  "solution_structure": "The structure includes a hinge housing, fixed bracket with first and second rails, two rotating members (first and second) with rail structures, two link members (first and second), and two arm members (first and second). The hinge housing supports the hinge structure. The fixed bracket provides a supporting point for the hinge components. The rotating members allow stable folding motion. The link members support the housings to enhance durability and make the first and second regions of the display flat in the folded state. The arm members further improve stability.",
+  "solution_implementation": "The fixed bracket is fastened to the hinge housing with the first and second rails. The rotating members consist of a first rail structure inserted into the first rail, a second rail structure that extends from the first rail structure, a third rail structure inserted into the second rail, and a fourth rail structure that extends from the third rail structure. The link members are coupled with the housings and include portions coupled with the housing rails. The arm members consist of a fifth rail fastened with a fifth rail disposed adjacent to the third rail of the first link member, and a sixth rail fastened with a sixth rail disposed adjacent to the fourth rail of the second link member.",
+  "effect": "Increased portability without compromising on screen size",
+  "id": "US20240430348A1"
+}

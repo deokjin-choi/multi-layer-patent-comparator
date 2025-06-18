@@ -20,11 +20,11 @@ template: |
   - Compare the two patents based **purely on content**, not position or label.
   - Use actual patent IDs as identifiers.
   - You may return `"tie"` if the difference is minimal or indistinguishable.
-  - For each comparison aspect, provide a reason.
+  - For each comparison aspect, first decide the winner.
+  - Then, explain **why the winner is better** based on the content.
   - ⚠ In all reasons, you MUST refer to patents only by their provided patent IDs ({patent_id_a}, {patent_id_b}).
   - Do NOT use "first patent", "second patent", "Patent A", "Patent B", or similar position-based expressions.
-  - Always write reasons like: "{patent_id_a} mentions X, while {patent_id_b} does not mention Y."
-  - DO NOT invent exceptions.
+  - DO NOT invent exceptions or assumptions.
 
   🔧 Overall Winner Determination Rule (**MUST follow the below rule**):
   - You are not allowed to apply subjective judgment.
@@ -34,7 +34,9 @@ template: |
   - If {patent_id_a} wins one aspect, {patent_id_b} wins one aspect, and the remaining aspect is a tie, then the overall_winner must be "tie".
   - Any violation will make your output invalid.
 
-  After applying the rule, provide an `overall_winner` and a confidence score from 0 to 1.
+  - After applying the rule, provide an `overall_winner` and a confidence score from 0 to 1.
+  - Then, in `overall_judgement`, explain in one sentence **why the selected patent is overall superior**.
+  - This explanation must reflect the actual aspect(s) that contributed to the win (e.g., functional purpose, technical uniqueness, or strategic value).
 
   ---  
   You MUST output only valid JSON. Do not include any explanation, markdown, or formatting. Do not wrap your output in ``` or any other markers.

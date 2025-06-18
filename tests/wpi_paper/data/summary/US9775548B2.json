@@ -1,0 +1,8 @@
+{
+  "problem": "Inefficient heart rate monitoring due to limited sensitivity or accuracy of PPG sensors in wearable fitness devices.",
+  "solution_function": "High-aspect-ratio photodetector element (2 mm square) captures diffused light from a pair of high-brightness green LEDs, placed approximately 8 mm apart. The control logic calculates heart rate based on fluctuations in the measured light.",
+  "solution_structure": "The device includes a housing with straps for attachment to a person's forearm, a back face where the light sources and photodetector element are located, and control logic within the housing.",
+  "solution_implementation": "When worn against a person's skin, the light sources illuminate the skin. The photodetector element then measures the emitted light. The control logic calculates heart rate based on these measurements.",
+  "effect": "Improved sensitivity and accuracy in heart rate monitoring, leading to more reliable fitness data.",
+  "id": "US9775548B2"
+}

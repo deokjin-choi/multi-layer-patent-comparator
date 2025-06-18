@@ -1,0 +1,8 @@
+{
+  "problem": "High CO2 content in hydrogen production processes, which contaminates the hydrogen and requires costly and potentially hazardous separation methods.",
+  "solution_function": "The invention presents a carbon capture system that selectively removes CO2 from H2-rich gas mixtures to produce high-purity H2 for further use or storage, thereby reducing emissions.",
+  "solution_structure": "The system comprises a pressure swing adsorption (PSA) unit which separates single gases from a gas mixture. The PSA unit is integrated with the hydrogen production process to treat the produced gas mixture and separate CO2.",
+  "solution_implementation": "The PSA unit operates by alternating high-pressure and low-pressure cycles, adsorbing CO2 onto a sorbent during the high-pressure cycle and desorbing it during the low-pressure cycle. The separated CO2 is then stored or released.",
+  "effect": "The carbon capture system reduces CO2 emissions by preventing its release into the environment, contributing to mitigating global warming. It also provides a higher purity H2 product for subsequent use.",
+  "id": "EP4469183A1"
+}

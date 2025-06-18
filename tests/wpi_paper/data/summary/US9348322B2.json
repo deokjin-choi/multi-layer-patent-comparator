@@ -1,0 +1,8 @@
+{
+  "problem": "Smart watches and smart glasses do not provide all desired features, particularly effective biometric sensor features while maintaining a desirably small size.",
+  "solution_function": "The invention presents a smart device with a biometric sensor that uses light emission and detection to measure biometric data from the user's skin, despite the device's compact size.",
+  "solution_structure": "The device includes a wrist worn device or a user worn frame, a controller, a power supply, a light emitter, a light detector, and a lens. The lens has an opaque section and a light transmissive section for directing light emission and detection.",
+  "solution_implementation": "The light emitter emits light towards the user's skin or wrist. The reflected light is detected by the light detector, which sends a signal to the controller. The controller processes this signal to derive biometric data.",
+  "effect": "The solution allows for effective biometric sensing in a compact device, addressing the need for a smart device that provides desirable biometric sensor features while maintaining a small size.",
+  "id": "US9348322B2"
+}

@@ -1,0 +1,8 @@
+{
+  "problem": "High costs and energy penalties associated with gas separation steps in current CO2 capture processes for power generation.",
+  "solution_function": "A chemical looping combustion (CLC) process that utilizes an oxygen carrier to transport oxygen between air and fuel, preventing direct contact and enabling the exhaust gas stream to consist of CO2 and H2O only. The captured CO2 is readily available after condensation of H2O.",
+  "solution_structure": "The system comprises a fuel reactor, an air reactor, and an oxygen carrier material. During oxidation, the oxygen carrier absorbs oxygen in the air reactor and releases it during reduction in the fuel reactor.",
+  "solution_implementation": "The process involves two heat states: exothermic during oxidation and endothermic during reduction, resulting in a total heat output similar to conventional combustion. The oxidation reaction occurs at a lower temperature (<1200°C) compared to direct combustion processes, reducing NOx formation.",
+  "effect": "Minimal energy penalty for CO2 capturing (estimated at 2-3% efficiency lost), reduced operational costs due to the absence of gas separation steps, and decreased NOx emissions.",
+  "id": "US10252243B2"
+}

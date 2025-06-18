@@ -1,0 +1,69 @@
+name: compare_technology_positioning_v9
+description: Compare two patents using their actual patent IDs. Choose a winner for each aspect and overall. Avoid tie unless they are truly indistinguishable. Provide a confidence score.
+template: |
+  You are a technology strategist comparing two patents for strategic evaluation.
+
+  Given two patents summarized below, analyze their technology positioning and provide a structured comparison.
+
+  [{patent_id_a}]  
+  Functional Purpose: {patent_a_fp}  
+  Technical Uniqueness: {patent_a_tu}  
+  Strategic Value: {patent_a_sv}
+
+  [{patent_id_b}]  
+  Functional Purpose: {patent_b_fp}  
+  Technical Uniqueness: {patent_b_tu}  
+  Strategic Value: {patent_b_sv}
+
+  ---  
+  🧠 Evaluation Instructions:
+  - Compare the two patents based **purely on content**, not order or label.
+  - You may return `"tie"` for a specific aspect **only if the two patents are truly indistinguishable** in that aspect.
+  - If the difference is small but still present, **you must choose a winner**.
+  - If uncertain, give preference to the patent with higher **strategic value**, then **technical uniqueness**.
+  - In all explanations, refer to patents strictly by their provided IDs ({patent_id_a}, {patent_id_b}).
+  - Do not use "first patent", "second patent", or similar phrasing.
+
+  🔧 Overall Winner Determination Rule (**MUST follow exactly**):
+  - Count the number of wins in the three aspects:
+    - If one patent ID wins 2 or more aspects → it becomes `overall_winner`.
+    - If "tie" appears in 2 or more aspects → assign `"tie"` as `overall_winner`.
+    - If each patent wins one aspect and one is a tie → assign `"tie"` as `overall_winner`.
+
+  🎯 Confidence Score Guidance:
+  - Assign a `confidence` score (0.0 to 1.0) based on **how clearly one patent outperformed the other overall**.
+  - Higher confidence reflects **clearer, stronger justification** in aspect-level reasoning.
+  - If the overall decision is "tie", the confidence must not exceed **0.5** unless the equality is well justified.
+
+  🌀 Consistency Reminder:
+  - Your evaluation must remain consistent regardless of the input order.
+  - Assume the patents are presented in reverse order and ensure the result would be the same.
+
+  ---  
+  Output Format:
+  Respond strictly in the following JSON format **with no extra characters or markdown**:
+
+  {{
+    "aspect_evaluation": {{
+      "functional_purpose": {{
+        "winner": "{patent_id_a}" or "{patent_id_b}" or "tie",
+        "reason": "... full sentence ..."
+      }},
+      "technical_uniqueness": {{
+        "winner": "{patent_id_a}" or "{patent_id_b}" or "tie",
+        "reason": "... full sentence ..."
+      }},
+      "strategic_value": {{
+        "winner": "{patent_id_a}" or "{patent_id_b}" or "tie",
+        "reason": "... full sentence ..."
+      }}
+    }},
+    "overall_winner": "{patent_id_a}" or "{patent_id_b}" or "tie",
+    "overall_judgement": "... one-sentence insight ...",
+    "confidence": float between 0.0 and 1.0
+  }}
+
+  ❗ Do NOT:
+  - Use placeholder values (e.g., "..." or "N/A")
+  - Leave any field empty
+  - Use label-based references (e.g., "Patent A", "first/second patent")

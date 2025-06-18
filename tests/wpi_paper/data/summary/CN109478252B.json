@@ -1,0 +1,8 @@
+{
+  "problem": "Limited performance in neural network operations when applied on CPUs and GPUs that are not optimized for neural network-specific operations like convolution, max pooling, and noise generation.",
+  "solution_function": "Optimization of multicast networks and memory transfer for efficient hardware acceleration of deep neural networks by providing hardware optimizations specific to these operations.",
+  "solution_structure": "System environment for machine learning hardware acceleration, scenario diagrams (Figures 1-5), block diagrams (Figures 2-3, 6-7) and flowcharts (Figures 4, 8) optimized for multicast networks, DRAM transfer optimization, and DRAM permutation.",
+  "solution_implementation": "The system comprises a series of neural networks or a network of neural networks that are accelerated through the use of hardware optimizations for common neural network operations. These optimizations include: 1) Multicast networks for parallelizing and streamlining communication between different components of the neural network, and 2) DRAM transfer optimization techniques to improve data access speed and reduce latency during computation.",
+  "effect": "Improved performance in deep neural network operations due to hardware optimizations specific to these operations, resulting in faster processing times, reduced resource consumption, and greater flexibility.",
+  "id": "CN109478252B"
+}

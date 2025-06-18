@@ -1,0 +1,8 @@
+{
+  "problem": "Excessive bending and squeezing during folding process affects the service life of flexible screens in foldable electronic devices",
+  "solution_function": "A folding mechanism allows the flexible screen to bend without excessive force by rotating two housing bases around a hinge mechanism, which consists of four swing arms. The swing arms allow for limited rotation and sliding movement to accommodate the bending action.",
+  "solution_structure": "The folding mechanism includes a base, first and second housing bases, first and second screen support plates, and a hinge mechanism consisting of four swing arms. The screen is attached to one of the screen support plates.",
+  "solution_implementation": "The hinge mechanism's first and third swing arms are connected to the same side of the base, opposite each other, with their ends rotatably connected to the base and respective housing bases. The second and fourth swing arms are connected similarly on the opposite side of the base. The swing arms provide limited rotation and sliding movement for the housing bases, facilitating a controlled bending motion.",
+  "effect": "Improved durability of flexible screens in foldable electronic devices by reducing excessive bending and squeezing during the folding process",
+  "id": "CN114909388B"
+}

@@ -5,11 +5,11 @@
 (2)전체 프로세스
 
 1)특허 원문 입수 : 5가지 분야/선정기준은?
--AI 기술 (ex. deep learning maxtix optimization) : US11475102B2 vs US20230297372A1, CN109992743B, US11347652B2, US11347652B2
--에너지 기술 (ex. Carbon capture) : US9257711B2 vs US11955674B1, EP4469183A1, US9502728B1, US10252243B2
--소비재 기술 (ex. water curtain & nozzle control) : US10231596B2 vs JP6857804B2, US12029369B2, JP6857804B2, EP3560405A1 
--전자기기 (ex. foldable Hinge) : US11703916B2 vs CN114909388B, EP4557048A1, US20240430348A1, JP2022165707A
--헬스케어 (ex. bio information 파악/대응 )US20210259560A1 vs KR102407094B1, US11432766B2, US9348322B2, US9775548B2
+-AI 기술 (ex. Hardware Architecture Optimization for AI and Deep Learning Acceleration) : US11475102B2 vs US20230297372A1, CN109992743B, US11347652B2, CN109478252B
+-에너지 기술 (ex. Carbon Capture-Based Energy Conversion Systems) : US9257711B2 vs US11955674B1, EP4469183A1, US9502728B1, US10252243B2
+-소비재 기술 (ex. Spray Mechanisms and Wash Arm Structures for Dishwashers) : US10231596B2 vs US11219349B2, US12029369B2,KR102528669B1, EP3560405A1 
+-전자기기 (ex. Hinge and Mechanical Structures for Foldable Electronic Devices) : US11703916B2 vs CN114909388B, EP4557048A1, US20240430348A1, JP2022165707A
+-헬스케어 (ex. Wearable Biosignal Monitoring and Health Condition Analysis Technologies )US20210259560A1 vs KR102407094B1, US11432766B2, US9348322B2, US9775548B2
 
 
 Technology Area	Example Subfields	Criteria for Our Patents	Criteria for Competitor Patents

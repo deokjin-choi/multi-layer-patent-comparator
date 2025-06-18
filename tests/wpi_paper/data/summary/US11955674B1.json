@@ -1,0 +1,8 @@
+{
+  "problem": "Excessive carbon dioxide emissions in hydrocarbon cracking systems during olefin production.",
+  "solution_function": "The system separates a first cracking product stream into hydrogen-rich methane and secondary streams. The hydrogen-rich methane is converted into electricity in a fuel cell by reacting with oxygen, producing carbon dioxide and water as byproducts.",
+  "solution_structure": "The system consists of a furnace, a first separator, a second separator (if applicable), and a fuel cell. The fuel cell has an assembly including an anode, a cathode, and a separating element positioned between the anode and the cathode.",
+  "solution_implementation": "The first separator separates the first cracking product stream into hydrogen-rich methane and secondary streams. The second separator (if applicable) further separates the hydrogen-rich methane stream into a hydrogen product stream and a methane product stream. The methane product stream or its derivative is introduced to the anode chamber of the fuel cell, while the oxygen-containing stream is introduced to the cathode chamber.",
+  "effect": "The system reduces carbon dioxide emissions by converting methane into electricity, which can be utilized in various applications, and emitting carbon dioxide as a byproduct. This process results in lower overall carbon footprint for hydrocarbon cracking systems.",
+  "id": "US11955674B1"
+}

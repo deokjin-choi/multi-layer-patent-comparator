@@ -1,0 +1,8 @@
+{
+  "problem": "Inefficient washing of dishes due to uneven spraying angles in conventional dishwashers",
+  "solution_function": "The invention presents a dishwasher with a spray arm that reciprocates using the rotational force of the main arm, thereby varying the spraying angles of an auxiliary arm for efficient washing of dishes.",
+  "solution_structure": "The structure includes a spray arm with a main arm and an auxiliary arm rotatably provided at the main arm, a fixed gear with gear teeth, an eccentric gear engaged to the fixed gear and rotating by rotating the spray arm, and a linker connecting the eccentric gear to the spray arm.",
+  "solution_implementation": "The system operates such that rotation of the eccentric gear moves the linker, which in turn pushes each auxiliary arm to be rotated. The main arm reciprocates due to this movement.",
+  "effect": "Improved washing efficiency resulting from evenly sprayed wash water onto dishes",
+  "id": "EP3560405A1"
+}

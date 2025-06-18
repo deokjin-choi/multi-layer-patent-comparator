@@ -1,0 +1,8 @@
+{
+  "problem": "Rotation of spray arm assembly becomes unstable when pressure of liquid varies during use of dishwasher",
+  "solution_function": "Stabilize rotation of wash arm assembly during dynamic operational conditions of dishwasher",
+  "solution_structure": "Wash arm with a circular opening and mounting unit with a circular insertion portion and supporting portion that extends radially from the circular insertion portion",
+  "solution_implementation": "Mounting unit is inserted at least partly into the circular opening of wash arm to allow rotation around its rotational axis",
+  "effect": "Improved rotational stability of wash arm assembly during dishwasher operation",
+  "id": "US11219349B2"
+}
