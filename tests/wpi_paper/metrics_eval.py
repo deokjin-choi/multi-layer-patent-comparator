@@ -11,7 +11,7 @@ from sentence_transformers import SentenceTransformer
 def evaluate_comparison_results(old_df, new_df):
 
     def majority_vote(row):
-        votes = [row["fr_winner"], row["tu_winner"], row["sv_winner"]]
+        votes = [row["fp_winner"], row["tu_winner"], row["sv_winner"]]
         count = Counter(votes)
         top_count = count.most_common(1)[0][1]
         top_winners = [k for k, v in count.items() if v == top_count]
@@ -29,22 +29,22 @@ def evaluate_comparison_results(old_df, new_df):
         df["match"] = df["overall_winner"] == df["majority_winner"]
 
         # 임베딩
-        fr_vecs = model.encode(df["fr_reason"].fillna("").tolist(), show_progress_bar=False)
+        fp_vecs = model.encode(df["fp_reason"].fillna("").tolist(), show_progress_bar=False)
         tu_vecs = model.encode(df["tu_reason"].fillna("").tolist(), show_progress_bar=False)
         sv_vecs = model.encode(df["sv_reason"].fillna("").tolist(), show_progress_bar=False)
         overall_vecs = model.encode(df["overall_reason"].fillna("").tolist(), show_progress_bar=False)
 
-        FR_mean = np.mean(fr_vecs, axis=0)
+        FP_mean = np.mean(fp_vecs, axis=0)
         TU_mean = np.mean(tu_vecs, axis=0)
         SV_mean = np.mean(sv_vecs, axis=0)
 
-        fr_sim = cosine_similarity(overall_vecs, [FR_mean]).flatten()
+        fp_sim = cosine_similarity(overall_vecs, [FP_mean]).flatten()
         tu_sim = cosine_similarity(overall_vecs, [TU_mean]).flatten()
         sv_sim = cosine_similarity(overall_vecs, [SV_mean]).flatten()
 
         dominant = []
-        for i in range(len(fr_sim)):
-            scores = {"FR": fr_sim[i], "TU": tu_sim[i], "SV": sv_sim[i]}
+        for i in range(len(fp_sim)):
+            scores = {"FP": fp_sim[i], "TU": tu_sim[i], "SV": sv_sim[i]}
             dominant.append(max(scores, key=scores.get))
         df["reason_dominant_aspect"] = dominant
 
@@ -59,24 +59,47 @@ def evaluate_comparison_results(old_df, new_df):
             .to_dict(orient="index")
         )
 
+        # 도메인별 accuracy / kappa 계산
+        accuracy_kappa_domain = {
+            domain: {
+                col: {
+                    "accuracy": accuracy_score(gr[col], gr["overall_winner"]),
+                    "kappa": cohen_kappa_score(gr[col], gr["overall_winner"])
+                }
+                for col in ["fp_winner", "tu_winner", "sv_winner"]
+            }
+            for domain, gr in df.groupby("domain")
+        }
+
+        # 도메인별 dominant reason 비율
+        dominant_reason_domain = (
+            df.groupby("domain")["reason_dominant_aspect"]
+            .value_counts(normalize=True)
+            .mul(100)
+            .unstack(fill_value=0)
+            .to_dict(orient="index")
+        )
+
         return {
             "overall_ours_ratio": (df["overall_winner"] == "ours").mean() * 100,
             "domain_ours_ratio": df.groupby("domain")["overall_winner"].apply(lambda x: (x == "ours").mean() * 100).to_dict(),
-            "axis_ours_ratio": {col: (df[col] == "ours").mean() * 100 for col in ["fr_winner", "tu_winner", "sv_winner"]},
+            "axis_ours_ratio": {col: (df[col] == "ours").mean() * 100 for col in ["fp_winner", "tu_winner", "sv_winner"]},
             "accuracy_kappa": {
                 col: {
                     "accuracy": accuracy_score(df[col], df["overall_winner"]),
                     "kappa": cohen_kappa_score(df[col], df["overall_winner"])
                 }
-                for col in ["fr_winner", "tu_winner", "sv_winner"]
+                for col in ["fp_winner", "tu_winner", "sv_winner"]
             },
+            "accuracy_kappa_domain": accuracy_kappa_domain,
             "mismatch_rate": (~df["match"]).mean() * 100,
             "mismatch_distribution": df.loc[~df["match"], "overall_winner"].value_counts(normalize=True).mul(100).to_dict(),
             "domain_mismatch_rate": domain_mismatch_rate,
             "domain_mismatch_distribution": domain_mismatch_distribution,
             "dominant_reason_global": df["reason_dominant_aspect"].value_counts(normalize=True).mul(100).to_dict(),
+            "dominant_reason_domain": dominant_reason_domain,
             "cohesion_scores": {
-                "FR": cohesion_score(fr_vecs),
+                "FP": cohesion_score(fp_vecs),
                 "TU": cohesion_score(tu_vecs),
                 "SV": cohesion_score(sv_vecs)
             },
@@ -104,9 +127,9 @@ def compare_results_overall_table(old_result, new_result):
             new_result["mismatch_distribution"].get("tie", 0),
         ],
          # ⬇⬇ 추가 시작 ⬇⬇
-        "Dominant Reason = FR (%)": [
-            old_result["dominant_reason_global"].get("FR", 0),
-            new_result["dominant_reason_global"].get("FR", 0),
+        "Dominant Reason = FP (%)": [
+            old_result["dominant_reason_global"].get("FP", 0),
+            new_result["dominant_reason_global"].get("FP", 0),
         ],
         "Dominant Reason = TU (%)": [
             old_result["dominant_reason_global"].get("TU", 0),
@@ -116,13 +139,13 @@ def compare_results_overall_table(old_result, new_result):
             old_result["dominant_reason_global"].get("SV", 0),
             new_result["dominant_reason_global"].get("SV", 0),
         ],
-        "FR Accuracy": [
-            old_result["accuracy_kappa"]["fr_winner"]["accuracy"],
-            new_result["accuracy_kappa"]["fr_winner"]["accuracy"],
+        "FP Accuracy": [
+            old_result["accuracy_kappa"]["fp_winner"]["accuracy"],
+            new_result["accuracy_kappa"]["fp_winner"]["accuracy"],
         ],
-        "FR Kappa": [
-            old_result["accuracy_kappa"]["fr_winner"]["kappa"],
-            new_result["accuracy_kappa"]["fr_winner"]["kappa"],
+        "FP Kappa": [
+            old_result["accuracy_kappa"]["fp_winner"]["kappa"],
+            new_result["accuracy_kappa"]["fp_winner"]["kappa"],
         ],
         "TU Accuracy": [
             old_result["accuracy_kappa"]["tu_winner"]["accuracy"],
@@ -140,9 +163,9 @@ def compare_results_overall_table(old_result, new_result):
             old_result["accuracy_kappa"]["sv_winner"]["kappa"],
             new_result["accuracy_kappa"]["sv_winner"]["kappa"],
         ],
-        "FR Cohesion": [
-            old_result["cohesion_scores"]["FR"],
-            new_result["cohesion_scores"]["FR"],
+        "FP Cohesion": [
+            old_result["cohesion_scores"]["FP"],
+            new_result["cohesion_scores"]["FP"],
         ],
         "TU Cohesion": [
             old_result["cohesion_scores"]["TU"],
@@ -158,84 +181,45 @@ def compare_results_overall_table(old_result, new_result):
     return df_comp
 
 
-def compare_results_table(old_result, new_result):
-    comparison = {
-        "Overall Ours Ratio (%)": [old_result["overall_ours_ratio"], new_result["overall_ours_ratio"]],
-        "Mismatch Rate (%)": [old_result["mismatch_rate"], new_result["mismatch_rate"]],
-        "FR Accuracy": [old_result["accuracy_kappa"]["fr_winner"]["accuracy"], new_result["accuracy_kappa"]["fr_winner"]["accuracy"]],
-        "FR Kappa": [old_result["accuracy_kappa"]["fr_winner"]["kappa"], new_result["accuracy_kappa"]["fr_winner"]["kappa"]],
-        "TU Accuracy": [old_result["accuracy_kappa"]["tu_winner"]["accuracy"], new_result["accuracy_kappa"]["tu_winner"]["accuracy"]],
-        "TU Kappa": [old_result["accuracy_kappa"]["tu_winner"]["kappa"], new_result["accuracy_kappa"]["tu_winner"]["kappa"]],
-        "SV Accuracy": [old_result["accuracy_kappa"]["sv_winner"]["accuracy"], new_result["accuracy_kappa"]["sv_winner"]["accuracy"]],
-        "SV Kappa": [old_result["accuracy_kappa"]["sv_winner"]["kappa"], new_result["accuracy_kappa"]["sv_winner"]["kappa"]],
-        "FR Cohesion": [old_result["cohesion_scores"]["FR"], new_result["cohesion_scores"]["FR"]],
-        "TU Cohesion": [old_result["cohesion_scores"]["TU"], new_result["cohesion_scores"]["TU"]],
-        "SV Cohesion": [old_result["cohesion_scores"]["SV"], new_result["cohesion_scores"]["SV"]],
-    }
+def compare_detailed_results_by_domain(old_result, new_result):
+    domains = old_result["domain_ours_ratio"].keys()
+    comparison = {}
 
-    # 1. 도메인별 ours 비율 비교
-    all_domains = set(old_result["domain_ours_ratio"].keys()) | set(new_result["domain_ours_ratio"].keys())
-    for domain in sorted(all_domains):
-        old_val = old_result["domain_ours_ratio"].get(domain, np.nan)
-        new_val = new_result["domain_ours_ratio"].get(domain, np.nan)
-        comparison[f"Domain '{domain}' Ours Ratio (%)"] = [old_val, new_val]
+    for domain in domains:
+        # Ours ratio, mismatch rate, mismatch winner
+        comparison[f"{domain} - Ours Ratio (%)"] = [
+            old_result["domain_ours_ratio"].get(domain, 0),
+            new_result["domain_ours_ratio"].get(domain, 0),
+        ]
+        comparison[f"{domain} - Mismatch Rate (%)"] = [
+            old_result["domain_mismatch_rate"].get(domain, 0),
+            new_result["domain_mismatch_rate"].get(domain, 0),
+        ]
+        for label in ["ours", "competitor", "tie"]:
+            comparison[f"{domain} - Mismatch Winner = {label} (%)"] = [
+                old_result["domain_mismatch_distribution"].get(domain, {}).get(label, 0),
+                new_result["domain_mismatch_distribution"].get(domain, {}).get(label, 0),
+            ]
+        # Dominant reason
+        for axis in ["FP", "TU", "SV"]:
+            comparison[f"{domain} - Dominant Reason = {axis} (%)"] = [
+                old_result.get("dominant_reason_domain", {}).get(domain, {}).get(axis, 0),
+                new_result.get("dominant_reason_domain", {}).get(domain, {}).get(axis, 0),
+            ]
+        # Accuracy / Kappa
+        for axis in ["fp_winner", "tu_winner", "sv_winner"]:
+            label = axis.upper().replace("_WINNER", "")
+            comparison[f"{domain} - {label} Accuracy"] = [
+                old_result.get("accuracy_kappa_domain", {}).get(domain, {}).get(axis, {}).get("accuracy", 0),
+                new_result.get("accuracy_kappa_domain", {}).get(domain, {}).get(axis, {}).get("accuracy", 0),
+            ]
+            comparison[f"{domain} - {label} Kappa"] = [
+                old_result.get("accuracy_kappa_domain", {}).get(domain, {}).get(axis, {}).get("kappa", 0),
+                new_result.get("accuracy_kappa_domain", {}).get(domain, {}).get(axis, {}).get("kappa", 0),
+            ]
 
-    # 2. Mismatch에 한한 최종 승자 비율 비교
-    all_mismatch_keys = set(old_result["mismatch_distribution"].keys()) | set(new_result["mismatch_distribution"].keys())
-    for key in sorted(all_mismatch_keys):
-        old_val = old_result["mismatch_distribution"].get(key, 0)
-        new_val = new_result["mismatch_distribution"].get(key, 0)
-        comparison[f"Mismatch Winner = {key} (%)"] = [old_val, new_val]
-
-    # 3. 도메인별 mismatch 비율 및 승자 비율
-    if "domain_mismatch_stats" in old_result and "domain_mismatch_stats" in new_result:
-        all_domains_mismatch = set(old_result["domain_mismatch_stats"].keys()) | set(new_result["domain_mismatch_stats"].keys())
-        for domain in sorted(all_domains_mismatch):
-            old_stats = old_result["domain_mismatch_stats"].get(domain, {})
-            new_stats = new_result["domain_mismatch_stats"].get(domain, {})
-
-            old_mis_rate = old_stats.get("mismatch_rate", np.nan)
-            new_mis_rate = new_stats.get("mismatch_rate", np.nan)
-            comparison[f"Domain '{domain}' Mismatch Rate (%)"] = [old_mis_rate, new_mis_rate]
-
-            all_winners = set(old_stats.get("winner_distribution", {}).keys()) | set(new_stats.get("winner_distribution", {}).keys())
-            for winner in sorted(all_winners):
-                old_w = old_stats.get("winner_distribution", {}).get(winner, 0)
-                new_w = new_stats.get("winner_distribution", {}).get(winner, 0)
-                comparison[f"Domain '{domain}' Winner = {winner} (Mismatch, %)]"] = [old_w, new_w]
-
-    df_comp = pd.DataFrame(comparison, index=["Old Prompt", "New Prompt"]).T
-    return df_comp
-
-
-
-# Function to plot a bar chart comparing old and new results
-def plot_comparison_bar_chart(old_result, new_result):
-    # 비교 항목 및 값
-    metrics = {
-        "Ours Ratio": [old_result["overall_ours_ratio"], new_result["overall_ours_ratio"]],
-        "Mismatch Rate": [old_result["mismatch_rate"], new_result["mismatch_rate"]],
-        "FR Accuracy": [old_result["accuracy_kappa"]["fr_winner"]["accuracy"], new_result["accuracy_kappa"]["fr_winner"]["accuracy"]],
-        "TU Accuracy": [old_result["accuracy_kappa"]["tu_winner"]["accuracy"], new_result["accuracy_kappa"]["tu_winner"]["accuracy"]],
-        "SV Accuracy": [old_result["accuracy_kappa"]["sv_winner"]["accuracy"], new_result["accuracy_kappa"]["sv_winner"]["accuracy"]],
-    }
-
-    labels = list(metrics.keys())
-    old_values = [v[0] for v in metrics.values()]
-    new_values = [v[1] for v in metrics.values()]
-
-    x = range(len(labels))
-    width = 0.35
-
-    plt.figure(figsize=(10, 6))
-    plt.bar(x, old_values, width, label='Old Prompt')
-    plt.bar([i + width for i in x], new_values, width, label='New Prompt')
-    plt.xticks([i + width/2 for i in x], labels, rotation=45)
-    plt.ylabel("Score / %")
-    plt.title("Prompt Performance Comparison")
-    plt.legend()
-    plt.tight_layout()
-    plt.show()
+    df_detailed_domain = pd.DataFrame(comparison, index=["Old Prompt", "New Prompt"]).T
+    return df_detailed_domain
 
 
 def compute_shakiness(df):

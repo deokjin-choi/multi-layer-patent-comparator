@@ -21,7 +21,7 @@ importlib.reload(metrics_eval)
 from app.controllers.engine import get_or_fetch_with_summary
 from app.controllers.positioning import analyze_positioning
 
-from tests.wpi_paper.metrics_eval import evaluate_comparison_results, compare_results_overall_table, plot_comparison_bar_chart, compare_shakiness_summary
+from tests.wpi_paper.metrics_eval import evaluate_comparison_results, compare_results_overall_table, compare_detailed_results_by_domain, compare_shakiness_summary
 
 # %%
 # 기술 도메인과 특허 매핑 정보
@@ -93,10 +93,10 @@ for trial in tqdm(range(1, 31), desc="Running 30 Trials"):
                 "trial": trial,
                 "our_id": our_id,
                 "competitor_id": comp_id,
-                "fr_winner": aspect_map.get("Functional Purpose", {}).get("winner", "-"),
-                "fr_reason": aspect_map.get("Functional Purpose", {}).get("reason", "-"),
-                "fr_ours": aspect_map.get("Functional Purpose", {}).get("our_summary", "-"),
-                "fr_competitor": aspect_map.get("Functional Purpose", {}).get("comp_summary", "-"),
+                "fp_winner": aspect_map.get("Functional Purpose", {}).get("winner", "-"),
+                "fp_reason": aspect_map.get("Functional Purpose", {}).get("reason", "-"),
+                "fp_ours": aspect_map.get("Functional Purpose", {}).get("our_summary", "-"),
+                "fp_competitor": aspect_map.get("Functional Purpose", {}).get("comp_summary", "-"),
                 "tu_winner": aspect_map.get("Technical Uniqueness", {}).get("winner", "-"),
                 "tu_reason": aspect_map.get("Technical Uniqueness", {}).get("reason", "-"),
                 "tu_ours": aspect_map.get("Technical Uniqueness", {}).get("our_summary", "-"),
@@ -133,3 +133,7 @@ summary = compare_shakiness_summary(old_df, new_df)
 
 print(summary["overall_comparison"])
 print(summary["domain_comparison"])
+
+# %%
+comparison_table_domain = compare_detailed_results_by_domain(old_result, new_result)
+print(comparison_table_domain)
