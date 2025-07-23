@@ -40,7 +40,7 @@ def build_prompt(entry):
     )
 
 # ✅ Attention 계산 함수
-def get_attention_scores(model_path, model_name, input_ids, target_words, target_token_ids, use_lora=False):
+def get_attention_scores(model_path, model_name, input_ids, target_words, target_token_ids_list, use_lora=False):
     print(f"\n🚀 Loading {model_name} model ...")
 
     if use_lora:
@@ -75,13 +75,20 @@ def get_attention_scores(model_path, model_name, input_ids, target_words, target
     attn_map = torch.stack(attentions).mean(dim=0).mean(dim=1)[0]  # (seq_len, seq_len)
 
     result = {}
-    for word, tid in zip(target_words, target_token_ids):
+    for word, token_ids in zip(target_words, target_token_ids_list):
         try:
-            token_positions = (input_ids[0] == tid).nonzero(as_tuple=True)[0]
-            score = attn_map[:, token_positions].sum().item()
-            result[word] = round(score, 4)
+            token_positions = []
+            for tid in token_ids:
+                positions = (input_ids[0] == tid).nonzero(as_tuple=True)[0]
+                token_positions.extend(positions.tolist())
+            if token_positions:
+                score = attn_map[:, token_positions].sum().item()
+                result[word] = round(score, 4)
+            else:
+                result[word] = 0.0
         except:
             result[word] = 0.0
+
 
     del model
     gc.collect()
@@ -104,13 +111,13 @@ target_words = [
     "movable", "vane", "radial", "supporting", "mounting", "unit",
     "customer", "satisfaction", "market", "differentiation", "performance", "effectiveness"
 ]
-target_token_ids = [tokenizer.encode(w, add_special_tokens=False)[0] for w in target_words]
+target_token_ids_list = [tokenizer.encode(w, add_special_tokens=False) for w in target_words]
 
 # ✅ 원본 모델 실행
-scores_original = get_attention_scores(original_model_path, "Original", input_ids, target_words, target_token_ids)
+scores_original = get_attention_scores(original_model_path, "Original", input_ids, target_words, target_token_ids_list)
 
 # ✅ Fine-tuned 모델 실행 (LoRA 병합 후)
-# scores_finetuned = get_attention_scores(fine_tuned_model_path, "Fine-tuned", input_ids, target_words, target_token_ids, use_lora=True)
+scores_finetuned = get_attention_scores(fine_tuned_model_path, "Fine-tuned", input_ids, target_words, target_token_ids_list, use_lora=True)
 
 # %%
 
