@@ -100,7 +100,7 @@ for entry in tqdm(valid_entries):
             **inputs,
             max_new_tokens=150,
             do_sample=True,
-            temperature=0.3,
+            temperature=0.2,
             pad_token_id=tokenizer.eos_token_id
         )
 
@@ -132,9 +132,15 @@ from collections import Counter
 import numpy as np
 from tqdm import tqdm
 
+def load_and_merge_data(old_path, new_path):
+    df_old = pd.read_csv(old_path)
+    df_new = pd.read_csv(new_path)
+    df_all = pd.concat([df_old, df_new], ignore_index=True)
+    return df_all
+
 # 1.전체 데이터 로딩 및 필요 필드만 남기기
-# df_total = load_and_merge_data("old/trial_full.csv", "new/trial_full.csv")
-# df_total = df_total[["fp_reason", "tu_reason", "sv_reason"]]
+df_total = load_and_merge_data("old/trial_full.csv", "new/trial_full.csv")
+df_total = df_total[["fp_reason", "tu_reason", "sv_reason"]]
 
 # 📍 경로
 output_file_path = "predicted_valid_with_reason_short.jsonl"
@@ -160,9 +166,9 @@ df_valid = pd.DataFrame(rows)
 # 📍 4. dominant aspect 계산
 model = SentenceTransformer(embedding_model_name)
 
-fp_vecs = model.encode(df_valid["fp_reason"].fillna("").tolist(), show_progress_bar=True)
-tu_vecs = model.encode(df_valid["tu_reason"].fillna("").tolist(), show_progress_bar=True)
-sv_vecs = model.encode(df_valid["sv_reason"].fillna("").tolist(), show_progress_bar=True)
+fp_vecs = model.encode(df_total["fp_reason"].fillna("").tolist(), show_progress_bar=True)
+tu_vecs = model.encode(df_total["tu_reason"].fillna("").tolist(), show_progress_bar=True)
+sv_vecs = model.encode(df_total["sv_reason"].fillna("").tolist(), show_progress_bar=True)
 overall_vecs = model.encode(df_valid["overall_reason"].fillna("").tolist(), show_progress_bar=True)
 
 FP_mean = np.mean(fp_vecs, axis=0)

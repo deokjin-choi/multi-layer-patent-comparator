@@ -37,90 +37,100 @@ def build_prompt(entry):
         f"sv_reason: {entry['sv_reason']}\n"
         f"overall_winner: {entry['overall_winner']}\n\n"
         f"### Output:\n"
+        f"Write an overall judgement (1–2 sentences) justifying the overall winner. \n"
+        f"Do not start with sentences like 'The overall winner is...'\n"
+        f"This explanation must reflect the actual aspect(s) that contributed to the win (e.g., functional purpose, technical uniqueness, or strategic value).\n"
     )
 
-# ✅ Attention 계산 함수
-def get_attention_scores(model_path, model_name, input_ids, target_words, target_token_ids_list, use_lora=False):
+def get_output_attention_scores(model_path, model_name, prompt, target_words, target_token_ids_list, use_lora=False):
     print(f"\n🚀 Loading {model_name} model ...")
 
     if use_lora:
         model = AutoPeftModelForCausalLM.from_pretrained(
-            model_path,                     # LoRA adapter 경로 (여기에 base도 포함)
-            torch_dtype=torch.float16,      # 또는 float32 가능
-            attn_implementation="eager",    # 필요시 유지
-            output_attentions=True,
+            model_path,
+            torch_dtype=torch.float16,
+            attn_implementation="eager",
             device_map="auto",
-            #offload_folder=offload_path,    # offload_dir 아님! 주의
-            low_cpu_mem_usage=False
+            low_cpu_mem_usage=True
         ).eval()
     else:
         model = AutoModelForCausalLM.from_pretrained(
-            original_model_path,
-            torch_dtype=torch.float16,             # 또는 float32
+            model_path,
+            torch_dtype=torch.float16,
             attn_implementation="eager",
-            output_attentions=True,
             device_map="auto",
             offload_folder=offload_path,
             low_cpu_mem_usage=True
         ).eval()
 
+    tokenizer.pad_token = tokenizer.eos_token
+    model.config.pad_token_id = tokenizer.pad_token_id  # ✅ 패딩 명시적 설정
+
+    input_ids = tokenizer(prompt, return_tensors="pt").input_ids.to("cuda")
+    input_len = input_ids.shape[1]
+
+    # ✅ 출력 생성 (generate는 attention 안 줌)
+    gen = model.generate(
+        input_ids=input_ids,
+        max_new_tokens=150,
+        return_dict_in_generate=True,
+        pad_token_id=tokenizer.pad_token_id,
+        eos_token_id=tokenizer.eos_token_id
+    )
+    full_ids = gen.sequences
+    gen_len = full_ids.shape[1] - input_len
+    output_range = list(range(input_len, input_len + gen_len))
+
+    generated_text = tokenizer.decode(gen.sequences[0][input_len:], skip_special_tokens=True)
+    print(f"Generated text: {generated_text}")
+
+    # ✅ attention 재계산 (forward로)
     with torch.no_grad():
-        outputs = model(input_ids=input_ids, output_attentions=True)
-        attentions = outputs.attentions
+        outputs = model(input_ids=full_ids, output_attentions=True)
+        attn_map = torch.stack(outputs.attentions).mean(dim=0).mean(dim=1)[0]  # (seq_len, seq_len)
 
-    if attentions is None:
-        print(f"❌ {model_name} returned no attention.")
-        return {w: 0.0 for w in target_words}
-
-    attn_map = torch.stack(attentions).mean(dim=0).mean(dim=1)[0]  # (seq_len, seq_len)
-
+    # ✅ 단어별 attention 점수 계산
     result = {}
     for word, token_ids in zip(target_words, target_token_ids_list):
-        try:
-            token_positions = []
-            for tid in token_ids:
-                positions = (input_ids[0] == tid).nonzero(as_tuple=True)[0]
-                token_positions.extend(positions.tolist())
-            if token_positions:
-                score = attn_map[:, token_positions].sum().item()
-                result[word] = round(score, 4)
-            else:
-                result[word] = 0.0
-        except:
+        token_positions = []
+        for tid in token_ids:
+            positions = (full_ids[0] == tid).nonzero(as_tuple=True)[0]
+            token_positions.extend(positions.tolist())
+        if token_positions:
+            score = attn_map[output_range][:, token_positions].sum().item()
+            result[word] = round(score, 4)
+        else:
             result[word] = 0.0
-
 
     del model
     gc.collect()
     torch.cuda.empty_cache()
-    print(f"✅ {model_name} Attention:", result)
+    print(f"✅ {model_name} Output Attention:", result)
     return result
 
-# ✅ Tokenizer 로딩
+# ✅ 토크나이저
 tokenizer = AutoTokenizer.from_pretrained(original_model_path)
 tokenizer.pad_token = tokenizer.eos_token
 
-# ✅ 입력 토큰화
-prompt = build_prompt(entry)
-inputs = tokenizer(prompt, return_tensors="pt")
-input_ids = inputs["input_ids"].to("cuda")
-
-# ✅ 관심 단어 설정
+# ✅ 키워드 목록
 target_words = [
     "distribution", "washing", "tank",
-    "movable", "vane", "radial", "supporting", "mounting", "unit",
-    "customer", "satisfaction", "market", "differentiation", "performance", "effectiveness"
+    "movable", "vane",  "mounting", 
+    "customer",  "market", "performance"
 ]
 target_token_ids_list = [tokenizer.encode(w, add_special_tokens=False) for w in target_words]
 
-# ✅ 원본 모델 실행
-scores_original = get_attention_scores(original_model_path, "Original", input_ids, target_words, target_token_ids_list)
+# ✅ 프롬프트
+prompt = build_prompt(entry)
 
-# ✅ Fine-tuned 모델 실행 (LoRA 병합 후)
-scores_finetuned = get_attention_scores(fine_tuned_model_path, "Fine-tuned", input_ids, target_words, target_token_ids_list, use_lora=True)
+# ✅ 실행: 원본 모델
+scores_original = get_output_attention_scores(original_model_path, "Original", prompt, target_words, target_token_ids_list)
+print(scores_original)
 
-# %%
+# ✅ 실행: 파인튜닝 모델
+scores_finetuned = get_output_attention_scores(fine_tuned_model_path, "Fine-tuned", prompt, target_words, target_token_ids_list, use_lora=True)
+print(scores_finetuned)
 
-# ✅ 비교 결과 출력
+# ✅ 출력 비교
 df = pd.DataFrame([scores_original, scores_finetuned], index=["Original", "Fine-tuned"])
-print("\n📊 Attention Score Comparison:\n", df)
+print("\n📊 Output Attention Score Comparison:\n", df)
