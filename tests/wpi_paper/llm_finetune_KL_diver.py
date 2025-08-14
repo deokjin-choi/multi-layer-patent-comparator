@@ -30,43 +30,6 @@ bnb_config = BitsAndBytesConfig(
     bnb_4bit_compute_dtype=torch.float16
 )
 
-# 🔧 프롬프트 생성 함수
-def build_prompt(entry):
-    input_ = entry["input"]
-    prompt = (
-        f"### Input:\n"
-        f"fp_winner: {input_['fp_winner']}\n"
-        f"fp_reason: {input_['fp_reason']}\n"
-        f"tu_winner: {input_['tu_winner']}\n"
-        f"tu_reason: {input_['tu_reason']}\n"
-        f"sv_winner: {input_['sv_winner']}\n"
-        f"sv_reason: {input_['sv_reason']}\n"
-        f"overall_winner: {input_['overall_winner']}\n\n"
-        f"### Output:\n"
-        f"Write an overall judgement (1–2 sentences) justifying the overall winner. \n"
-        f"Do not start with sentences like 'The overall winner is...'\n"
-        f"This explanation must reflect the actual aspect(s) that contributed to the win (e.g., functional purpose, technical uniqueness, or strategic value).\n"
-    )
-    return prompt
-
-def build_prompt_for_base_model(entry):
-    input_ = entry["input"]
-    return (
-        f"Below is a comparison between two patents: Our patent and the Competitor's patent.\n\n"
-        f"Functional Purpose:\n"
-        f"- Winner: {input_['fp_winner']}\n"
-        f"- Reason: {input_['fp_reason']}\n\n"
-        f"Technical Uniqueness:\n"
-        f"- Winner: {input_['tu_winner']}\n"
-        f"- Reason: {input_['tu_reason']}\n\n"
-        f"Strategic Value:\n"
-        f"- Winner: {input_['sv_winner']}\n"
-        f"- Reason: {input_['sv_reason']}\n\n"
-        f"overall_winner: {input_['overall_winner']}\n\n"
-        f"Write an overall judgement (1–2 sentences) justifying the overall winner. \n"
-
-    )
-
 def build_prompt_shared(entry):
     input_ = entry["input"]
     return (
@@ -160,7 +123,6 @@ for i, entry in enumerate(tqdm(valid_entries, desc="Base Model")):
             **inputs,
             max_new_tokens=150,
             do_sample=False,
-            #temperature=0.2,
             pad_token_id=tokenizer.eos_token_id,
             eos_token_id=tokenizer.eos_token_id,
             return_dict_in_generate=True,
@@ -239,7 +201,6 @@ for i, entry in enumerate(tqdm(valid_entries, desc="Fine-tuned Model")):
             **inputs,
             max_new_tokens=150,
             do_sample=False,
-            #temperature=0.2,
             pad_token_id=tokenizer.eos_token_id,
             eos_token_id=tokenizer.eos_token_id,
             return_dict_in_generate=True,
@@ -379,6 +340,41 @@ def assign_aspect_to_keywords(df_base_finetuned, model, FP_mean, TU_mean, SV_mea
 model, FP_mean, TU_mean, SV_mean = compute_mean_embeddings(df_total)
 df_base_finetuned_keyword_split = assign_aspect_to_keywords(df_base_finetuned.copy(), model, FP_mean, TU_mean, SV_mean)
 
+# %% 실제 키워드 등장빈도 확인
+def count_inclusion(text, keyword_str):
+    keyword_list = [kw.strip() for kw in keyword_str.split(',')]
+    return sum(kw in text for kw in keyword_list)
+
+# base 모델 키워드 포함 수 계산
+df_base_finetuned_keyword_split['base_fp_count'] = df_base_finetuned_keyword_split.apply(lambda x: count_inclusion(x['base_reason'], x['fp_keyword']), axis=1)
+df_base_finetuned_keyword_split['base_tu_count'] = df_base_finetuned_keyword_split.apply(lambda x: count_inclusion(x['base_reason'], x['tu_keyword']), axis=1)
+df_base_finetuned_keyword_split['base_sv_count'] = df_base_finetuned_keyword_split.apply(lambda x: count_inclusion(x['base_reason'], x['sv_keyword']), axis=1)
+
+# fine-tuned 모델 키워드 포함 수 계산
+df_base_finetuned_keyword_split['finetuned_fp_count'] = df_base_finetuned_keyword_split.apply(lambda x: count_inclusion(x['finetuned_reason'], x['fp_keyword']), axis=1)
+df_base_finetuned_keyword_split['finetuned_tu_count'] = df_base_finetuned_keyword_split.apply(lambda x: count_inclusion(x['finetuned_reason'], x['tu_keyword']), axis=1)
+df_base_finetuned_keyword_split['finetuned_sv_count'] = df_base_finetuned_keyword_split.apply(lambda x: count_inclusion(x['finetuned_reason'], x['sv_keyword']), axis=1)
+
+avg_base_fp = df_base_finetuned_keyword_split.dropna()['base_fp_count'].mean()
+avg_base_tu = df_base_finetuned_keyword_split.dropna()['base_tu_count'].mean()
+avg_base_sv = df_base_finetuned_keyword_split.dropna()['base_sv_count'].mean()
+
+avg_fine_fp = df_base_finetuned_keyword_split.dropna()['finetuned_fp_count'].mean()
+avg_fine_tu = df_base_finetuned_keyword_split.dropna()['finetuned_tu_count'].mean()
+avg_fine_sv = df_base_finetuned_keyword_split.dropna()['finetuned_sv_count'].mean()
+
+# 비율 계산
+fp_ratio = avg_fine_fp / avg_base_fp if avg_base_fp != 0 else float('inf')
+tu_ratio = avg_fine_tu / avg_base_tu if avg_base_tu != 0 else float('inf')
+sv_ratio = avg_fine_sv / avg_base_sv if avg_base_sv != 0 else float('inf')
+
+# 출력
+print("📊 평균 키워드 포함 개수 비교")
+print(f"FP  : base={avg_base_fp:.3f}, finetuned={avg_fine_fp:.3f}, ratio={fp_ratio:.2f}")
+print(f"TU  : base={avg_base_tu:.3f}, finetuned={avg_fine_tu:.3f}, ratio={tu_ratio:.2f}")
+print(f"SV  : base={avg_base_sv:.3f}, finetuned={avg_fine_sv:.3f}, ratio={sv_ratio:.2f}")
+
+
 # %%
 import pickle
 import torch
@@ -461,13 +457,40 @@ for i, row in df_base_finetuned_keyword_split.iterrows():
 df_delta = pd.DataFrame(records).set_index('id')
 
 # ✅ 히트맵 출력
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(8, 6))
 sns.heatmap(df_delta, cmap="RdBu_r", center=0, linewidths=0.5)
-plt.title("FP / TU / SV Keyword Probability Δ per Sample")
+plt.title("Keyword Probability Delta")
 plt.xlabel("Aspect")
 plt.ylabel("Validation ID")
 plt.tight_layout()
 plt.show()
+
+# %%
+# 🔹 FP, TU, SV 각각의 ΔP 분포 가져오기
+fp_deltas = df_delta['FP_delta'].dropna().values
+tu_deltas = df_delta['TU_delta'].dropna().values
+sv_deltas = df_delta['SV_delta'].dropna().values
+
+# 🔹 PDF (KDE plot) 시각화
+plt.figure(figsize=(10, 6))
+sns.kdeplot(fp_deltas, fill=True, label="FP", color="skyblue", linewidth=2)
+sns.kdeplot(tu_deltas, fill=True, label="TU", color="lightgreen", linewidth=2)
+sns.kdeplot(sv_deltas, fill=True, label="SV", color="salmon", linewidth=2)
+
+plt.axvline(0, linestyle='--', color='black', linewidth=1)
+plt.title("Probability Shift Distribution per Reasoning Dimension (ΔP)")
+plt.xlabel("Probability Change (Fine-tuned – Base)")
+plt.ylabel("Density")
+plt.legend()
+plt.grid(True, linestyle='--', alpha=0.3)
+plt.tight_layout()
+plt.show()
+
+
+# %%
+df_delta['FP_delta'].mean(), df_delta['TU_delta'].mean(), df_delta['SV_delta'].mean()
+
+
 
 # %%
 # Δ 합산 기준 정렬
@@ -497,4 +520,54 @@ for rank, idx in enumerate(bottom3_indices, 1):
     print("🔸 [Fine-tuned Reason]")
     print(df_base_finetuned_keyword_split.loc[idx, 'finetuned_reason'])
 # %%
+exam_idx = 66
 
+def tokenize(phrase_str):
+    phrases = [p.strip() for p in str(phrase_str).split(',') if p.strip()]
+    tokens = []
+    for phrase in phrases:
+        tokens.extend(tokenizer.tokenize(phrase))
+    return tokens
+
+# 🔹 키워드 입력
+fp_keyword = "cardiovascular disease monitoring"
+tu_keyword = "compact digital health device"
+sv_keyword = "improve treatment outcomes"
+fp_tokens = tokenize(fp_keyword)
+tu_tokens = tokenize(tu_keyword)
+sv_tokens = tokenize(sv_keyword)
+
+base_prob_map = build_token_prob_map_avg(base_probs[exam_idx])
+fine_prob_map = build_token_prob_map_avg(finetuned_probs[exam_idx])
+
+# 🔹 확률 수집
+def extract_probs(token_list, prob_map):
+    return [(token, prob_map.get(token, 0.0)) for token in token_list]
+
+fp_base = extract_probs(fp_tokens, base_prob_map)
+fp_fine = extract_probs(fp_tokens, fine_prob_map)
+tu_base = extract_probs(tu_tokens, base_prob_map)
+tu_fine = extract_probs(tu_tokens, fine_prob_map)
+sv_base = extract_probs(sv_tokens, base_prob_map)
+sv_fine = extract_probs(sv_tokens, fine_prob_map)
+
+# 🔹 시각화용 데이터 준비
+df_tokens = pd.DataFrame({
+    "Token": fp_tokens + tu_tokens + sv_tokens,
+    "Group": ["FP"] * len(fp_tokens) + ["TU"] * len(tu_tokens) + ["SV"] * len(sv_tokens),
+    "Base": [p[1] for p in fp_base] + [p[1] for p in tu_base] + [p[1] for p in sv_base],
+    "Fine-tuned": [p[1] for p in fp_fine] + [p[1] for p in tu_fine] + [p[1] for p in sv_fine]
+})
+
+# Melt for plotting
+df_melted = df_tokens.melt(id_vars=["Token", "Group"], value_vars=["Base", "Fine-tuned"],
+                           var_name="Model", value_name="Probability")
+
+plt.figure(figsize=(10, 5))
+sns.barplot(data=df_melted, x="Token", y="Probability", hue="Model", palette="Set2")
+plt.title("Base vs Fine-tuned Token Probabilities for Keywords")
+plt.xlabel("Token")
+plt.ylabel("Avg Probability")
+plt.legend(title="Model")
+plt.tight_layout()
+plt.show()
