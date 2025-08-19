@@ -1,8 +1,0 @@
-{
-  "problem": "Inflexible calculation and low efficiency in matrix multiplication",
-  "solution_function": "Matrix multiplier that divides matrices into sub-blocks, performs two-way vector multiplications on each operation unit of a two-dimensional computational array (X rowY column operation unit), adds the results, and accumulates them to obtain the final result for each operation unit",
-  "solution_structure": "First memory, second memory, operation circuit with X rowY column operation units, and controller",
-  "solution_implementation": "The first matrix is divided into sub-blocks (SR sub-blocks), the second matrix is divided into sub-blocks (RT sub-blocks). Each operation unit includes a vector multiplication circuit and an addition circuit. The controller manages the data flow between the memory and operation circuit, divides the matrices into sub-blocks, and coordinates the operation units to perform the two-way vector multiplications and accumulations.",
-  "effect": "Improved calculation flexibility and efficiency in matrix multiplication",
-  "id": "CN109992743B"
-}
