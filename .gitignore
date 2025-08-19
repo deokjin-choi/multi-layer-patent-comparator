@@ -27,9 +27,6 @@ ehthumbs.db
 Icon?
 desktop.ini
 
-# Compiled results (pickle or cache)
-*.pkl
-
 # IDE-specific folders
 .vscode/
 .idea/
