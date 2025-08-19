@@ -31,11 +31,11 @@ The main contributions of this project are:
 │   ├── raw                   # Raw patent data (in JSON format)
 │   └── summary               # Summarized patent data (in JSON format)
 └── src
-├── metrics_utils.py      # Metrics calculation utility
-├── peft_analyze_attns.py # Attention analysis script
-├── peft_analyze_probs.py # Token probability analysis script
-├── peft_generate_outputs.py # Script for generating outputs from the fine-tuned model
-├── peft_train.py         # PEFT fine-tuning training script
-├── prompt_eval.py        # Prompt evaluation script
-└── prompt_run.py         # Prompt execution script
+    ├── metrics_utils.py      # Metrics calculation utility
+    ├── peft_analyze_attns.py # Attention analysis script
+    ├── peft_analyze_probs.py # Token probability analysis script
+    ├── peft_generate_outputs.py # Script for generating outputs from the fine-tuned model
+    ├── peft_train.py         # PEFT fine-tuning training script
+    ├── prompt_eval.py        # Prompt evaluation script
+    └── prompt_run.py         # Prompt execution script
 ```
