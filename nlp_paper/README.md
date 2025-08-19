@@ -14,6 +14,7 @@ The main contributions of this project are:
 * **Bias Mitigation via PEFT**: We demonstrated that PEFT can be used to investigate and mitigate inherent biases. Specifically, fine-tuning was shown to reduce the bias towards 'Strategic Value (SV)' and strengthen reasoning on the 'Functional Purpose (FP)' and 'Technical Uniqueness (TU)' dimensions.
 
 ## File Structure
+```
 .
 ├── data
 │   ├── peft                  # Data and results for PEFT fine-tuning
@@ -37,3 +38,4 @@ The main contributions of this project are:
 ├── peft_train.py         # PEFT fine-tuning training script
 ├── prompt_eval.py        # Prompt evaluation script
 └── prompt_run.py         # Prompt execution script
+```
