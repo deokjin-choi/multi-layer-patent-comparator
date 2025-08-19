@@ -1,0 +1,8 @@
+{
+  "problem": "Scaling up Deep Neural Network (DNN) accelerators faces a memory bandwidth problem when increasing the number of independent datapaths accessing a single logically unified memory structure.",
+  "solution_function": "The invention introduces a banked memory structure for use with an accelerator. The banked memory structure distributes data across multiple local memories, each associated with a separate computation unit via a channel. A memory decoder manages the assignment of vectors to channels and their respective local memories for processing.",
+  "solution_structure": "The banked memory structure includes a plurality of local memories, a memory decoder, a plurality of computation units, and a plurality of channels.",
+  "solution_implementation": "The memory decoder receives data for the accelerator, identifies a plurality of vectors, identifies the plurality of local memory in the accelerator, selects an separate local memory for each vector, maps an address of the selected local memory to the vector, and sends the data for the vector to the data channel associated with the selected local memory.",
+  "effect": "This solution reduces complexity in supporting an increasing number of independent accesses to a single memory structure by distributing them across multiple local memories.",
+  "id": "US11347652B2"
+}

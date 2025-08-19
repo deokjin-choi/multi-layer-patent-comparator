@@ -1,0 +1,8 @@
+{
+  "problem": "Sub-optimal performance when using traditional CPUs and GPUs for parallel operations and specific neural network-related operations such as convolution, max pooling, and noise generation in machine learning applications.",
+  "solution_function": "Multicast network and memory transfer optimization that enables efficient handling of data between hardware components to optimize performance during matrix operations, convolution, max pooling, and noise generation within deep neural networks for hardware acceleration.",
+  "solution_structure": "System environment with: 1. Multicast network (optimized for data distribution to multiple recipients). 2. DRAM permutation block (for efficient DRAM transfer optimization).",
+  "solution_implementation": "Multicast network optimizes data distribution, reducing latency and improving parallel processing efficiency. DRAM permutation block improves memory transfer efficiency by rearranging data before transfer for optimal utilization of available resources.",
+  "effect": "Improved performance in machine learning applications with deep neural networks through reduced latency, improved parallel processing efficiency, and optimized memory transfer efficiency.",
+  "id": "CN109478252B"
+}

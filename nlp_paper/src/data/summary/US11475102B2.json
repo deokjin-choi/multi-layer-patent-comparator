@@ -1,0 +1,8 @@
+{
+  "problem": "Inefficient matrix multiplication in deep neural network applications consumes a significant proportion of running time.",
+  "solution_function": "The system performs efficient matrix multiplication by loading data from memory into two multiplying units (first and second) in a single burst. Each unit contains inner buffer circuits, adder circuits, and multiplying circuits. The first multiplying unit forms two products based on the input data and sends them to an adder circuit. Similarly, the second multiplying unit forms its own set of products. The adder circuits add the respective products together and send the results to an outer buffer circuit for final summation.",
+  "solution_structure": "The system includes a first multiplying unit with a first inner buffer circuit, a second inner buffer circuit, an adder circuit, and a multiplying circuit. The second multiplying unit has similar components. There is also a memory load circuit and an outer buffer circuit.",
+  "solution_implementation": "Data from memory is loaded into the inner buffer circuits of both multiplying units in a single burst using burst memory access mode. Each multiplying unit forms two products based on its internal data, sends them to its adder circuit, and performs further computations as needed. The adder circuits combine their respective products and send the sums to the outer buffer circuit for final addition.",
+  "effect": "The system improves the performance of deep neural network applications by reducing the time spent on matrix multiplication.",
+  "id": "US11475102B2"
+}

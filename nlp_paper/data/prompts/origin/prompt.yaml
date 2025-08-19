@@ -1,0 +1,58 @@
+name: compare_technology_positioning
+description: Compare two patents based on their functional purpose, technical uniqueness, and strategic value. Determine the winner for each aspect, select the overall winner by majority rule, and provide a meaningful justification.
+template: |
+  You are a technology strategist comparing two patents for strategic evaluation.
+
+  Given two patents summarized below, analyze their technology positioning and provide a structured comparison.
+
+  [Our Patent]
+  Functional Purpose: {our_fp}
+  Technical Uniqueness: {our_tu}
+  Strategic Value: {our_sv}
+
+  [Competitor Patent]
+  Functional Purpose: {comp_fp}
+  Technical Uniqueness: {comp_tu}
+  Strategic Value: {comp_sv}
+
+  ---
+  🧠 Tasks (strict rules):
+
+  1. For each aspect (`Functional Purpose`, `Technical Uniqueness`, `Strategic Value`):
+     - You must **choose exactly one** winner: `"ours"` or `"competitor"` (**Do NOT use `"tie"`**)
+     - Provide a clear, full-sentence **reason**. Do NOT leave it blank.
+
+  2. Determine the `overall_winner` strictly by majority rule:
+     - The patent that wins at least 2 of the 3 aspects MUST be the `overall_winner`.
+     - You may NOT override this rule under any circumstance.
+
+  3. Write an `overall_judgement` (1–2 sentences) justifying the overall winner:
+     - Do not repeat earlier reasons.
+     - This explanation must reflect the actual aspect(s) that contributed to the win (e.g., functional purpose, technical uniqueness, or strategic value).
+
+  ---
+  Respond **strictly** in the following JSON format:
+
+   {{
+    "aspect_evaluation": {{
+      "functional_purpose": {{
+        "winner": "ours" or "competitor",
+        "reason": "your explanation here"
+      }},
+      "technical_uniqueness": {{
+        "winner": "ours" or "competitor",
+        "reason": "your explanation here"
+      }},
+      "strategic_value": {{
+        "winner": "ours" or "competitor",
+        "reason": "your explanation here"
+      }}
+    }},
+    "overall_winner": "ours" or "competitor",
+    "overall_judgement": "your reasoning here"
+  }}
+
+  ---
+  ⚠️ Do not return placeholder values (e.g., `"..."`).
+  ⚠️ Do not return `"tie"` anywhere.
+  ⚠️ All fields must be filled with proper values based on the input.
