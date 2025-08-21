@@ -49,11 +49,11 @@ We designed a structured framework with explicit decision logic, prompt refineme
 
 **Token/Attention Evidence:**
 - Token probability shifts: FP +0.0282, TU +0.0328, SV –0.0423 
-![kde token](/result_figures/Figure4.png) 
-![token case ](/result_figures/Figure5.png) 
+![kde token](/nlp_paper/result_figures/Figure4.png) 
+![token case ](/nlp_paper/result_figures/Figure5.png) 
 - Attention shifts: FP +1.22e−4, TU +1.52e−4, SV –5.9e−5  
-![kde attn](/result_figures/Figure6.png) 
-![attn case ](/result_figures/Figure7.png) 
+![kde attn](/nlp_paper/result_figures/Figure6.png) 
+![attn case ](/nlp_paper/result_figures/Figure7.png) 
 
 ---
 
