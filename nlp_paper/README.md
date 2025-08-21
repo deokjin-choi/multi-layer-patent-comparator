@@ -49,11 +49,11 @@ We designed a structured framework with explicit decision logic, prompt refineme
 
 **Token/Attention Evidence:**
 - Token probability shifts: FP +0.0282, TU +0.0328, SV –0.0423 
-![kde token](result_figures/Figure4-KDE plot of probability shifts for FP,TU, and SV keywords.png) 
-![token case ](result_figures/Figure5-Token-level probability shifts for FP,TU, and SV keywords, showing the case with the largest cumulative probability shift.png) 
+![kde token](nlp_paper/result_figures/Figure4-KDE plot of probability shifts for FP,TU, and SV keywords.png) 
+![token case ](nlp_paper/result_figures/Figure5-Token-level probability shifts for FP,TU, and SV keywords, showing the case with the largest cumulative probability shift.png) 
 - Attention shifts: FP +1.22e−4, TU +1.52e−4, SV –5.9e−5  
-![kde attn](result_figures/Figure6-KDE plot of attention scorechanges for FP,TU,and SV keywords.png) 
-![attn case ](result_figures/Figure7-Layer-wise attention scores for FP,TU,and SV keywords,showing thecase with the largest cumulative attention change.png) 
+![kde attn](nlp_paper/result_figures/Figure6-KDE plot of attention scorechanges for FP,TU,and SV keywords.png) 
+![attn case ](nlp_paper/result_figures/Figure7-Layer-wise attention scores for FP,TU,and SV keywords,showing thecase with the largest cumulative attention change.png) 
 
 ---
 
