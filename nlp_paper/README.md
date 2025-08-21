@@ -22,8 +22,9 @@ We designed a structured framework with explicit decision logic, prompt refineme
 1. Extract **Problem–Solution–Effect** from patents.
 2. Generate FP/TU/SV summaries and select winners with reasoning.
 3. Aggregate results into final judgments through majority logic.
-4. Run repeated evaluations (30×) and apply prompt variations to test stability.
-5. Fine-tune with PEFT (LoRA) to mitigate SV dominance.
+4. Write natural-language **justifications for overall winner selection**.
+5. Run repeated evaluations (30×) and apply prompt variations to test stability.
+6. Fine-tune with PEFT (LoRA) using the collected justifications to mitigate SV dominance.
 
 ---
 
@@ -35,7 +36,8 @@ We designed a structured framework with explicit decision logic, prompt refineme
 - **TU Kappa**: 0.022 → 0.359  
 - **SV Kappa**: 0.299 → 0.703  
 
-**Dominant Reasoning Axis (Validation Set):**
+**Bias Mitigation via PEFT (LoRA):**
+Dominant Reasoning Axis (Validation Set)
 
 | Model                   | FP (%) | TU (%) | SV (%) |
 |--------------------------|--------|--------|--------|
@@ -62,28 +64,28 @@ We designed a structured framework with explicit decision logic, prompt refineme
 ```
 .
 ├── data
-│   ├── peft                  # Data and results for PEFT fine-tuning
-│   │   ├── attention         # Attention analysis results
-│   │   ├── figs              # Analysis visualizations (heatmaps, KDE plots, etc.)
-│   │   ├── justifications    # Reasoning outputs for base and fine-tuned models
-│   │   ├── lora_output       # Fine-tuned LoRA adapter model
-│   │   ├── token_probs       # Data used for token probability analysis
+│   ├── peft                    # Data and results for PEFT fine-tuning
+│   │   ├── attention           # Attention analysis results
+│   │   ├── figs                # Analysis visualizations (heatmaps, KDE plots, etc.)
+│   │   ├── justifications      # Reasoning outputs for base and fine-tuned models
+│   │   ├── lora_output         # Fine-tuned LoRA adapter model
+│   │   ├── token_probs         # Data used for token probability analysis
 │   │   ├── fine_tuned_train.jsonl    # Fine-tuning training data
 │   │   └── fine_tuned_valid.jsonl    # Fine-tuning validation data
-│   ├── prompts               # Prompt data
-│   │   ├── origin            # Original prompts
-│   │   └── revised           # Revised prompts
-│   ├── raw                   # Raw patent data (in JSON format)
-│   └── summary               # Summarized patent data (in JSON format)
-└── src
-    ├── metrics_utils.py      # Metrics calculation utility
-    ├── peft_analyze_attns.py # Attention analysis script
-    ├── peft_analyze_probs.py # Token probability analysis script
-    ├── peft_generate_outputs.py # Script for generating outputs from the base and fine-tuned model
-    ├── peft_train.py         # PEFT fine-tuning training script
-    ├── prompt_eval.py        # Prompt evaluation script
-    └── prompt_run.py         # Prompt execution script
-└── result_figures            # Main result figures in the paper
+│   ├── prompts                 # Prompt data
+│   │   ├── origin              # Original prompts
+│   │   └── revised             # Revised prompts
+│   ├── raw                     # Raw patent data (in JSON format)
+│   └── summary                 # Summarized patent data (in JSON format)
+├── src
+│   ├── metrics_utils.py        # Metrics calculation utility
+│   ├── peft_analyze_attns.py   # Attention analysis script
+│   ├── peft_analyze_probs.py   # Token probability analysis script
+│   ├── peft_generate_outputs.py # Script for generating outputs from the base and fine-tuned model
+│   ├── peft_train.py           # PEFT fine-tuning training script
+│   ├── prompt_eval.py          # Prompt evaluation script
+│   └── prompt_run.py           # Prompt execution script
+└── result_figures              # Main result figures in the paper
 
 ```
 
